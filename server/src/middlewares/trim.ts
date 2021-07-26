@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-export default (req: Request, res: Response, next: NextFunction) => {
+export default (req: Request, _: Response, next: NextFunction) => {
   // trim requests except password key
   const exceptions = ["password"];
 
