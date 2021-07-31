@@ -1,6 +1,5 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import Head from "next/head";
-import Link from "next/link";
 
 export default function Home() {
   const classes = useStyles();
@@ -10,15 +9,7 @@ export default function Home() {
         <title>Leddit: The backpage of the internet</title>
       </Head>
 
-      <Box>
-        <div>
-          <Link href="/">
-            <a>
-              <Typography>leddit</Typography>
-            </a>
-          </Link>
-        </div>
-      </Box>
+      <Box></Box>
     </div>
   );
 }

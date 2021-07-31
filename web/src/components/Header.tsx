@@ -7,16 +7,25 @@ import {
   TextField,
   Toolbar,
   Typography,
+  Link as MuiLink,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Header: React.FC = () => {
   const classes = useStyles();
+  const router = useRouter();
+
   return (
     <AppBar position="fixed" className={classes.root} elevation={0}>
       <Toolbar className={classes.toolbar}>
         <Box>
-          <Typography variant="h4">leddit.</Typography>
+          <Link href="/" passHref>
+            <MuiLink variant="h4" underline="none" color="textPrimary">
+              leddit.
+            </MuiLink>
+          </Link>
         </Box>
 
         <Box className={classes.searchFieldContainer}>
@@ -48,6 +57,7 @@ const Header: React.FC = () => {
             color="primary"
             variant="contained"
             className={classes.authButtons}
+            onClick={() => router.push("/register")}
           >
             Sign Up
           </Button>
