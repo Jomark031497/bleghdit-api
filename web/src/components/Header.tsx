@@ -18,56 +18,61 @@ const Header: React.FC = () => {
   const router = useRouter();
 
   return (
-    <AppBar position="fixed" className={classes.root} elevation={0}>
-      <Toolbar className={classes.toolbar}>
-        <Box>
-          <Link href="/" passHref>
-            <MuiLink variant="h4" underline="none" color="textPrimary">
-              leddit.
-            </MuiLink>
-          </Link>
-        </Box>
+    <>
+      <AppBar position="fixed" className={classes.root} elevation={0}>
+        <Toolbar className={classes.toolbar}>
+          <Box>
+            <Link href="/" passHref>
+              <MuiLink variant="h4" underline="none" color="textPrimary">
+                leddit.
+              </MuiLink>
+            </Link>
+          </Box>
 
-        <Box className={classes.searchFieldContainer}>
-          <TextField
-            type="input"
-            variant="outlined"
-            size="small"
-            placeholder="Search Leddit"
-            fullWidth={true}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Box>
+          <Box className={classes.searchFieldContainer}>
+            <TextField
+              type="input"
+              variant="outlined"
+              size="small"
+              placeholder="Search Leddit"
+              fullWidth={true}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
 
-        <Box className={classes.authButtonsContainer}>
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.authButtons}
-          >
-            Log In
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.authButtons}
-            onClick={() => router.push("/register")}
-          >
-            Sign Up
-          </Button>
-        </Box>
-      </Toolbar>
-    </AppBar>
+          <Box className={classes.authButtonsContainer}>
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.authButtons}
+            >
+              Log In
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              className={classes.authButtons}
+              onClick={() => router.push("/register")}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      <div className={classes.offset} />
+    </>
   );
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  offset: theme.mixins.toolbar,
   root: {
     backgroundColor: "#fff",
     color: "#000",

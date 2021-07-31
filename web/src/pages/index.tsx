@@ -9,7 +9,9 @@ export default function Home() {
         <title>Leddit: The backpage of the internet</title>
       </Head>
 
-      <Box></Box>
+      <Box>
+        <Typography variant="h1">Wassup madlang popol</Typography>
+      </Box>
     </div>
   );
 }

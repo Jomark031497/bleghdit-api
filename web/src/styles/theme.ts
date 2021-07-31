@@ -20,6 +20,11 @@ const theme = createTheme({
   typography: {
     fontFamily: "'IBM Plex Sans', sans-serif;",
   },
+  mixins: {
+    toolbar: {
+      minHeight: "8vh",
+    },
+  },
 });
 
 export default theme;
