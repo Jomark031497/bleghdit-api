@@ -17,6 +17,9 @@ const theme = createTheme({
       default: "#fff",
     },
   },
+  typography: {
+    fontFamily: "'IBM Plex Sans', sans-serif;",
+  },
 });
 
 export default theme;

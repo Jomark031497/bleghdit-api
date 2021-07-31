@@ -3,6 +3,10 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core";
 import theme from "../styles/theme";
+import axios from "axios";
+import Layout from "../components/Layout";
+
+axios.defaults.baseURL = "http://localhost:5000/";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -16,7 +20,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </>
   );

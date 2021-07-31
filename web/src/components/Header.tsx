@@ -1,0 +1,84 @@
+import {
+  AppBar,
+  Box,
+  Button,
+  InputAdornment,
+  makeStyles,
+  TextField,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+
+const Header: React.FC = () => {
+  const classes = useStyles();
+  return (
+    <AppBar position="fixed" className={classes.root} elevation={0}>
+      <Toolbar className={classes.toolbar}>
+        <Box>
+          <Typography variant="h4">leddit.</Typography>
+        </Box>
+
+        <Box className={classes.searchFieldContainer}>
+          <TextField
+            type="input"
+            variant="outlined"
+            size="small"
+            placeholder="Search Leddit"
+            fullWidth={true}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+
+        <Box className={classes.authButtonsContainer}>
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classes.authButtons}
+          >
+            Log In
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.authButtons}
+          >
+            Sign Up
+          </Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+const useStyles = makeStyles(() => ({
+  root: {
+    backgroundColor: "#fff",
+    color: "#000",
+    height: "8vh",
+    justifyContent: "center",
+    padding: "0.5rem",
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  searchFieldContainer: {
+    width: "50%",
+  },
+  authButtonsContainer: {},
+
+  authButtons: {
+    borderRadius: "1rem",
+    padding: "0.3rem 2.3rem",
+    margin: "auto 0.5rem",
+  },
+}));
+
+export default Header;
