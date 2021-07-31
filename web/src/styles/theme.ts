@@ -19,6 +19,9 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "'IBM Plex Sans', sans-serif;",
+    button: {
+      textTransform: "none",
+    },
   },
   mixins: {
     toolbar: {

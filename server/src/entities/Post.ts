@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import {
   Entity as TOEntity,
   Column,
@@ -38,6 +39,9 @@ export default class Post extends Entity {
   @Column()
   subName: string;
 
+  @Column()
+  username: string;
+
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
@@ -48,6 +52,10 @@ export default class Post extends Entity {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
+
+  @Expose() get url(): string {
+    return `/r/${this.subName}/${this.identifier}/${this.slug}`;
+  }
 
   @BeforeInsert()
   makeIdAndSlug() {

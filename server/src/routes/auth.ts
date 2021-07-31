@@ -6,13 +6,12 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import dotenv from "dotenv";
 import auth from "../middlewares/auth";
+import { mapErrors } from "../util/helper";
 
 dotenv.config();
 
 const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
-
-  console.log("auth run");
 
   try {
     let errors: any = {};
@@ -30,7 +29,9 @@ const register = async (req: Request, res: Response) => {
     const user = new User({ email, username, password });
 
     errors = await validate(user);
-    if (errors.length) return res.status(400).json({ errors });
+    if (errors.length) {
+      return res.status(400).json(mapErrors(errors));
+    }
 
     await user.save();
 
