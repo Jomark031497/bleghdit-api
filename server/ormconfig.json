@@ -5,7 +5,7 @@
   "username": "postgres",
   "password": "doodles",
   "database": "leddit",
-  "synchronize": false,
+  "synchronize": true,
   "logging": true,
   "entities": ["src/entities/**/*.ts"],
   "migrations": ["src/migrations/**/*.ts"],

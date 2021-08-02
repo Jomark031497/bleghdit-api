@@ -8,4 +8,7 @@ export interface Post {
   subName: string;
   createdAt: string;
   updatedAt: string;
+  voteScore?: number;
+  commentCount?: number;
+  userVote?: number;
 }

@@ -6,7 +6,6 @@ import {
   makeStyles,
   TextField,
   Toolbar,
-  Typography,
   Link as MuiLink,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";

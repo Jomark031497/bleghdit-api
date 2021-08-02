@@ -10,6 +10,7 @@ import morgan from "morgan";
 import authRoutes from "./routes/auth";
 import postRoutes from "./routes/posts";
 import subRoutes from "./routes/subs";
+import miscRoutes from "./routes/misc";
 
 // trim the excess spaces in username/email
 import trim from "./middlewares/trim";
@@ -27,6 +28,7 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);
+app.use("/api/misc", miscRoutes);
 
 app.listen(process.env.PORT, async () => {
   console.log(`server running at port ${process.env.PORT}`);
