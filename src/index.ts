@@ -3,14 +3,18 @@ import { createConnection } from "typeorm";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import trim from "./middlewares/trimFields";
+import { config as dotenv } from "dotenv";
 
 const app = express();
-const PORT = 8080;
+dotenv();
+const PORT = process.env.PORT || 8080;
 
+// middlewares
 app.use(express.json());
 app.use(cors());
 app.use(trim);
 
+// endpoints
 app.use("/api/auth", authRoutes);
 
 app.listen(PORT, async () => {

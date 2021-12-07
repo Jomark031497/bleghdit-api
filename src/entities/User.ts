@@ -1,27 +1,15 @@
-import {
-  BaseEntity,
-  BeforeInsert,
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { BeforeInsert, Column, Entity, Index } from "typeorm";
 import { genSalt, hash } from "bcrypt";
-import { Exclude, instanceToPlain } from "class-transformer";
+import { Exclude } from "class-transformer";
 import { IsEmail, Length } from "class-validator";
+import RootEntity from "./RootEntity";
 
 @Entity("users")
-export default class User extends BaseEntity {
+export default class User extends RootEntity {
   constructor(user: Partial<User>) {
     super();
     Object.assign(this, user);
   }
-
-  @Exclude()
-  @PrimaryGeneratedColumn()
-  id: number;
 
   @Index()
   @Length(3, 255, { message: "Username must be at least 3 characters long" })
@@ -38,20 +26,10 @@ export default class User extends BaseEntity {
   @Length(6, 255, { message: "Username must be at least 6characters long" })
   password: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  // LIFECYCLE HOOK
+  // lifecycle hook to hash password before saving
   @BeforeInsert()
   async hashPassword() {
     const salt = await genSalt();
     this.password = await hash(this.password, salt);
-  }
-
-  toJSON() {
-    return instanceToPlain(this);
   }
 }
