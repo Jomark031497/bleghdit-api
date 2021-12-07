@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import User from "../entities/User";
-import { compare } from "bcrypt";
+import passport from "passport";
 
 export const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
@@ -26,18 +26,21 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-export const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  try {
-    const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ error: "User not found" });
-
-    // de hashing
-    const passwordMatched = await compare(password, user.password);
-    if (!passwordMatched) return res.status(400).json({ error: "Incorrect password, please try again" });
-
-    return res.json(user);
-  } catch (e) {
-    return res.status(400).json(e);
-  }
+export const login = async (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate("local", async (err, user, _) => {
+    try {
+      console.log("am here");
+      if (err) return next(err);
+      if (!user) return res.status(400).json({ error: "Usernames/Password is incorrect" });
+      console.log("am here2");
+      req.logIn(user, (err: Error) => {
+        console.log("am here3");
+        if (err) return next(err);
+        res.json(user);
+        next();
+      });
+    } catch (e) {
+      return res.status(500).json({ error: "Something went wrong" });
+    }
+  })(req, res, next);
 };
