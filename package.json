@@ -4,9 +4,8 @@
   "description": "a reddit clone created using react/next, typescript, nodeJS/express, typeorm, and PostgreSQL",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.ts",
-    "dev": "nodemon dist/index.js",
-    "watch": "tsc -w"
+    "start": "tsnode src/index.ts",
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -19,14 +18,18 @@
   },
   "homepage": "https://github.com/Jomark031497/leddit#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/node": "^16.11.12",
     "nodemon": "^2.0.15",
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "pg": "^8.7.1",
+    "ts-node": "^10.4.0",
     "typeorm": "^0.2.41"
   }
 }
