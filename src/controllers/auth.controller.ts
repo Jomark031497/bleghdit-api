@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../entities/User";
 import passport from "passport";
+import { validate } from "class-validator";
 
 export const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
@@ -18,6 +19,11 @@ export const register = async (req: Request, res: Response) => {
 
     // create the user
     const user = new User({ email, username, password });
+
+    // validate the user using class validator
+    errors = await validate(user);
+    if (errors.length > 0) return res.status(400).json({ errors });
+
     await user.save();
     return res.json(user);
   } catch (e) {
@@ -48,4 +54,14 @@ export const me = async (req: Request, res: Response) => {
   if (!req.user) return res.status(404).json({ error: "no user found" });
 
   return res.status(200).json(req.user);
+};
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    if (!req.user) return res.status(404).json({ error: "no user found" });
+    req.logout();
+    return res.status(200).json({ message: "logged out successfully" });
+  } catch (e) {
+    return res.status(500).json({ error: "something went wrong" });
+  }
 };
