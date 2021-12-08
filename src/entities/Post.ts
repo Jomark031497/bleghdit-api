@@ -28,14 +28,17 @@ export default class Post extends RootEntity {
   @Column()
   subName: string;
 
+  // There can be multiple posts in one User
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
+  // There can be multiple Posts in one Sub
   @ManyToOne(() => Subs, (sub) => sub.posts)
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
   sub: Subs;
 
+  // lifecycle hook to make a auto-generated 7 character ID and slugify the post title
   @BeforeInsert()
   makeIDandSlug() {
     this.identifier = makeID(7);

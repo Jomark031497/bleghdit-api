@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
+/**
+ * used to check if the user is authenticated
+ */
 const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   // return 401 if user is not authenticated
   if (!req.isAuthenticated()) {

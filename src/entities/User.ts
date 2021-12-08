@@ -7,14 +7,15 @@ import Post from "./Post";
 
 @Entity("users")
 export default class User extends RootEntity {
+  // Partial<User> : So we don't have to use all the required fields
   constructor(user: Partial<User>) {
     super();
     Object.assign(this, user);
   }
 
+  @Column({ unique: true })
   @Index()
   @Length(3, 255, { message: "Username must be at least 3 characters long" })
-  @Column({ unique: true })
   username: string;
 
   @Index()
@@ -22,11 +23,12 @@ export default class User extends RootEntity {
   @Column({ unique: true })
   email: string;
 
-  @Exclude()
   @Column()
+  @Exclude() // exclude this column from showing when returning a JSON obj
   @Length(6, 255, { message: "Username must be at least 6characters long" })
   password: string;
 
+  // User can have multiple posts
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 

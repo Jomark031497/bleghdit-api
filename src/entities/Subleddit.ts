@@ -10,8 +10,8 @@ export default class Subs extends RootEntity {
     Object.assign(this, sub);
   }
 
-  @Index()
   @Column({ unique: true })
+  @Index()
   name: string;
 
   @Column()
@@ -26,10 +26,12 @@ export default class Subs extends RootEntity {
   @Column({ nullable: true })
   bannerURN: string;
 
+  // There can be multiple subleddits owned by a one user
   @ManyToOne(() => User)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
+  // there can be multiple posts in one sub
   @OneToMany(() => Post, (post) => post.sub)
   posts: Post[];
 }

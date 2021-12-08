@@ -4,6 +4,7 @@ import passport from "passport";
 import { isEmpty, validate } from "class-validator";
 
 export const register = async (req: Request, res: Response) => {
+  // destructure the fields
   const { email, username, password } = req.body;
   try {
     // validations
@@ -24,22 +25,26 @@ export const register = async (req: Request, res: Response) => {
     errors = await validate(user);
     if (errors.length > 0) return res.status(400).json({ errors });
 
+    // save the user to the database
     await user.save();
-    return res.json(user);
+    return res.status(200).json(user);
   } catch (e) {
     return res.status(400).json(e);
   }
 };
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
-  let errors: any = {};
-  const { username, password } = req.body;
-
-  if (isEmpty(username)) errors.username = "Username must not be empty";
-  if (isEmpty(password)) errors.password = "Password must not be empty";
-  if (Object.keys(errors).length > 0) return res.status(400).json(errors);
-
   try {
+    // destructure the fields
+    const { username, password } = req.body;
+
+    // validation
+    let errors: any = {};
+
+    // check if the fields are empty
+    if (isEmpty(username)) errors.username = "Username must not be empty";
+    if (isEmpty(password)) errors.password = "Password must not be empty";
+    if (Object.keys(errors).length > 0) return res.status(400).json(errors);
     // authenticate the login
     passport.authenticate("local", async (err, user, _) => {
       try {
@@ -49,7 +54,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         // authorize the login
         req.logIn(user, (err: Error) => {
           if (err) return next(err);
-          res.json(user);
+          res.status(200).json(user);
           next();
         });
       } catch (e) {

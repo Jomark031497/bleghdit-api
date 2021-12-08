@@ -11,17 +11,19 @@ import cookierParser from "cookie-parser";
 import passport from "passport";
 import authenticate from "../passportconfig";
 
-const app = express();
-dotenv();
+const app = express(); // initialize express app
+dotenv(); // invoke dotenv config
 const PORT = process.env.PORT || 8080;
 
 // middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); // recognize incoming requests as JSON Objects
+app.use(express.urlencoded({ extended: false })); // recognize incoming requests as strings or arrays
+
+// restricts allowed hosts to a single origin
 app.use(
   cors({
     origin: "http://localhost:3000",
-    credentials: true,
+    credentials: true, // allow http sessions
   })
 );
 app.use(
