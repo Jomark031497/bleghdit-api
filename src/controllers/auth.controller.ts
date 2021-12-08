@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../entities/User";
 import passport from "passport";
-import { validate } from "class-validator";
+import { isEmpty, validate } from "class-validator";
 
 export const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
@@ -32,22 +32,36 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
-  // authenticate the login
-  passport.authenticate("local", async (err, user, _) => {
-    try {
-      if (err) return next(err);
-      if (!user) return res.status(400).json({ error: "Usernames/Password is incorrect" });
+  let errors: any = {};
+  const { username, password } = req.body;
 
-      // authorize the login
-      req.logIn(user, (err: Error) => {
+  if (isEmpty(username)) errors.username = "Username must not be empty";
+  if (isEmpty(password)) errors.password = "Password must not be empty";
+  if (Object.keys(errors).length > 0) return res.status(400).json(errors);
+
+  try {
+    // authenticate the login
+    passport.authenticate("local", async (err, user, _) => {
+      try {
+        console.log(user);
         if (err) return next(err);
-        res.json(user);
-        next();
-      });
-    } catch (e) {
-      return res.status(500).json({ error: "Something went wrong" });
-    }
-  })(req, res, next);
+        if (!user) return res.status(400).json({ error: "Usernames/Password is incorrect" });
+
+        // authorize the login
+        req.logIn(user, (err: Error) => {
+          if (err) return next(err);
+          res.json(user);
+          next();
+        });
+      } catch (e) {
+        return res.status(500).json({ error: "Something went wrong" });
+      }
+    })(req, res, next);
+  } catch (e) {
+    return res.status(400).json(e);
+  }
+
+  return null;
 };
 
 export const me = async (req: Request, res: Response) => {
