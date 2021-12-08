@@ -26,7 +26,7 @@ export default class Post extends RootEntity {
   body: string;
 
   @Column()
-  subredditName: string;
+  subName: string;
 
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })

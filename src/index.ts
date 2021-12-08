@@ -3,6 +3,7 @@ import { createConnection } from "typeorm";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import postRoutes from "./routes/posts.routes";
+import subRoutes from "./routes/subs.routes";
 import trim from "./middlewares/trimFields";
 import { config as dotenv } from "dotenv";
 import session from "express-session";
@@ -39,6 +40,7 @@ app.use(trim);
 // endpoints
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/subs", subRoutes);
 
 app.listen(PORT, async () => {
   console.log(`listening to port ${PORT}`);
