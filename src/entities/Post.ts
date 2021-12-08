@@ -2,6 +2,7 @@ import { makeID, slugify } from "../utils/helpers";
 import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
 import RootEntity from "./RootEntity";
 import User from "./User";
+import Subs from "./Subleddit";
 
 @Entity("posts")
 export default class Post extends RootEntity {
@@ -30,6 +31,10 @@ export default class Post extends RootEntity {
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
+
+  @ManyToOne(() => Subs, (sub) => sub.posts)
+  @JoinColumn({ name: "subName", referencedColumnName: "name" })
+  sub: Subs;
 
   @BeforeInsert()
   makeIDandSlug() {
