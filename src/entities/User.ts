@@ -1,8 +1,9 @@
-import { BeforeInsert, Column, Entity, Index } from "typeorm";
+import { BeforeInsert, Column, Entity, Index, OneToMany } from "typeorm";
 import { genSalt, hash } from "bcrypt";
 import { Exclude } from "class-transformer";
 import { IsEmail, Length } from "class-validator";
 import RootEntity from "./RootEntity";
+import Post from "./Post";
 
 @Entity("users")
 export default class User extends RootEntity {
@@ -25,6 +26,9 @@ export default class User extends RootEntity {
   @Column()
   @Length(6, 255, { message: "Username must be at least 6characters long" })
   password: string;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 
   // lifecycle hook to hash password before saving
   @BeforeInsert()

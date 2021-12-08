@@ -43,7 +43,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     // authenticate the login
     passport.authenticate("local", async (err, user, _) => {
       try {
-        console.log(user);
         if (err) return next(err);
         if (!user) return res.status(400).json({ error: "Usernames/Password is incorrect" });
 
