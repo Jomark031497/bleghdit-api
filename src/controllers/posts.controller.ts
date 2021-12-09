@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Subs from "../entities/Subleddit";
 import Post from "../entities/Post";
+import Comment from "../entities/Comment";
 
 export const createPost = async (req: Request, res: Response) => {
   // destructure the fields
@@ -29,20 +30,22 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const getPosts = async (_: Request, res: Response) => {
   try {
+    // find all the posts
     const posts = await Post.find({
       order: { createdAt: "DESC" }, // display the latest post
     });
 
     return res.json(posts);
   } catch (e) {
-    return res.json({ error: "something went wrong" });
+    return res.status(500).json({ error: "something went wrong" });
   }
 };
 
 export const getPost = async (req: Request, res: Response) => {
-  const { slug, identifier } = req.params;
+  const { slug, identifier } = req.params; // destructure the slug and identifier from params
 
   try {
+    // find the specific post
     const post = await Post.findOneOrFail(
       { identifier, slug },
       {
@@ -52,6 +55,29 @@ export const getPost = async (req: Request, res: Response) => {
 
     return res.status(200).json(post);
   } catch (e) {
+    return res.status(404).json({ error: "Post not found" });
+  }
+};
+
+export const commentOnPost = async (req: Request, res: Response) => {
+  const { identifier, slug } = req.params; // destructure the body, slug and identifier from params and body
+  const body = req.body.body;
+
+  const user: any = req.user; // get the current authorized user from session
+  try {
+    const post = await Post.findOneOrFail({ identifier, slug });
+    const comment = new Comment({
+      body,
+      user,
+      post,
+    });
+
+    // save the comment
+    await comment.save();
+
+    return res.status(200).json(comment);
+  } catch (e) {
+    console.error(e);
     return res.status(404).json({ error: "Post not found" });
   }
 };

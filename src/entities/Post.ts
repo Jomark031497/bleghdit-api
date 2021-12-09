@@ -1,8 +1,9 @@
 import { makeID, slugify } from "../utils/helpers";
-import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import RootEntity from "./RootEntity";
 import User from "./User";
 import Subs from "./Subleddit";
+import Comment from "./Comment";
 
 @Entity("posts")
 export default class Post extends RootEntity {
@@ -13,7 +14,7 @@ export default class Post extends RootEntity {
 
   @Index()
   @Column()
-  identifier: string; // 7 character ID
+  identifier: string; // 7 Character Id
 
   @Column()
   title: string;
@@ -28,19 +29,23 @@ export default class Post extends RootEntity {
   @Column()
   subName: string;
 
-  // There can be multiple posts in one User
+  // A User can have multiple posts
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
-  // There can be multiple Posts in one Sub
+  // A Sub can have multiple posts
   @ManyToOne(() => Subs, (sub) => sub.posts)
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
   sub: Subs;
 
-  // lifecycle hook to make a auto-generated 7 character ID and slugify the post title
+  // A Post can have multiple comments
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
+
+  // Lifecycle hook to create a slug and identifier
   @BeforeInsert()
-  makeIDandSlug() {
+  makeIdAndSlug() {
     this.identifier = makeID(7);
     this.slug = slugify(this.title);
   }
