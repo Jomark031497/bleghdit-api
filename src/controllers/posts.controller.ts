@@ -26,3 +26,13 @@ export const createPost = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "something went wrong" });
   }
 };
+
+export const getPosts = async (_: Request, res: Response) => {
+  try {
+    const posts = await Post.find();
+
+    return res.json(posts);
+  } catch (e) {
+    return res.json({ error: "something went wrong" });
+  }
+};
