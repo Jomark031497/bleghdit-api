@@ -29,10 +29,29 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const getPosts = async (_: Request, res: Response) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find({
+      order: { createdAt: "DESC" }, // display the latest post
+    });
 
     return res.json(posts);
   } catch (e) {
     return res.json({ error: "something went wrong" });
+  }
+};
+
+export const getPost = async (req: Request, res: Response) => {
+  const { slug, identifier } = req.params;
+
+  try {
+    const post = await Post.findOneOrFail(
+      { identifier, slug },
+      {
+        relations: ["sub"], // add sub from the JSON
+      }
+    );
+
+    return res.status(200).json(post);
+  } catch (e) {
+    return res.status(404).json({ error: "Post not found" });
   }
 };
