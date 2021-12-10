@@ -2,11 +2,15 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Layout from "../components/Layout";
 import theme from "../styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { pathname } = useRouter();
+  const authRoutes = ["/register", "/login"];
+  const authRoute = authRoutes.includes(pathname);
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -23,9 +27,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Layout>
+        {!authRoute ? (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        ) : (
           <Component {...pageProps} />
-        </Layout>
+        )}
       </ThemeProvider>
     </>
   );

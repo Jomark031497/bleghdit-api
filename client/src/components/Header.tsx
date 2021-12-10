@@ -55,7 +55,7 @@ const Header: React.FC = () => {
 
 const useStyles = makeStyles(() => ({
   offset: {
-    minHeight: "7vh",
+    minHeight: "5vh",
   },
   root: {
     justifyContent: "center",
