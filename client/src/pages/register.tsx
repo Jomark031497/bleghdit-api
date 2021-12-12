@@ -1,12 +1,33 @@
 import { Checkbox, Typography, Link as MuiLink } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
+import axios from "axios";
 import { NextPage } from "next";
+import React, { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
 
 const Register: NextPage = () => {
   const classes = useStyles();
+
+  const [user, setUser] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+  // const [errors, setErrors] = useState<any>({});
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post("/auth/register", user);
+      console.log(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Box className={classes.imageContainer}></Box>
@@ -29,9 +50,36 @@ const Register: NextPage = () => {
           </Typography>
         </Box>
 
-        <CTextField variant="outlined" label="username" size="small" />
-        <CTextField variant="outlined" label="password" size="small" />
-        <CButton variant="contained">REGISTER</CButton>
+        <Box component="form" onSubmit={handleSubmit}>
+          <CTextField
+            variant="outlined"
+            label="email address"
+            size="small"
+            fullWidth
+            value={user.email}
+            onChange={(e: any) => setUser({ ...user, email: e.target.value })}
+          />
+          <CTextField
+            variant="outlined"
+            label="username"
+            size="small"
+            fullWidth
+            value={user.username}
+            onChange={(e: any) => setUser({ ...user, username: e.target.value })}
+          />
+          <CTextField
+            variant="outlined"
+            label="password"
+            type="password"
+            size="small"
+            fullWidth
+            value={user.password}
+            onChange={(e: any) => setUser({ ...user, password: e.target.value })}
+          />
+          <CButton type="submit" variant="contained" fullWidth>
+            REGISTER
+          </CButton>
+        </Box>
 
         <Typography>
           Already a ledditor? <MuiLink underline="none">Log in</MuiLink>
