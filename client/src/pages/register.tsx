@@ -3,6 +3,9 @@ import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { NextPage } from "next";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import React, { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
@@ -10,6 +13,7 @@ import CTextField from "../components/CTextField";
 
 const Register: NextPage = () => {
   const classes = useStyles();
+  const router = useRouter();
 
   const [user, setUser] = useState({
     email: "",
@@ -20,10 +24,9 @@ const Register: NextPage = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     try {
-      const res = await axios.post("/auth/register", user);
-      console.log(res.data);
+      await axios.post("/auth/register", user);
+      router.push("/login");
     } catch (err: any) {
       setErrors(err.response.data);
     }
@@ -31,8 +34,12 @@ const Register: NextPage = () => {
 
   return (
     <div className={classes.root}>
-      <Box className={classes.imageContainer}></Box>
+      <Head>
+        <title>leddit.com: Join the worldwide conversation</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
 
+      <Box className={classes.imageContainer} />
       <Box className={classes.formContainer}>
         <Box className={classes.labels}>
           <Typography variant="h6">Sign up</Typography>
@@ -95,7 +102,10 @@ const Register: NextPage = () => {
         </Box>
 
         <Typography>
-          Already a ledditor? <MuiLink underline="none">Log in</MuiLink>
+          Already a ledditor?{" "}
+          <Link href="/" passHref>
+            <MuiLink underline="none">Log in</MuiLink>
+          </Link>
         </Typography>
       </Box>
     </div>
