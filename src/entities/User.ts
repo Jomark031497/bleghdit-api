@@ -19,13 +19,13 @@ export default class User extends RootEntity {
   username: string;
 
   @Index()
-  @IsEmail(undefined, { message: "must be a valid email address" })
   @Column({ unique: true })
+  @IsEmail(undefined, { message: "must be a valid email address" })
   email: string;
 
   @Column()
   @Exclude() // exclude this column from showing when returning a JSON obj
-  @Length(6, 255, { message: "Username must be at least 6characters long" })
+  @Length(6, 255, { message: "Username must be at least 6 characters long" })
   password: string;
 
   // User can have multiple posts

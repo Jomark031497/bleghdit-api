@@ -32,6 +32,10 @@ const Register: NextPage = () => {
         <CTextField variant="outlined" label="username" size="small" />
         <CTextField variant="outlined" label="password" size="small" />
         <CButton variant="contained">REGISTER</CButton>
+
+        <Typography>
+          Already a ledditor? <MuiLink underline="none">Log in</MuiLink>
+        </Typography>
       </Box>
     </div>
   );

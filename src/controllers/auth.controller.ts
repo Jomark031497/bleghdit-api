@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import User from "../entities/User";
 import passport from "passport";
 import { isEmpty, validate } from "class-validator";
+import { mapErrors } from "../utils/helpers";
 
 export const register = async (req: Request, res: Response) => {
   // destructure the fields
@@ -23,7 +24,9 @@ export const register = async (req: Request, res: Response) => {
 
     // validate the user using class validator
     errors = await validate(user);
-    if (errors.length > 0) return res.status(400).json({ errors });
+    if (errors.length > 0) {
+      return res.status(400).json(mapErrors(errors));
+    }
 
     // save the user to the database
     await user.save();
