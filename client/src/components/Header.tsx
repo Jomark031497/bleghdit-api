@@ -25,14 +25,16 @@ const Header: React.FC = () => {
     <>
       <AppBar position="fixed" className={classes.root} elevation={0}>
         <Toolbar className={classes.toolbar}>
-          <Link href="/" passHref>
-            <MuiLink underline="none" color="textPrimary" className={classes.titleContainer}>
-              <Image src="/images/reddit_logo.svg" height={30} width={30} />
-              <Typography variant="h5" sx={{ fontWeight: "bolder", margin: "auto 0.3rem" }}>
-                leddit.
-              </Typography>
-            </MuiLink>
-          </Link>
+          <Box className={classes.titleContainer}>
+            <Link href="/" passHref>
+              <MuiLink underline="none" color="textPrimary" className={classes.logoContainer}>
+                <Image src="/images/reddit_logo.svg" height={30} width={30} />
+                <Typography variant="h5" sx={{ fontWeight: "bolder", margin: "auto 0.3rem" }}>
+                  leddit.
+                </Typography>
+              </MuiLink>
+            </Link>
+          </Box>
 
           <Box className={classes.textfieldContainer}>
             <TextField
@@ -46,6 +48,7 @@ const Header: React.FC = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.textfield}
             />
           </Box>
 
@@ -75,7 +78,7 @@ const Header: React.FC = () => {
 
 const useStyles = makeStyles(() => ({
   offset: {
-    minHeight: "5vh",
+    minHeight: "6vh",
   },
   root: {
     justifyContent: "center",
@@ -87,11 +90,15 @@ const useStyles = makeStyles(() => ({
     minHeight: "5vh",
   },
   titleContainer: {
+    marginRight: "8rem",
+  },
+  logoContainer: {
     display: "flex",
     alignItems: "start",
   },
-  textfieldContainer: {
-    width: "50%",
+  textfieldContainer: {},
+  textfield: {
+    width: "40rem",
   },
   buttonsContainer: {
     display: "flex",
