@@ -25,7 +25,7 @@ const Register: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/register", user);
+      await axios.post("/auth/register", user, { withCredentials: true });
       router.push("/login");
     } catch (err: any) {
       setErrors(err.response.data);

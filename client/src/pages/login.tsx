@@ -1,4 +1,4 @@
-import { Box, Typography, Link as MuiLink, Checkbox } from "@mui/material";
+import { Box, Typography, Link as MuiLink } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
 import { NextPage } from "next";
@@ -22,7 +22,7 @@ const Login: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/login", user);
+      await axios.post("/auth/login", user, { withCredentials: true });
       router.push("/");
     } catch (err: any) {
       setErrors(err.response.data);
@@ -31,7 +31,7 @@ const Login: NextPage = () => {
   return (
     <div className={classes.root}>
       <Head>
-        <title>leddit.com: Join the worldwide conversation</title>
+        <title>leddit.com: Log in</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
