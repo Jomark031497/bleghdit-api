@@ -25,7 +25,9 @@ const Header: React.FC = () => {
           <Link href="/" passHref>
             <MuiLink underline="none" color="textPrimary" className={classes.titleContainer}>
               <Image src="/images/reddit_logo.svg" height={30} width={30} />
-              <Typography variant="h5">leddit.</Typography>
+              <Typography variant="h5" sx={{ fontWeight: "bolder", margin: "auto 0.3rem" }}>
+                leddit.
+              </Typography>
             </MuiLink>
           </Link>
 
