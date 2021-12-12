@@ -12,7 +12,7 @@ export default function (passport: any) {
       async (username, password, done) => {
         try {
           const user = await User.findOne({ username });
-          if (!user) return done(null, false, { message: "no user found" });
+          if (!user) return done(null, false, { message: "User not found" });
           const passwordMatched = await compare(password, user.password);
           if (!passwordMatched) return done(null, false);
 

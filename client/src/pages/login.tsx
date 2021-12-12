@@ -73,6 +73,10 @@ const Login: NextPage = () => {
             {errors.password}
           </Typography>
 
+          <Typography color="error" variant="subtitle2">
+            {errors.error}
+          </Typography>
+
           <CButton type="submit" variant="contained" fullWidth>
             LOGIN
           </CButton>
