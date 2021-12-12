@@ -29,6 +29,9 @@ export default class Post extends RootEntity {
   @Column()
   subName: string;
 
+  @Column()
+  username: string;
+
   // A User can have multiple posts
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
