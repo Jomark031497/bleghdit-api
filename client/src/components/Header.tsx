@@ -1,8 +1,19 @@
-import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Link as MuiLink, IconButton } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  InputAdornment,
+  TextField,
+  Toolbar,
+  Link as MuiLink,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { makeStyles } from "@mui/styles";
+import Image from "next/image";
 import Link from "next/link";
 
 const Header: React.FC = () => {
@@ -11,13 +22,12 @@ const Header: React.FC = () => {
     <>
       <AppBar position="fixed" className={classes.root} elevation={0}>
         <Toolbar className={classes.toolbar}>
-          <Box className={classes.titleContainer}>
-            <Link href="/" passHref>
-              <MuiLink variant="h5" underline="none" color="textPrimary">
-                leddit.
-              </MuiLink>
-            </Link>
-          </Box>
+          <Link href="/" passHref>
+            <MuiLink underline="none" color="textPrimary" className={classes.titleContainer}>
+              <Image src="/images/reddit_logo.svg" height={30} width={30} />
+              <Typography variant="h5">leddit.</Typography>
+            </MuiLink>
+          </Link>
 
           <Box className={classes.textfieldContainer}>
             <TextField
@@ -63,9 +73,13 @@ const useStyles = makeStyles(() => ({
   },
   toolbar: {
     justifyContent: "space-between",
+    alignItems: "center",
     minHeight: "5vh",
   },
-  titleContainer: {},
+  titleContainer: {
+    display: "flex",
+    alignItems: "start",
+  },
   textfieldContainer: {
     width: "50%",
   },
