@@ -22,8 +22,9 @@ app.use(express.urlencoded({ extended: false })); // recognize incoming requests
 // restricts allowed hosts to a single origin
 app.use(
   cors({
-    origin: "http://localhost:3000",
     credentials: true, // allow http sessions
+    origin: process.env.ORIGIN,
+    optionsSuccessStatus: 200,
   })
 );
 app.use(
