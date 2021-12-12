@@ -3,6 +3,7 @@ import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { NextPage } from "next";
+
 import React, { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
@@ -15,7 +16,7 @@ const Register: NextPage = () => {
     username: "",
     password: "",
   });
-  // const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<any>({});
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -23,8 +24,8 @@ const Register: NextPage = () => {
     try {
       const res = await axios.post("/auth/register", user);
       console.log(res.data);
-    } catch (e) {
-      console.error(e);
+    } catch (err: any) {
+      setErrors(err.response.data);
     }
   };
 
@@ -46,7 +47,7 @@ const Register: NextPage = () => {
         <Box className={classes.checkboxContainer}>
           <Checkbox size="small" disableRipple className={classes.checkbox} />
           <Typography variant="subtitle2" color="textSecondary">
-            I agree to get emails about cool stuff on Reddit{" "}
+            I agree to get emails about cool stuff on Reddit
           </Typography>
         </Box>
 
@@ -54,28 +55,40 @@ const Register: NextPage = () => {
           <CTextField
             variant="outlined"
             label="email address"
-            size="small"
             fullWidth
+            error={errors.email ? true : false}
             value={user.email}
             onChange={(e: any) => setUser({ ...user, email: e.target.value })}
           />
+          <Typography color="error" variant="subtitle2">
+            {errors.email}
+          </Typography>
+
           <CTextField
             variant="outlined"
             label="username"
-            size="small"
             fullWidth
+            error={errors.username ? true : false}
             value={user.username}
             onChange={(e: any) => setUser({ ...user, username: e.target.value })}
           />
+          <Typography color="error" variant="subtitle2">
+            {errors.username}
+          </Typography>
+
           <CTextField
             variant="outlined"
             label="password"
             type="password"
-            size="small"
             fullWidth
+            error={errors.password ? true : false}
             value={user.password}
             onChange={(e: any) => setUser({ ...user, password: e.target.value })}
           />
+          <Typography color="error" variant="subtitle2">
+            {errors.password}
+          </Typography>
+
           <CButton type="submit" variant="contained" fullWidth>
             REGISTER
           </CButton>
