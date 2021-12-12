@@ -1,22 +1,19 @@
-import { Checkbox, Typography, Link as MuiLink } from "@mui/material";
+import { Box, Typography, Link as MuiLink, Checkbox } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { Box } from "@mui/system";
 import axios from "axios";
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
 
-const Register: NextPage = () => {
+const Login: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
 
   const [user, setUser] = useState({
-    email: "",
     username: "",
     password: "",
   });
@@ -25,13 +22,12 @@ const Register: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/register", user);
-      router.push("/login");
+      await axios.post("/auth/login", user);
+      router.push("/");
     } catch (err: any) {
       setErrors(err.response.data);
     }
   };
-
   return (
     <div className={classes.root}>
       <Head>
@@ -42,35 +38,16 @@ const Register: NextPage = () => {
       <Box className={classes.imageContainer} />
       <Box className={classes.formContainer}>
         <Box className={classes.labels}>
-          <Typography variant="h6">Sign up</Typography>
+          <Typography variant="h6">Login</Typography>
           <Typography variant="subtitle2" color="textSecondary">
-            By continuing, you are setting up a Reddit account and agree to our
+            By continuing, you agree to our
             <MuiLink underline="none"> User Agreement </MuiLink>
             and
             <MuiLink underline="none"> Privacy Policy </MuiLink>.
           </Typography>
         </Box>
 
-        <Box className={classes.checkboxContainer}>
-          <Checkbox size="small" disableRipple className={classes.checkbox} />
-          <Typography variant="subtitle2" color="textSecondary">
-            I agree to get emails about cool stuff on Reddit
-          </Typography>
-        </Box>
-
         <Box component="form" onSubmit={handleSubmit}>
-          <CTextField
-            variant="outlined"
-            label="email address"
-            fullWidth
-            error={errors.email ? true : false}
-            value={user.email}
-            onChange={(e: any) => setUser({ ...user, email: e.target.value })}
-          />
-          <Typography color="error" variant="subtitle2">
-            {errors.email}
-          </Typography>
-
           <CTextField
             variant="outlined"
             label="username"
@@ -97,14 +74,14 @@ const Register: NextPage = () => {
           </Typography>
 
           <CButton type="submit" variant="contained" fullWidth>
-            REGISTER
+            LOGIN
           </CButton>
         </Box>
 
         <Typography>
-          Already a ledditor?
-          <Link href="/login" passHref>
-            <MuiLink underline="none"> Log in</MuiLink>
+          New to leddit?
+          <Link href="/register" passHref>
+            <MuiLink underline="none"> Sign up</MuiLink>
           </Link>
         </Typography>
       </Box>
@@ -130,16 +107,10 @@ const useStyles = makeStyles((_) => ({
     padding: "0rem 1.5rem",
     paddingBottom: "5rem",
   },
-  checkboxContainer: {
-    display: "flex",
-  },
-  checkbox: {
-    marginRight: "0.3rem",
-    padding: 0,
-  },
+
   labels: {
     paddingBottom: "3rem",
   },
 }));
 
-export default Register;
+export default Login;
