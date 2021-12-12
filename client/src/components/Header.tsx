@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Button,
   InputAdornment,
   TextField,
   Toolbar,
@@ -15,9 +14,13 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { makeStyles } from "@mui/styles";
 import Image from "next/image";
 import Link from "next/link";
+import CButton from "./CButton";
+import { useRouter } from "next/router";
 
 const Header: React.FC = () => {
   const classes = useStyles();
+
+  const router = useRouter();
   return (
     <>
       <AppBar position="fixed" className={classes.root} elevation={0}>
@@ -47,14 +50,19 @@ const Header: React.FC = () => {
           </Box>
 
           <Box className={classes.buttonsContainer}>
-            <Button color="secondary" variant="contained" className={classes.buttons}>
+            <CButton variant="outlined" className={classes.buttons} onClick={() => router.push("/login")}>
               Log In
-            </Button>
-            <Button color="secondary" variant="contained" className={classes.buttons}>
+            </CButton>
+            <CButton
+              color="primary"
+              variant="contained"
+              className={classes.buttons}
+              onClick={() => router.push("/register")}
+            >
               Sign Up
-            </Button>
+            </CButton>
             <IconButton>
-              <AccountCircleIcon color="secondary" />
+              <AccountCircleIcon />
               <ArrowDropDownIcon />
             </IconButton>
           </Box>
