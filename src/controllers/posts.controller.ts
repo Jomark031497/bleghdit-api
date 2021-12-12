@@ -33,6 +33,7 @@ export const getPosts = async (_: Request, res: Response) => {
     // find all the posts
     const posts = await Post.find({
       order: { createdAt: "DESC" }, // display the latest post
+      relations: ["user"],
     });
 
     return res.json(posts);
