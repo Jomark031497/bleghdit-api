@@ -17,54 +17,56 @@ interface PostProps {
 const PostCard: React.FC<PostProps> = ({ post }) => {
   const classes = useStyles();
   return (
-    <Box className={classes.root} key={post.identifier}>
-      <Box className={classes.voteContainer}>
-        <IconButton>
-          <ArrowUpwardIcon />
-        </IconButton>
-        <Typography variant="body2">42.69K</Typography>
-        <IconButton>
-          <ArrowDownwardIcon />
-        </IconButton>
-      </Box>
+    <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`}>
+      <Box className={classes.root} key={post.identifier}>
+        <Box className={classes.voteContainer}>
+          <IconButton>
+            <ArrowUpwardIcon />
+          </IconButton>
+          <Typography variant="body2">42.69K</Typography>
+          <IconButton>
+            <ArrowDownwardIcon />
+          </IconButton>
+        </Box>
 
-      <Box className={classes.postContentContainer}>
-        <Box className={classes.postData}>
-          <Box className={classes.postDataSubreddit}>
-            <Image src="/images/reddit_logo.png" width="20" height="20" />
-            <Link href={`/r/${post.subName}`} passHref>
-              <MuiLink variant="subtitle1" underline="hover" color="textPrimary" style={{ marginLeft: "0.3rem" }}>
-                r/{post.subName}
+        <Box className={classes.postContentContainer}>
+          <Box className={classes.postData}>
+            <Box className={classes.postDataSubreddit}>
+              <Image src="/images/reddit_logo.png" width="20" height="20" />
+              <Link href={`/r/${post.subName}`} passHref>
+                <MuiLink variant="subtitle1" underline="hover" color="textPrimary" style={{ marginLeft: "0.3rem" }}>
+                  r/{post.subName}
+                </MuiLink>
+              </Link>
+            </Box>
+
+            <Link href={`/u/${post.username}`} passHref>
+              <MuiLink variant="subtitle2" underline="hover" color="textSecondary" style={{ margin: "0 0.3rem" }}>
+                Posted by u/{post.username}
               </MuiLink>
             </Link>
+            <Typography variant="subtitle2" color="textSecondary">
+              {dayjs(post.createdAt).fromNow()}
+            </Typography>
           </Box>
 
-          <Link href={`/u/${post.username}`} passHref>
-            <MuiLink variant="subtitle2" underline="hover" color="textSecondary" style={{ margin: "0 0.3rem" }}>
-              Posted by u/{post.username}
-            </MuiLink>
-          </Link>
-          <Typography variant="subtitle2" color="textSecondary">
-            {dayjs(post.createdAt).fromNow()}
-          </Typography>
-        </Box>
+          <Box className={classes.postTitleAndBody}>
+            <Typography variant="h5">{post.title}</Typography>
+            {post.body && (
+              <Typography variant="body1" className={classes.postBody}>
+                {post.body}
+              </Typography>
+            )}
+          </Box>
 
-        <Box className={classes.postTitleAndBody}>
-          <Typography variant="h5">{post.title}</Typography>
-          {post.body && (
-            <Typography variant="body1" className={classes.postBody}>
-              {post.body}
-            </Typography>
-          )}
-        </Box>
-
-        <Box className={classes.actionButtonsContainer}>
-          <Typography className={classes.actionButtons}>69 Comments</Typography>
-          <Typography className={classes.actionButtons}>Share</Typography>
-          <Typography className={classes.actionButtons}>Save</Typography>
+          <Box className={classes.actionButtonsContainer}>
+            <Typography className={classes.actionButtons}>69 Comments</Typography>
+            <Typography className={classes.actionButtons}>Share</Typography>
+            <Typography className={classes.actionButtons}>Save</Typography>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Link>
   );
 };
 
