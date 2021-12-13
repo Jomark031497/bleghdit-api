@@ -1,5 +1,4 @@
 import { Box, Button, IconButton, Link as MuiLink, Typography } from "@mui/material";
-import React from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import CommentIcon from "@mui/icons-material/ModeCommentOutlined";
@@ -11,6 +10,7 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Post } from "../types";
+import axios from "axios";
 dayjs.extend(relativeTime);
 
 interface PostProps {
@@ -19,63 +19,80 @@ interface PostProps {
 
 const PostCard: React.FC<PostProps> = ({ post }) => {
   const classes = useStyles();
-  return (
-    <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`}>
-      <Box className={classes.root} key={post.identifier}>
-        <Box className={classes.voteContainer}>
-          <IconButton>
-            <ArrowUpwardIcon />
-          </IconButton>
-          <Typography variant="body2">42.69K</Typography>
-          <IconButton>
-            <ArrowDownwardIcon />
-          </IconButton>
-        </Box>
 
-        <Box className={classes.postContentContainer}>
-          <Box className={classes.postData}>
-            <Box className={classes.postDataSubreddit}>
-              <Image src="/images/reddit_logo.png" width="20" height="20" />
-              <Link href={`/r/${post.subName}`} passHref>
-                <MuiLink variant="subtitle1" underline="hover" color="textPrimary" style={{ marginLeft: "0.3rem" }}>
-                  r/{post.subName}
+  const vote = async (value: number) => {
+    try {
+      const res = await axios.post(
+        "/vote",
+        { identifier: post.identifier, slug: post.slug, value },
+        { withCredentials: true }
+      );
+
+      console.log(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return (
+    <Box className={classes.root} key={post.identifier}>
+      <Box className={classes.voteContainer}>
+        <IconButton onClick={() => vote(1)} style={{ color: post.userVote === 1 ? "red" : "" }}>
+          <ArrowUpwardIcon className={classes.upvoteIcon} />
+        </IconButton>
+        <Typography variant="body2">{post.voteScore}</Typography>
+        <IconButton onClick={() => vote(-1)} style={{ color: post.userVote === -1 ? "blue" : "" }}>
+          <ArrowDownwardIcon className={classes.downvoteIcon} />
+        </IconButton>
+      </Box>
+
+      <Box className={classes.postContentContainer}>
+        <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>
+          <div>
+            <Box className={classes.postData}>
+              <Box className={classes.postDataSubreddit}>
+                <Image src="/images/reddit_logo.png" width="20" height="20" />
+                <Link href={`/r/${post.subName}`} passHref>
+                  <MuiLink variant="subtitle1" underline="hover" color="textPrimary" style={{ marginLeft: "0.3rem" }}>
+                    r/{post.subName}
+                  </MuiLink>
+                </Link>
+              </Box>
+
+              <Link href={`/u/${post.username}`} passHref>
+                <MuiLink variant="subtitle2" underline="hover" color="textSecondary" style={{ margin: "0 0.3rem" }}>
+                  Posted by u/{post.username}
                 </MuiLink>
               </Link>
+              <Typography variant="subtitle2" color="textSecondary">
+                {dayjs(post.createdAt).fromNow()}
+              </Typography>
             </Box>
 
-            <Link href={`/u/${post.username}`} passHref>
-              <MuiLink variant="subtitle2" underline="hover" color="textSecondary" style={{ margin: "0 0.3rem" }}>
-                Posted by u/{post.username}
-              </MuiLink>
-            </Link>
-            <Typography variant="subtitle2" color="textSecondary">
-              {dayjs(post.createdAt).fromNow()}
-            </Typography>
-          </Box>
+            <Box className={classes.postTitleAndBody}>
+              <Typography variant="h5">{post.title}</Typography>
+              {post.body && (
+                <Typography variant="body1" className={classes.postBody}>
+                  {post.body}
+                </Typography>
+              )}
+            </Box>
 
-          <Box className={classes.postTitleAndBody}>
-            <Typography variant="h5">{post.title}</Typography>
-            {post.body && (
-              <Typography variant="body1" className={classes.postBody}>
-                {post.body}
-              </Typography>
-            )}
-          </Box>
-
-          <Box className={classes.actionButtonsContainer}>
-            <Button className={classes.actionButtons} startIcon={<CommentIcon />} size="small">
-              69 Comments
-            </Button>
-            <Button className={classes.actionButtons} startIcon={<ShareIcon />} size="small">
-              Share
-            </Button>
-            <Button className={classes.actionButtons} startIcon={<SaveIcon />} size="small">
-              Save
-            </Button>
-          </Box>
-        </Box>
+            <Box className={classes.actionButtonsContainer}>
+              <Button className={classes.actionButtons} startIcon={<CommentIcon />} size="small">
+                {post.commentCount} Comments
+              </Button>
+              <Button className={classes.actionButtons} startIcon={<ShareIcon />} size="small">
+                Share
+              </Button>
+              <Button className={classes.actionButtons} startIcon={<SaveIcon />} size="small">
+                Save
+              </Button>
+            </Box>
+          </div>
+        </Link>
       </Box>
-    </Link>
+    </Box>
   );
 };
 
@@ -96,6 +113,7 @@ const useStyles = makeStyles((theme: any) => ({
     flexDirection: "column",
     flex: 0.5,
     marginLeft: "0.2rem",
+    alignItems: "center",
   },
   postContentContainer: {
     display: "flex",
@@ -123,6 +141,16 @@ const useStyles = makeStyles((theme: any) => ({
   },
   postBody: {
     margin: "0.5rem auto",
+  },
+  upvoteIcon: {
+    "&:hover": {
+      color: "red",
+    },
+  },
+  downvoteIcon: {
+    "&:hover": {
+      color: "blue",
+    },
   },
 }));
 

@@ -5,7 +5,7 @@ import User from "./User";
 import Subs from "./Subleddit";
 import Comment from "./Comment";
 import Vote from "./Vote";
-import { Expose } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 
 @Entity("posts")
 export default class Post extends RootEntity {
@@ -45,6 +45,7 @@ export default class Post extends RootEntity {
   sub: Subs;
 
   // A Post can have multiple comments
+  @Exclude()
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 

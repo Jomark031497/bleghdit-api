@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("/posts");
+      const res = await axios.get("/posts", { withCredentials: true });
       setPosts(res.data);
     } catch (err) {
       console.error(err);

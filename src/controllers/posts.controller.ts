@@ -28,13 +28,21 @@ export const createPost = async (req: Request, res: Response) => {
   }
 };
 
-export const getPosts = async (_: Request, res: Response) => {
+export const getPosts = async (req: Request, res: Response) => {
   try {
+    const user: any = req.user;
     // find all the posts
     const posts = await Post.find({
       order: { createdAt: "DESC" }, // display the latest post
+      relations: ["comments", "votes", "sub"],
     });
 
+    if (user) {
+      console.log(user);
+      posts.forEach((p) => p.setUserVote(user));
+    }
+
+    console.log(posts);
     return res.json(posts);
   } catch (e) {
     return res.status(500).json({ error: "something went wrong" });
