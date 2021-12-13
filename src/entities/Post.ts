@@ -4,6 +4,8 @@ import RootEntity from "./RootEntity";
 import User from "./User";
 import Subs from "./Subleddit";
 import Comment from "./Comment";
+import Vote from "./Vote";
+import { Expose } from "class-transformer";
 
 @Entity("posts")
 export default class Post extends RootEntity {
@@ -45,6 +47,26 @@ export default class Post extends RootEntity {
   // A Post can have multiple comments
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
+
+  // A Post can have multiple votes
+  @OneToMany(() => Vote, (vote) => vote.post)
+  votes: Vote[];
+
+  // exposed virtual field to show comment count
+  @Expose() get commentCount(): number {
+    return this.comments?.length;
+  }
+
+  // exposed virtual field to show voteScore
+  @Expose() get voteScore(): number {
+    return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
+  }
+
+  protected userVote: number;
+  setUserVote(user: User) {
+    const index = this.votes?.findIndex((v) => v.username === user.username);
+    this.userVote = index > -1 ? this.votes[index].value : 0;
+  }
 
   // Lifecycle hook to create a slug and identifier
   @BeforeInsert()

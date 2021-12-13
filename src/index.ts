@@ -1,15 +1,18 @@
 import express from "express";
-import { createConnection } from "typeorm";
 import cors from "cors";
-import authRoutes from "./routes/auth.routes";
-import postRoutes from "./routes/posts.routes";
-import subRoutes from "./routes/subs.routes";
-import trim from "./middlewares/trimFields";
-import { config as dotenv } from "dotenv";
 import session from "express-session";
 import cookierParser from "cookie-parser";
 import passport from "passport";
+import { config as dotenv } from "dotenv";
+import { createConnection } from "typeorm";
+
+import trim from "./middlewares/trimFields";
 import authenticate from "../passportconfig";
+
+import authRoutes from "./routes/auth.routes";
+import postRoutes from "./routes/posts.routes";
+import subRoutes from "./routes/subs.routes";
+import voteRoutes from "./routes/vote.routes";
 
 const app = express(); // initialize express app
 dotenv(); // invoke dotenv config
@@ -23,7 +26,7 @@ app.use(express.urlencoded({ extended: false })); // recognize incoming requests
 app.use(
   cors({
     credentials: true, // allow http sessions
-    origin: process.env.ORIGIN,
+    origin: process.env.ORIGIN, // client origin
     optionsSuccessStatus: 200,
   })
 );
@@ -34,16 +37,17 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(cookierParser(<string>process.env.SECRET));
-app.use(passport.initialize());
+app.use(cookierParser(<string>process.env.SECRET)); // parse cookies
+app.use(passport.initialize()); // initialize passport
 app.use(passport.session());
 authenticate(passport);
-app.use(trim);
+app.use(trim); // trim whitespaces from inputs
 
 // endpoints
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);
+app.use("/api/vote", voteRoutes);
 
 app.listen(PORT, async () => {
   console.log(`listening to port ${PORT}`);

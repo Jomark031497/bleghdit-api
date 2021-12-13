@@ -1,8 +1,9 @@
 import { makeID } from "../utils/helpers";
-import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import Post from "./Post";
 import RootEntity from "./RootEntity";
 import User from "./User";
+import Vote from "./Vote";
 
 @Entity("comments")
 export default class Comment extends RootEntity {
@@ -29,6 +30,17 @@ export default class Comment extends RootEntity {
   // A Post can have multiple comments
   @ManyToOne(() => Post, (post) => post.comments, { nullable: false })
   post: Post;
+
+  // A Comment can have many votes
+  @OneToMany(() => Vote, (vote) => vote.comment)
+  votes: Vote[];
+
+  // virtual field
+  protected userVote: number;
+  setUserVote(user: User) {
+    const index = this.votes?.findIndex((v) => v.username === user.username);
+    this.userVote = index > -1 ? this.votes[index].value : 0;
+  }
 
   // Lifecycle hook to create a identifier
   @BeforeInsert()

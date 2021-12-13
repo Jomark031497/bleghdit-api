@@ -4,6 +4,7 @@ import { Exclude } from "class-transformer";
 import { IsEmail, Length } from "class-validator";
 import RootEntity from "./RootEntity";
 import Post from "./Post";
+import Vote from "./Vote";
 
 @Entity("users")
 export default class User extends RootEntity {
@@ -31,6 +32,10 @@ export default class User extends RootEntity {
   // User can have multiple posts
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  // A User can have multiple votes
+  @OneToMany(() => Vote, (vote) => vote.user)
+  votes: Vote[];
 
   // lifecycle hook to hash password before saving
   @BeforeInsert()
