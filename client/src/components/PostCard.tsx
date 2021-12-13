@@ -1,7 +1,10 @@
-import { Box, IconButton, Link as MuiLink, Typography } from "@mui/material";
+import { Box, Button, IconButton, Link as MuiLink, Typography } from "@mui/material";
 import React from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import CommentIcon from "@mui/icons-material/ModeCommentOutlined";
+import SaveIcon from "@mui/icons-material/BookmarkBorderOutlined";
+import ShareIcon from "@mui/icons-material/ShareOutlined";
 import { makeStyles } from "@mui/styles";
 import Image from "next/image";
 import Link from "next/link";
@@ -60,9 +63,15 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
           </Box>
 
           <Box className={classes.actionButtonsContainer}>
-            <Typography className={classes.actionButtons}>69 Comments</Typography>
-            <Typography className={classes.actionButtons}>Share</Typography>
-            <Typography className={classes.actionButtons}>Save</Typography>
+            <Button className={classes.actionButtons} startIcon={<CommentIcon />} size="small">
+              69 Comments
+            </Button>
+            <Button className={classes.actionButtons} startIcon={<ShareIcon />} size="small">
+              Share
+            </Button>
+            <Button className={classes.actionButtons} startIcon={<SaveIcon />} size="small">
+              Save
+            </Button>
           </Box>
         </Box>
       </Box>
@@ -70,7 +79,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
   );
 };
 
-const useStyles = makeStyles((_) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: {
     display: "flex",
     margin: "0.5rem auto",
@@ -98,7 +107,8 @@ const useStyles = makeStyles((_) => ({
     display: "flex",
   },
   actionButtons: {
-    margin: "auto 0.5rem",
+    margin: "auto 0.3rem",
+    color: theme.palette.text.secondary,
   },
   postData: {
     display: "flex",
