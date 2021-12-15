@@ -8,7 +8,8 @@
     "server": "nodemon --exec ts-node src/index.ts",
     "client": "cd client && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\" -names server,client",
-    "typeorm": "ts-node/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node/register ./node_modules/typeorm/cli.js",
+    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",
     "pg": "^8.7.1",
-    "typeorm": "^0.2.41"
+    "typeorm": "^0.2.41",
+    "typeorm-seeding": "^1.6.1"
   }
 }

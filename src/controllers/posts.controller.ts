@@ -38,11 +38,9 @@ export const getPosts = async (req: Request, res: Response) => {
     });
 
     if (user) {
-      console.log(user);
       posts.forEach((p) => p.setUserVote(user));
     }
 
-    console.log(posts);
     return res.json(posts);
   } catch (e) {
     return res.status(500).json({ error: "something went wrong" });
