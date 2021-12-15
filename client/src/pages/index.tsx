@@ -16,26 +16,31 @@ const Home: NextPage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
+    const checkAuth = async () => {
+      try {
+        const { data } = await axios.get("/auth/me", { withCredentials: true, signal: abortController.signal });
+        dispatch(setCurrentUser(data));
+      } catch (err) {
+        console.error(err);
+      }
+    };
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("/posts", { withCredentials: true });
+        const res = await axios.get("/posts", { withCredentials: true, signal: abortController.signal });
         setPosts(res.data);
       } catch (err) {
         console.error(err);
       }
     };
 
-    const checkAuth = async () => {
-      try {
-        const { data } = await axios.get("/auth/me", { withCredentials: true });
-        dispatch(setCurrentUser(data));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    checkAuth();
     fetchPosts();
+    checkAuth();
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   return (

@@ -29,8 +29,10 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
       );
 
       console.log(res.data);
-    } catch (e) {
-      console.error(e);
+    } catch (err: any) {
+      console.error(err.response.data);
+
+      // ADD ERROR MESSAGE THAT USER NEEDS TO BE LOGGED IN
     }
   };
 

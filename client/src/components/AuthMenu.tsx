@@ -26,8 +26,8 @@ const AuthMenu: React.FC<AuthMenuProps> = ({ data }) => {
 
   const handleLogout = async () => {
     try {
-      dispatch(logoutUser());
       await axios.get("/auth/logout", { withCredentials: true });
+      dispatch(logoutUser());
 
       window.location.reload();
     } catch (err: any) {
