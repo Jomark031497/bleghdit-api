@@ -7,14 +7,30 @@ import Link from "next/link";
 import CButton from "./CButton";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState, useAppDispatch } from "../redux/store";
 import AuthMenu from "./AuthMenu";
+import axios from "axios";
+import { useEffect } from "react";
+import { setCurrentUser } from "../redux/features/auth/loginSlice";
 
 const Header: React.FC = () => {
   const classes = useStyles();
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
   const { data } = useSelector((state: RootState) => state.login);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data } = await axios.get("/auth/me", { withCredentials: true });
+        dispatch(setCurrentUser(data));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   return (
     <>
@@ -48,7 +64,9 @@ const Header: React.FC = () => {
           </Box>
 
           <Box className={classes.authContainer}>
-            {!data && (
+            {data ? (
+              <AuthMenu data={data} />
+            ) : (
               <Box className={classes.buttonsContainer}>
                 <CButton variant="outlined" className={classes.buttons} onClick={() => router.push("/login")}>
                   Log In
@@ -63,7 +81,6 @@ const Header: React.FC = () => {
                 </CButton>
               </Box>
             )}
-            {data && <AuthMenu data={data} />}
           </Box>
         </Toolbar>
       </AppBar>
@@ -86,7 +103,7 @@ const useStyles = makeStyles(() => ({
     minHeight: "5vh",
   },
   titleContainer: {
-    marginRight: "8rem",
+    marginRight: "2rem",
   },
   logoContainer: {
     display: "flex",

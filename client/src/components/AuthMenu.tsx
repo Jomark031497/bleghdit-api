@@ -8,7 +8,7 @@ import { logoutUser } from "../redux/features/auth/loginSlice";
 import axios from "axios";
 
 interface AuthMenuProps {
-  data: User;
+  data: User | null;
 }
 
 const AuthMenu: React.FC<AuthMenuProps> = ({ data }) => {
@@ -40,7 +40,7 @@ const AuthMenu: React.FC<AuthMenuProps> = ({ data }) => {
     <>
       <IconButton disableRipple={true} onClick={handleClick}>
         <AccountCircleIcon />
-        <Typography>{data.username}</Typography>
+        <Typography>{data?.username}</Typography>
         <ArrowDropDownIcon />
       </IconButton>
       <Menu

@@ -5,22 +5,24 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
+import { useSelector } from "react-redux";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
 import { loginUser } from "../redux/features/auth/loginSlice";
-import { useAppDispatch } from "../redux/store";
+import { RootState, useAppDispatch } from "../redux/store";
 
 const Login: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
-
   const dispatch = useAppDispatch();
-
+  const { data } = useSelector((state: RootState) => state.login);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
   const [errors, setErrors] = useState<any>({});
+
+  if (data) router.push("/");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
