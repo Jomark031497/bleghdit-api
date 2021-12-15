@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Axios from "axios";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-
+import { SWRConfig } from "swr";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Layout from "../components/Layout";
@@ -29,19 +29,25 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>My Page</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-
-      <ReduxProvider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {!authRoute ? (
-            <Layout>
+      <SWRConfig
+        value={{
+          fetcher: (url) => Axios.get(url).then((res) => res.data),
+          dedupingInterval: 10000,
+        }}
+      >
+        <ReduxProvider store={store}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {!authRoute ? (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            ) : (
               <Component {...pageProps} />
-            </Layout>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </ThemeProvider>
-      </ReduxProvider>
+            )}
+          </ThemeProvider>
+        </ReduxProvider>
+      </SWRConfig>
     </>
   );
 }
