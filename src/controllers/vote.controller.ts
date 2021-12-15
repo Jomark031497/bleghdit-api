@@ -6,41 +6,40 @@ import Comment from "../entities/Comment";
 export const vote = async (req: Request, res: Response) => {
   const { identifier, slug, commentIdentifier, value } = req.body;
 
-  // validate if the value is -1(downvote),0(remove vote),  or 1(upvote)
-  if (![-1, 0, 1].includes(value)) return res.status(400).json({ error: "invalid value" });
+  // Validate vote value
+  if (![-1, 0, 1].includes(value)) {
+    return res.status(400).json({ value: "Value must be -1, 0 or 1" });
+  }
 
   try {
-    const user: any = req.user; // get user from session
-    let post = await Post.findOneOrFail({ identifier, slug }); // find post with the identifier and slug;
+    const user: any = req.user;
+    let post = await Post.findOneOrFail({ identifier, slug });
     let vote: Vote | undefined;
     let comment: Comment | undefined;
 
     if (commentIdentifier) {
-      // if there is a commentIdentifier find vote by comment
+      // IF there is a comment identifier find vote by comment
       comment = await Comment.findOneOrFail({ identifier: commentIdentifier });
       vote = await Vote.findOne({ user, comment });
     } else {
-      // else find vote by post
+      // Else find vote by post
       vote = await Vote.findOne({ user, post });
     }
 
     if (!vote && value === 0) {
-      // if no vote and value = 0 return an error
-      return res.status(404).json({ error: "vote not found" });
+      // if no vote and value = 0 return error
+      return res.status(404).json({ error: "Vote not found" });
     } else if (!vote) {
-      // if no vote create it
-      vote = new Vote({
-        user,
-        value,
-      });
+      // If no vote create it
+      vote = new Vote({ user, value });
       if (comment) vote.comment = comment;
       else vote.post = post;
       await vote.save();
     } else if (value === 0) {
-      // if vote exists and value is zero, remove vote from db
+      // If vote exists and value = 0 remove vote from DB
       await vote.remove();
     } else if (vote.value !== value) {
-      // if vote and value have changed, update the vote
+      // If vote and value has changed, update vote
       vote.value = value;
       await vote.save();
     }
@@ -49,12 +48,12 @@ export const vote = async (req: Request, res: Response) => {
       { identifier, slug },
       { relations: ["comments", "comments.votes", "sub", "votes"] }
     );
-
     post.setUserVote(user);
     post.comments.forEach((c) => c.setUserVote(user));
+
     return res.json(post);
-  } catch (e) {
-    console.log(e);
-    return res.status(500).json({ error: "something went wrong" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };

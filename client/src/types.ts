@@ -19,6 +19,17 @@ export interface User {
   updatedAt: string;
 }
 
+export interface Sub {
+  title: string;
+  name: string;
+  description: string;
+  bannerURN?: string;
+  imageURN?: string;
+  posts: Post[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ReduxState {
   data: User | null;
   isLoading: boolean;

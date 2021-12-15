@@ -9,6 +9,7 @@ import Layout from "../components/Layout";
 import theme from "../styles/theme";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "../redux/store";
+import axios from "axios";
 
 Axios.defaults.baseURL = "http://localhost:8080/api";
 
@@ -31,7 +32,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <SWRConfig
         value={{
-          fetcher: (url) => Axios.get(url).then((res) => res.data),
+          fetcher: async (url) => {
+            try {
+              const { data } = await Axios.get(url, { withCredentials: true });
+
+              return data;
+            } catch (err: any) {
+              console.error(err);
+            }
+          },
           dedupingInterval: 10000,
         }}
       >
