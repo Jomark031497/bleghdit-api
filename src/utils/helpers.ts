@@ -31,6 +31,7 @@ export const slugify = (str: string): string => {
     .replace(/-/g, "_");
 };
 
+// map errors into an object
 export const mapErrors = (errors: Object[]) => {
   return errors.reduce((prev: any, err: any) => {
     prev[err.property] = Object.entries(err.constraints)[0][1];

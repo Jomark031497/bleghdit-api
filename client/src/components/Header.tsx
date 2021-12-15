@@ -16,11 +16,15 @@ import Image from "next/image";
 import Link from "next/link";
 import CButton from "./CButton";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const Header: React.FC = () => {
   const classes = useStyles();
-
   const router = useRouter();
+
+  const { data } = useSelector((state: RootState) => state.login);
+
   return (
     <>
       <AppBar position="fixed" className={classes.root} elevation={0}>
@@ -52,22 +56,28 @@ const Header: React.FC = () => {
             />
           </Box>
 
-          <Box className={classes.buttonsContainer}>
-            <CButton variant="outlined" className={classes.buttons} onClick={() => router.push("/login")}>
-              Log In
-            </CButton>
-            <CButton
-              color="primary"
-              variant="contained"
-              className={classes.buttons}
-              onClick={() => router.push("/register")}
-            >
-              Sign Up
-            </CButton>
-            <IconButton>
-              <AccountCircleIcon />
-              <ArrowDropDownIcon />
-            </IconButton>
+          <Box className={classes.authContainer}>
+            {!data && (
+              <Box className={classes.buttonsContainer}>
+                <CButton variant="outlined" className={classes.buttons} onClick={() => router.push("/login")}>
+                  Log In
+                </CButton>
+                <CButton
+                  color="primary"
+                  variant="contained"
+                  className={classes.buttons}
+                  onClick={() => router.push("/register")}
+                >
+                  Sign Up
+                </CButton>
+              </Box>
+            )}
+            {data && (
+              <IconButton>
+                <AccountCircleIcon />
+                <ArrowDropDownIcon />
+              </IconButton>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -100,9 +110,12 @@ const useStyles = makeStyles(() => ({
   textfield: {
     width: "40rem",
   },
-  buttonsContainer: {
+  authContainer: {
     display: "flex",
     alignItems: "center",
+  },
+  buttonsContainer: {
+    display: "flex",
   },
   buttons: {
     borderRadius: "1rem",

@@ -25,22 +25,21 @@ app.use(express.urlencoded({ extended: false })); // recognize incoming requests
 // restricts allowed hosts to a single origin
 app.use(
   cors({
-    credentials: true, // allow http sessions
     origin: process.env.ORIGIN, // client origin
-    optionsSuccessStatus: 200,
+    credentials: true, // allow http sessions
   })
 );
 app.use(
   session({
     secret: <string>process.env.SECRET,
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
 app.use(cookierParser(<string>process.env.SECRET)); // parse cookies
 app.use(passport.initialize()); // initialize passport
-app.use(passport.session());
-authenticate(passport);
+app.use(passport.session()); // initialize session
+authenticate(passport); // authenticate middleware
 app.use(trim); // trim whitespaces from inputs
 
 // endpoints

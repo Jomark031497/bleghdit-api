@@ -1,6 +1,5 @@
 import { Box, Typography, Link as MuiLink } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import axios from "axios";
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -8,10 +7,14 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
+import { loginUser } from "../redux/features/loginSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Login: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
+
+  const dispatch = useAppDispatch();
 
   const [user, setUser] = useState({
     username: "",
@@ -22,11 +25,16 @@ const Login: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/login", user, { withCredentials: true });
+      const res = await dispatch(loginUser(user)).unwrap();
+
+      console.log(res);
+
       router.push("/");
     } catch (err: any) {
       setErrors(err.response.data);
     }
+
+    // e.preventDefault();
   };
   return (
     <div className={classes.root}>

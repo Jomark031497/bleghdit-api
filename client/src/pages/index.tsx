@@ -7,20 +7,34 @@ import { Post } from "../types";
 import { NextPage } from "next";
 import PostCard from "../components/PostCard";
 
+import { useAppDispatch } from "../redux/store";
+import { setCurrentUser } from "../redux/features/loginSlice";
+
 const Home: NextPage = () => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
   const [posts, setPosts] = useState<Post[]>([]);
 
-  const fetchPosts = async () => {
-    try {
-      const res = await axios.get("/posts", { withCredentials: true });
-      setPosts(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await axios.get("/posts", { withCredentials: true });
+        setPosts(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const checkAuth = async () => {
+      try {
+        const { data } = await axios.get("/auth/me", { withCredentials: true });
+        dispatch(setCurrentUser(data));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    checkAuth();
     fetchPosts();
   }, []);
 
