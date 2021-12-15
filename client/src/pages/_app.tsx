@@ -1,5 +1,5 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Axios from "axios";
+import axios from "axios";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { SWRConfig } from "swr";
@@ -9,9 +9,8 @@ import Layout from "../components/Layout";
 import theme from "../styles/theme";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "../redux/store";
-import axios from "axios";
 
-Axios.defaults.baseURL = "http://localhost:8080/api";
+axios.defaults.baseURL = "http://localhost:8080/api";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
@@ -34,7 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         value={{
           fetcher: async (url) => {
             try {
-              const { data } = await Axios.get(url, { withCredentials: true });
+              const { data } = await axios.get(url, { withCredentials: true });
 
               return data;
             } catch (err: any) {
