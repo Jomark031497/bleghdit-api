@@ -9,19 +9,16 @@ import Layout from "../components/Layout";
 import theme from "../styles/theme";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "../redux/store";
+import fetcher from "../lib/fetcher";
+import removeJSS from "../lib/removeJSS";
 
 axios.defaults.baseURL = "http://localhost:8080/api";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
-  const authRoutes = ["/register", "/login"];
-  const authRoute = authRoutes.includes(pathname);
+  const authRoute = ["/register", "/login"].includes(pathname);
   useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector("#jss-server-side");
-    if (jssStyles) {
-      jssStyles.parentElement!.removeChild(jssStyles);
-    }
+    removeJSS();
   }, []);
   return (
     <>
@@ -29,20 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>My Page</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <SWRConfig
-        value={{
-          fetcher: async (url) => {
-            try {
-              const { data } = await axios.get(url, { withCredentials: true });
-
-              return data;
-            } catch (err: any) {
-              console.error(err);
-            }
-          },
-          dedupingInterval: 10000,
-        }}
-      >
+      <SWRConfig value={{ fetcher: async (url) => fetcher(url), dedupingInterval: 10000 }}>
         <ReduxProvider store={store}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
