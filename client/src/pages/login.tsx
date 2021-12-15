@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
-import { loginUser } from "../redux/features/loginSlice";
+import { loginUser } from "../redux/features/auth/loginSlice";
 import { useAppDispatch } from "../redux/store";
 
 const Login: NextPage = () => {

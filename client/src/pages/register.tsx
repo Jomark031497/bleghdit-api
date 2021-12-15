@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
-import { registerUser } from "../redux/features/registerSlice";
+import { registerUser } from "../redux/features/auth/registerSlice";
 import { useAppDispatch } from "../redux/store";
 
 const Register: NextPage = () => {

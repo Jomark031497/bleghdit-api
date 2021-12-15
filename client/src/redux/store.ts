@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import login from "./features/loginSlice";
-import register from "./features/registerSlice";
+import login from "./features/auth/loginSlice";
+import register from "./features/auth/registerSlice";
 import { useDispatch } from "react-redux";
 
 // combine all reducers into 1

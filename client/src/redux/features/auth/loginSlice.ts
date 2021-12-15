@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ReduxState } from "../../types";
+import { ReduxState } from "../../../types";
 
 interface LoginPayload {
   username: string;

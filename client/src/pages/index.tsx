@@ -8,7 +8,7 @@ import { NextPage } from "next";
 import PostCard from "../components/PostCard";
 
 import { useAppDispatch } from "../redux/store";
-import { setCurrentUser } from "../redux/features/loginSlice";
+import { setCurrentUser } from "../redux/features/auth/loginSlice";
 
 const Home: NextPage = () => {
   const classes = useStyles();
