@@ -1,7 +1,6 @@
 import { Checkbox, Typography, Link as MuiLink } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
-import axios from "axios";
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -10,10 +9,13 @@ import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
+import { registerUser } from "../redux/features/registerSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Register: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [user, setUser] = useState({
     email: "",
@@ -25,7 +27,9 @@ const Register: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/register", user, { withCredentials: true });
+      const res = await dispatch(registerUser(user));
+      console.log(res);
+
       router.push("/login");
     } catch (err: any) {
       setErrors(err.response.data);

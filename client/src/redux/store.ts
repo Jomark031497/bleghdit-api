@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import login from "./features/loginSlice";
+import register from "./features/registerSlice";
 import { useDispatch } from "react-redux";
 
 // combine all reducers into 1
-const rootReducer = combineReducers({ login });
+const rootReducer = combineReducers({ login, register });
 
 // create the store and add the reducer functions
 const store = configureStore({

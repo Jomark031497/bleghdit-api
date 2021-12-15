@@ -1,19 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { User } from "../../types";
-
-interface State {
-  data: User | null;
-  isLoading: boolean;
-  error: any;
-}
+import { ReduxState } from "../../types";
 
 interface LoginPayload {
   username: string;
   password: string;
 }
 
-const initialState: State = {
+const initialState: ReduxState = {
   data: null,
   isLoading: false,
   error: null,
@@ -47,13 +41,13 @@ export const loginSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.pending, (state) => {
-      state.data = null;
       state.isLoading = true;
     });
 
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.data = action.payload;
       state.isLoading = false;
+      state.error = null;
     });
 
     builder.addCase(loginUser.rejected, (state, action) => {

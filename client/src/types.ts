@@ -18,3 +18,9 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ReduxState {
+  data: User | null;
+  isLoading: boolean;
+  error: any;
+}
