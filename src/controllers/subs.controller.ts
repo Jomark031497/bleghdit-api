@@ -2,6 +2,7 @@ import { isEmpty } from "class-validator";
 import { Request, Response } from "express";
 import Subs from "../entities/Subleddit";
 import { getRepository } from "typeorm";
+import Post from "../entities/Post";
 
 export const createSub = async (req: Request, res: Response) => {
   // destructure the fields
@@ -36,5 +37,29 @@ export const createSub = async (req: Request, res: Response) => {
     return res.status(200).json(newSub);
   } catch (e) {
     return res.status(400).json(e);
+  }
+};
+
+export const getSub = async (req: Request, res: Response) => {
+  const { name } = req.params; // get the sub name from the request
+  const user: any = req.user; //get authenticated user if available
+
+  try {
+    const sub = await Subs.findOneOrFail({ name }); // find the sub from the Subs
+    const posts = await Post.find({
+      where: { sub },
+      relations: ["comments", "votes"],
+      order: { createdAt: "DESC" },
+    });
+
+    sub.posts = posts;
+
+    if (user) {
+      sub.posts.forEach((post) => post.setUserVote(user));
+    }
+
+    return res.json(sub);
+  } catch (err) {
+    return res.status(500).json({ error: "something went wrong" });
   }
 };
