@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ReduxState } from "../../types";
+import { ReduxState } from "../../../types";
 
 interface RegisterPayload {
   username: string;
@@ -30,7 +30,9 @@ export const registerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state) => {
+      state.data = null;
       state.isLoading = true;
+      state.error = null;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
       state.isLoading = false;

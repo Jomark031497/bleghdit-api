@@ -1,16 +1,6 @@
-import {
-  AppBar,
-  Box,
-  InputAdornment,
-  TextField,
-  Toolbar,
-  Link as MuiLink,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { AppBar, Box, InputAdornment, TextField, Toolbar, Link as MuiLink, Typography } from "@mui/material";
+
 import SearchIcon from "@mui/icons-material/Search";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { makeStyles } from "@mui/styles";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,6 +8,7 @@ import CButton from "./CButton";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import AuthMenu from "./AuthMenu";
 
 const Header: React.FC = () => {
   const classes = useStyles();
@@ -72,12 +63,7 @@ const Header: React.FC = () => {
                 </CButton>
               </Box>
             )}
-            {data && (
-              <IconButton>
-                <AccountCircleIcon />
-                <ArrowDropDownIcon />
-              </IconButton>
-            )}
+            {data && <AuthMenu data={data} />}
           </Box>
         </Toolbar>
       </AppBar>

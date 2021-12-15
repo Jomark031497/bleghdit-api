@@ -25,16 +25,12 @@ const Login: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await dispatch(loginUser(user)).unwrap();
-
-      console.log(res);
-
+      await dispatch(loginUser(user)).unwrap();
       router.push("/");
     } catch (err: any) {
-      setErrors(err.response.data);
+      console.log(err);
+      setErrors(err);
     }
-
-    // e.preventDefault();
   };
   return (
     <div className={classes.root}>

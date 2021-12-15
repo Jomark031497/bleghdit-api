@@ -6,7 +6,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
 import { registerUser } from "../redux/features/auth/registerSlice";
@@ -27,12 +27,11 @@ const Register: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await dispatch(registerUser(user));
-      console.log(res);
+      await dispatch(registerUser(user)).unwrap();
 
       router.push("/login");
     } catch (err: any) {
-      setErrors(err.response.data);
+      setErrors(err);
     }
   };
 
