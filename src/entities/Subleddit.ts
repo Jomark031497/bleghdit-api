@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import Post from "./Post";
 import RootEntity from "./RootEntity";
@@ -37,4 +38,18 @@ export default class Subs extends RootEntity {
   // there can be multiple posts in one sub
   @OneToMany(() => Post, (post) => post.sub)
   posts: Post[];
+
+  // virtual field for image URL
+  @Expose()
+  get imageUrl(): string {
+    return this.imageURN
+      ? `${process.env.APP_URL}/images/${this.imageURN}`
+      : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+  }
+
+  // virtual field for banner URL
+  @Expose()
+  get bannerUrl(): string | undefined {
+    return this.bannerURN ? `${process.env.APP_URL}/images/${this.bannerURN}` : undefined;
+  }
 }
