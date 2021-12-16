@@ -53,7 +53,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         // authorize the login
         req.logIn(user, (err: Error) => {
           if (err) return next(err);
-          return res.status(200).json(user);
+          res.status(200).json(user);
           next();
         });
       } catch (e) {
@@ -63,7 +63,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   } catch (e) {
     return res.status(400).json(e);
   }
-  return res.status(500).json({ error: "something went wrong" });
+  return null;
 };
 
 export const me = async (req: Request, res: Response) => {

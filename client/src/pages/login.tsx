@@ -58,7 +58,7 @@ const Login: NextPage = () => {
             variant="outlined"
             label="username"
             fullWidth
-            error={errors.username ? true : false}
+            error={errors.length ? true : false}
             value={user.username}
             onChange={(e: any) => setUser({ ...user, username: e.target.value })}
           />
@@ -71,7 +71,7 @@ const Login: NextPage = () => {
             label="password"
             type="password"
             fullWidth
-            error={errors.password ? true : false}
+            error={errors.length ? true : false}
             value={user.password}
             onChange={(e: any) => setUser({ ...user, password: e.target.value })}
           />
