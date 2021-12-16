@@ -26,6 +26,9 @@ export default class Subs extends RootEntity {
   @Column({ nullable: true })
   bannerURN: string;
 
+  @Column()
+  username: string;
+
   // There can be multiple subleddits owned by a one user
   @ManyToOne(() => User)
   @JoinColumn({ name: "username", referencedColumnName: "username" })

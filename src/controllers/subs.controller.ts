@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import Subs from "../entities/Subleddit";
 import { getRepository } from "typeorm";
 import Post from "../entities/Post";
+import fs from "fs";
 
 export const createSub = async (req: Request, res: Response) => {
   // destructure the fields
@@ -60,6 +61,31 @@ export const getSub = async (req: Request, res: Response) => {
 
     return res.json(sub);
   } catch (err) {
+    return res.status(500).json({ error: "something went wrong" });
+  }
+};
+
+export const uploadSubImage = async (req: Request, res: Response) => {
+  const user: any = req.user; // get the user from session
+  const type = req.body.type; // get the type (image/bannner) from req.body
+  const file: any = req.file; // get file from req.file
+  try {
+    // return an error if the type isn't image or banner
+    if (type !== "image" && type !== "banner") {
+      fs.unlinkSync(file.path); // delete the photo
+      return res.status(400).json({ error: "invalid type" }); // return an error
+    }
+
+    // get the urn from the req.file
+    const urn: any = file.filename;
+
+    if (type === "image") user.sub.imageURN = urn;
+    else user.sub.bannerURN = urn;
+
+    await user.sub.save();
+
+    return res.status(200).json(user.sub);
+  } catch (error) {
     return res.status(500).json({ error: "something went wrong" });
   }
 };
