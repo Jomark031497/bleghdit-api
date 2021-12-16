@@ -42,7 +42,7 @@ app.use(passport.session()); // initialize session
 authenticate(passport); // authenticate middleware
 app.use(trim); // trim whitespaces from inputs
 
-// endpoints
+// routes
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);

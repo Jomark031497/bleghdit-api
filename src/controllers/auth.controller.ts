@@ -5,8 +5,7 @@ import { isEmpty, validate } from "class-validator";
 import { mapErrors } from "../utils/helpers";
 
 export const register = async (req: Request, res: Response) => {
-  // destructure the fields
-  const { email, username, password } = req.body;
+  const { email, username, password } = req.body; // destructure the fields
   try {
     // validations
     let errors: any = {};
@@ -17,13 +16,12 @@ export const register = async (req: Request, res: Response) => {
     // insert the errors to the errors object with their respective key-value pair
     if (checkUser) errors.username = "Username is already taken";
     if (checkEmail) errors.email = "Email is already taken";
-    if (Object.keys(errors).length > 0) return res.status(400).json(errors);
+    if (Object.keys(errors).length > 0) return res.status(400).json(errors); // return a 400 error if there are errors
 
-    // create the user
-    const user = new User({ email, username, password });
+    const user = new User({ email, username, password }); // create a new User
 
-    // validate the user using class validator
-    errors = await validate(user);
+    errors = await validate(user); // validate the user using class validator
+
     if (errors.length > 0) {
       return res.status(400).json(mapErrors(errors));
     }
@@ -37,11 +35,9 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    // destructure the fields
-    const { username, password } = req.body;
+  const { username, password } = req.body; // destructure from body
 
-    // validation
+  try {
     let errors: any = {};
 
     // check if the fields are empty
@@ -57,7 +53,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         // authorize the login
         req.logIn(user, (err: Error) => {
           if (err) return next(err);
-          res.status(200).json(user);
+          return res.status(200).json(user);
           next();
         });
       } catch (e) {
@@ -67,13 +63,11 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   } catch (e) {
     return res.status(400).json(e);
   }
-
-  return null;
+  return res.status(500).json({ error: "something went wrong" });
 };
 
 export const me = async (req: Request, res: Response) => {
   if (!req.user) return res.status(404).json({ error: "no user found" });
-
   return res.status(200).json(req.user);
 };
 

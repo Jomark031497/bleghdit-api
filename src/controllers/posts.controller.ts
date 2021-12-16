@@ -13,8 +13,7 @@ export const createPost = async (req: Request, res: Response) => {
   if (!user) return res.status(404).json({ error: "unauthenticated" });
 
   try {
-    // check if the sub exists
-    const findSub = await Subs.findOneOrFail({ name: sub });
+    const findSub = await Subs.findOneOrFail({ name: sub }); // check if the sub exists
     //create a post
     const post = new Post({ title, body, user, sub: findSub });
 
@@ -37,9 +36,7 @@ export const getPosts = async (req: Request, res: Response) => {
       relations: ["comments", "votes", "sub"],
     });
 
-    if (user) {
-      posts.forEach((p) => p.setUserVote(user));
-    }
+    if (user) posts.forEach((p) => p.setUserVote(user));
 
     return res.json(posts);
   } catch (e) {
