@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { createSub, deleteSubImage, getSub, uploadSubImage } from "../controllers/subs.controller";
+import { createSub, deleteSubImage, getSub, getSubs, uploadSubImage } from "../controllers/subs.controller";
 import requireAuth from "../middlewares/requireAuth";
 import { userOwnsSub, upload } from "../middlewares/uploadImage";
 
 const router = Router();
 
 router.post("/create", requireAuth, createSub);
+
+router.get("/", getSubs);
 
 router.get("/:name", getSub);
 

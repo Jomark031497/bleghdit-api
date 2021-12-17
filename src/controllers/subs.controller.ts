@@ -41,6 +41,15 @@ export const createSub = async (req: Request, res: Response) => {
   }
 };
 
+export const getSubs = async (_: Request, res: Response) => {
+  try {
+    const subs = await Subs.find();
+    return res.status(200).json(subs);
+  } catch (error) {
+    return res.status(500).json({ error: "something went wrong" });
+  }
+};
+
 export const getSub = async (req: Request, res: Response) => {
   const { name } = req.params; // get the sub name from the request
   const user: any = req.user; //get authenticated user if available
