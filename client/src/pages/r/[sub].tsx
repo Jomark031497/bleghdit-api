@@ -12,8 +12,11 @@ import { Post, Sub } from "../../types";
 const Subleddit: NextPage = () => {
   const router = useRouter();
   const classes = useStyles();
+  const subName = router.query.sub;
 
-  const { data: sub } = useSWR<Sub>(`/subs/${router.query.sub}`);
+  const { data: sub, error } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
+
+  if (error) router.push("/");
 
   return (
     <>

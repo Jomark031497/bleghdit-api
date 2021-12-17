@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import CButton from "./CButton";
+import { mutate } from "swr";
 
 interface SubProps {
   sub: Sub | undefined;
@@ -44,6 +45,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
       });
 
       console.log(data);
+      mutate(`/subs/${sub?.name}`);
     } catch (error) {
       console.error(error);
     }
@@ -66,7 +68,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                   cursor: ownsSub ? "pointer" : "",
                 }}
                 onClick={() => openFileInput("banner")}
-              />
+              ></Box>
             ) : (
               <Box style={{ height: "24vh", background: "skyblue" }} />
             )}
