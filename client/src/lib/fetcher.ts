@@ -5,6 +5,6 @@ export default async function fetcher(url: string) {
     const { data } = await axios.get(url, { withCredentials: true });
     return data;
   } catch (err: any) {
-    console.error(err.response.data);
+    console.error(err);
   }
 }

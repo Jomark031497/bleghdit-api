@@ -61,7 +61,8 @@ export const getSub = async (req: Request, res: Response) => {
 
     return res.json(sub);
   } catch (err) {
-    return res.status(500).json({ error: "something went wrong" });
+    console.error(err);
+    return res.status(404).json({ error: "something went wrong" });
   }
 };
 

@@ -28,6 +28,10 @@ export interface Sub {
   posts: Post[];
   createdAt: string;
   updatedAt: string;
+
+  // virtuals
+  imageUrl: string;
+  bannerUrl?: string;
 }
 
 export interface ReduxState {
