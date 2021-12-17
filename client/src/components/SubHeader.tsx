@@ -27,11 +27,13 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
 
   const openFileInput = (type: string) => {
     if (!ownsSub) return;
+    fileInputRef.current!.name = type;
     fileInputRef.current!.click();
   };
 
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files![0];
+    const files = e.target.files;
+    const file = files![0];
 
     const formData = new FormData();
     formData.append("file", file);
@@ -42,7 +44,6 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });
-
       mutate(`/subs/${sub?.name}`);
     } catch (error) {
       console.error(error);
