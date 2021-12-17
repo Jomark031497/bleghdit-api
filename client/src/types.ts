@@ -28,7 +28,7 @@ export interface Sub {
   posts: Post[];
   createdAt: string;
   updatedAt: string;
-
+  username: string;
   // virtuals
   imageUrl: string;
   bannerUrl?: string;

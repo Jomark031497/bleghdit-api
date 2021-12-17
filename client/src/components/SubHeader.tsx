@@ -1,6 +1,9 @@
 import { Avatar, Box, Container, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import Image from "next/image";
+import axios from "axios";
+import { ChangeEvent, createRef, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import CButton from "./CButton";
 
@@ -10,40 +13,88 @@ interface SubProps {
 
 const SubHeader: React.FC<SubProps> = ({ sub }) => {
   const classes = useStyles();
+  const fileInputRef = createRef<HTMLInputElement>();
+  const { data } = useSelector((state: RootState) => state.login);
+  const [ownsSub, setOwnsSub] = useState(false);
+
+  useEffect(() => {
+    if (!sub) return;
+    const isOwn = data?.username === sub.username;
+    setOwnsSub(isOwn);
+  }, [sub]);
+
+  const openFileInput = (type: string) => {
+    if (!ownsSub) return;
+    fileInputRef.current!.name = type;
+    fileInputRef.current!.click();
+  };
+
+  const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    const file = files![0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("type", fileInputRef.current!.name);
+
+    try {
+      const { data } = await axios.post(`/subs/${sub?.name}/image`, formData, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-      <Box className={classes.subHeaderContainer}>
-        {sub?.bannerUrl ? (
-          <Box
-            style={{
-              height: "24vh",
-              backgroundImage: `url(${sub.bannerUrl})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-        ) : (
-          <Box style={{ height: "24vh", background: "skyblue" }} />
-        )}
+      {sub && (
+        <>
+          <input type="file" hidden={true} ref={fileInputRef} onChange={uploadImage} />
+          <Box className={classes.subHeaderContainer}>
+            {sub.bannerUrl ? (
+              <Box
+                style={{
+                  height: "24vh",
+                  backgroundImage: `url(${sub.bannerUrl})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  cursor: ownsSub ? "pointer" : "",
+                }}
+                onClick={() => openFileInput("banner")}
+              />
+            ) : (
+              <Box style={{ height: "24vh", background: "skyblue" }} />
+            )}
 
-        <Container maxWidth="md" className={classes.subDataContainer}>
-          <Box className={classes.avatarContainer}>
-            <Avatar src={`${sub?.imageUrl}`} alt="subreddit image" className={classes.subAvatar} />
+            <Container maxWidth="md" className={classes.subDataContainer}>
+              <Box className={classes.avatarContainer} style={{ cursor: ownsSub ? "pointer" : "" }}>
+                <Avatar
+                  src={`${sub.imageUrl}`}
+                  alt="subreddit image"
+                  className={classes.subAvatar}
+                  onClick={() => openFileInput("image")}
+                />
+              </Box>
+              <Box className={classes.subTitle}>
+                <Typography variant="h4">{sub.title}</Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  /r/{sub.name}
+                </Typography>
+              </Box>
+              <Box>
+                <CButton variant="contained" className={classes.buttons}>
+                  Join
+                </CButton>
+              </Box>
+            </Container>
           </Box>
-          <Box className={classes.subTitle}>
-            <Typography variant="h4">{sub?.title}</Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              /r/{sub?.name}
-            </Typography>
-          </Box>
-          <Box>
-            <CButton variant="contained" className={classes.buttons}>
-              Join
-            </CButton>
-          </Box>
-        </Container>
-      </Box>
+        </>
+      )}
     </>
   );
 };
