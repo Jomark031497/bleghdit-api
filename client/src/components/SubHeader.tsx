@@ -1,5 +1,5 @@
-import { Avatar, Box, Container, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Avatar, Box, Container, Theme, Typography } from "@mui/material";
+import { makeStyles, useTheme } from "@mui/styles";
 import axios from "axios";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import CButton from "./CButton";
 import { mutate } from "swr";
+import Image from "next/image";
 
 interface SubProps {
   sub: Sub | undefined;
@@ -14,6 +15,7 @@ interface SubProps {
 
 const SubHeader: React.FC<SubProps> = ({ sub }) => {
   const classes = useStyles();
+  const theme: Theme = useTheme();
 
   const [ownsSub, setOwnsSub] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -62,9 +64,9 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                   height: "24vh",
                   backgroundImage: `url(${sub.bannerUrl})`,
                   backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
                   backgroundPosition: "center",
                   cursor: ownsSub ? "pointer" : "",
+                  backgroundColor: "skyblue",
                 }}
                 onClick={() => openFileInput("banner")}
               ></Box>
@@ -121,8 +123,6 @@ const useStyles = makeStyles((_) => ({
     paddingLeft: "6rem",
   },
   buttons: {
-    borderRadius: "1rem",
-    padding: "0.3rem 2.3rem",
     margin: "auto 0.5rem",
   },
 }));
