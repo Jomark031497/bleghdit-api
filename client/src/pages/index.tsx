@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import Head from "next/head";
@@ -7,6 +7,7 @@ import { NextPage } from "next";
 import PostCard from "../components/PostCard";
 
 import useSWR from "swr";
+import FrontPageActions from "../components/FrontPageActions";
 
 const Home: NextPage = () => {
   const classes = useStyles();
@@ -21,8 +22,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Container className={classes.container} maxWidth="md">
-        <Typography variant="h5">Recent Posts</Typography>
-
+        <FrontPageActions />
         {posts && posts.map((post: Post) => <PostCard post={post} key={post.identifier} />)}
       </Container>
     </>
