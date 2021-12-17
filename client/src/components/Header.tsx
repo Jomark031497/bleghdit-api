@@ -17,6 +17,7 @@ const Header: React.FC = () => {
   const classes = useStyles();
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const { data } = useSelector((state: RootState) => state.login);
 
   useEffect(() => {
@@ -28,7 +29,6 @@ const Header: React.FC = () => {
         console.error(err);
       }
     };
-
     checkAuth();
   }, []);
 
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
           <Box className={classes.titleContainer}>
             <Link href="/" passHref>
               <MuiLink underline="none" color="textPrimary" className={classes.logoContainer}>
-                <Image src="/images/reddit_logo.svg" height={30} width={30} />
+                <Image src="/images/reddit_logo.svg" height={40} width={40} />
                 <Typography variant="h5" sx={{ fontWeight: "bolder", margin: "auto 0.3rem" }}>
                   leddit.
                 </Typography>
@@ -51,7 +51,8 @@ const Header: React.FC = () => {
             <TextField
               placeholder="Search Reddit"
               size="small"
-              fullWidth={true}
+              fullWidth
+              className={classes.textfield}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -59,7 +60,6 @@ const Header: React.FC = () => {
                   </InputAdornment>
                 ),
               }}
-              className={classes.textfield}
             />
           </Box>
 
@@ -89,18 +89,19 @@ const Header: React.FC = () => {
   );
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((_) => ({
   offset: {
-    minHeight: "6vh",
+    minHeight: "5vh",
+    background: "red",
   },
   root: {
     justifyContent: "center",
     backgroundColor: "white",
+    height: "5vh",
   },
   toolbar: {
     justifyContent: "space-between",
     alignItems: "center",
-    minHeight: "5vh",
   },
   titleContainer: {
     marginRight: "2rem",
@@ -109,9 +110,13 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "start",
   },
-  textfieldContainer: {},
+  textfieldContainer: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+  },
   textfield: {
-    width: "40rem",
+    width: "40%",
   },
   authContainer: {
     display: "flex",
@@ -121,8 +126,6 @@ const useStyles = makeStyles(() => ({
     display: "flex",
   },
   buttons: {
-    borderRadius: "1rem",
-    padding: "0.3rem 2.3rem",
     margin: "auto 0.5rem",
   },
 }));

@@ -23,9 +23,7 @@ const Home: NextPage = () => {
       <Container className={classes.container} maxWidth="md">
         <Typography variant="h5">Recent Posts</Typography>
 
-        {posts?.map((post: Post) => (
-          <PostCard post={post} key={post.identifier} />
-        ))}
+        {posts && posts.map((post: Post) => <PostCard post={post} key={post.identifier} />)}
       </Container>
     </>
   );

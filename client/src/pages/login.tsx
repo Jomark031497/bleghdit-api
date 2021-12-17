@@ -30,7 +30,6 @@ const Login: NextPage = () => {
       await dispatch(loginUser(user)).unwrap();
       router.push("/");
     } catch (err: any) {
-      console.log(err);
       setErrors(err);
     }
   };

@@ -1,7 +1,7 @@
 import { Avatar, Box, Container, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
-import { ChangeEvent, createRef, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
@@ -14,9 +14,10 @@ interface SubProps {
 
 const SubHeader: React.FC<SubProps> = ({ sub }) => {
   const classes = useStyles();
-  const fileInputRef = createRef<HTMLInputElement>();
-  const { data } = useSelector((state: RootState) => state.login);
+
   const [ownsSub, setOwnsSub] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { data } = useSelector((state: RootState) => state.login);
 
   useEffect(() => {
     if (!sub) return;
@@ -26,25 +27,22 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
 
   const openFileInput = (type: string) => {
     if (!ownsSub) return;
-    fileInputRef.current!.name = type;
     fileInputRef.current!.click();
   };
 
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    const file = files![0];
+    const file = e.target.files![0];
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("type", fileInputRef.current!.name);
 
     try {
-      const { data } = await axios.post(`/subs/${sub?.name}/image`, formData, {
+      await axios.post(`/subs/${sub?.name}/image`, formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log(data);
       mutate(`/subs/${sub?.name}`);
     } catch (error) {
       console.error(error);

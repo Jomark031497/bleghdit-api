@@ -22,17 +22,9 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
 
   const vote = async (value: number) => {
     try {
-      const res = await axios.post(
-        "/vote",
-        { identifier: post.identifier, slug: post.slug, value },
-        { withCredentials: true }
-      );
-
-      console.log(res.data);
+      await axios.post("/vote", { identifier: post.identifier, slug: post.slug, value }, { withCredentials: true });
     } catch (err: any) {
-      console.error(err.response.data);
-
-      // ADD ERROR MESSAGE THAT USER NEEDS TO BE LOGGED IN
+      console.error(err);
     }
   };
 

@@ -12,10 +12,8 @@ import { Post, Sub } from "../../types";
 const Subleddit: NextPage = () => {
   const router = useRouter();
   const classes = useStyles();
-  const subName = router.query.sub;
 
-  const { data: sub, error } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
-
+  const { data: sub, error } = useSWR<Sub>(router.query.sub ? `/subs/${router.query.sub}` : null);
   if (error) router.push("/");
 
   return (
@@ -23,13 +21,16 @@ const Subleddit: NextPage = () => {
       <Head>
         <title>{sub?.title}</title>
       </Head>
-
-      <SubHeader sub={sub} />
-      <Container className={classes.container} maxWidth="md">
-        {sub?.posts.map((post: Post) => (
-          <PostCard post={post} key={post.identifier} />
-        ))}
-      </Container>
+      {sub && (
+        <>
+          <SubHeader sub={sub} />
+          <Container className={classes.container} maxWidth="md">
+            {sub.posts.map((post: Post) => (
+              <PostCard post={post} key={post.identifier} />
+            ))}
+          </Container>
+        </>
+      )}
     </>
   );
 };

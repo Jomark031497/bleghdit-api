@@ -28,7 +28,6 @@ const Register: NextPage = () => {
     e.preventDefault();
     try {
       await dispatch(registerUser(user)).unwrap();
-
       router.push("/login");
     } catch (err: any) {
       setErrors(err);
