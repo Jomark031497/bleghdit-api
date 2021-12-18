@@ -1,7 +1,7 @@
 import { isEmpty } from "class-validator";
 import { Request, Response } from "express";
 import Subs from "../entities/Subleddit";
-import { getRepository } from "typeorm";
+import { getConnection, getRepository } from "typeorm";
 import Post from "../entities/Post";
 import fs from "fs";
 
@@ -43,9 +43,19 @@ export const createSub = async (req: Request, res: Response) => {
 
 export const getSubs = async (_: Request, res: Response) => {
   try {
-    const subs = await Subs.find();
+    const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageURN" , 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;
+    const subs = await getConnection()
+      .createQueryBuilder()
+      .select(`s.title, s.name, ${imageUrlExp} as "imageURL", count(p.id) as "postCount"`)
+      .from(Subs, "s")
+      .leftJoin(Post, "p", `s.name = p."subName"`)
+      .groupBy('s.title, s.name, "imageURL"')
+      .orderBy(`"postCount"`, "DESC")
+      .limit(5)
+      .execute();
     return res.status(200).json(subs);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: "something went wrong" });
   }
 };
