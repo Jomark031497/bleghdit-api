@@ -43,13 +43,13 @@ export const createSub = async (req: Request, res: Response) => {
 
 export const getSubs = async (_: Request, res: Response) => {
   try {
-    const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageURN" , 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;
+    const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageURN" , '')`;
     const subs = await getConnection()
       .createQueryBuilder()
-      .select(`s.title, s.name, ${imageUrlExp} as "imageURL", count(p.id) as "postCount"`)
+      .select(`s.title, s.name, ${imageUrlExp} as "imageUrl", count(p.id) as "postCount"`)
       .from(Subs, "s")
       .leftJoin(Post, "p", `s.name = p."subName"`)
-      .groupBy('s.title, s.name, "imageURL"')
+      .groupBy('s.title, s.name, "imageUrl"')
       .orderBy(`"postCount"`, "DESC")
       .limit(5)
       .execute();
