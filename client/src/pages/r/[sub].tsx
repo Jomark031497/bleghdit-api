@@ -15,8 +15,7 @@ const Subleddit: NextPage = () => {
   const router = useRouter();
   const classes = useStyles();
 
-  const { data: sub, error } = useSWR<Sub>(router.query.sub ? `/subs/${router.query.sub}` : null);
-  if (error) router.push("/");
+  const { data: sub } = useSWR<Sub>(router.query.sub ? `/subs/${router.query.sub}` : null);
 
   return (
     <>

@@ -47,14 +47,19 @@ export const getPosts = async (req: Request, res: Response) => {
 export const getPost = async (req: Request, res: Response) => {
   const { slug, identifier } = req.params; // destructure the slug and identifier from params
 
+  const user: any = req.user;
   try {
     // find the specific post
     const post = await Post.findOneOrFail(
       { identifier, slug },
       {
-        relations: ["sub"], // add sub from the JSON
+        relations: ["sub", "votes"], // add sub from the JSON
       }
     );
+
+    if (user) {
+      post.setUserVote(user);
+    }
 
     return res.status(200).json(post);
   } catch (e) {

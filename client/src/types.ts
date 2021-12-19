@@ -4,6 +4,7 @@ export interface Post {
   body?: string;
   slug: string;
   subName: string;
+  sub: Sub;
   createdAt: string;
   updatedAt: string;
   username: string;
