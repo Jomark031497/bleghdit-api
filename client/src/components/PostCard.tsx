@@ -2,15 +2,13 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
-import { Box, Button, Typography } from "@mui/material";
-import CommentIcon from "@mui/icons-material/ModeCommentOutlined";
-import SaveIcon from "@mui/icons-material/BookmarkBorderOutlined";
-import ShareIcon from "@mui/icons-material/ShareOutlined";
+import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import { Post } from "../types";
 import UpvoteDownVote from "./UpvoteDownVote";
 import PostData from "./PostData";
+import PostActionButtons from "./PostActionButtons";
 
 dayjs.extend(relativeTime);
 
@@ -39,17 +37,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
               )}
             </Box>
 
-            <Box className={classes.actionButtonsContainer}>
-              <Button className={classes.actionButtons} startIcon={<CommentIcon />} size="small">
-                {post.commentCount} Comments
-              </Button>
-              <Button className={classes.actionButtons} startIcon={<ShareIcon />} size="small">
-                Share
-              </Button>
-              <Button className={classes.actionButtons} startIcon={<SaveIcon />} size="small">
-                Save
-              </Button>
-            </Box>
+            <PostActionButtons post={post} />
           </div>
         </Link>
       </Box>
@@ -57,7 +45,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
   );
 };
 
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     margin: "0.5rem auto",
@@ -74,13 +62,6 @@ const useStyles = makeStyles((theme: any) => ({
     flexDirection: "column",
     flex: 8.5,
     margin: "0.3rem 0.5rem",
-  },
-  actionButtonsContainer: {
-    display: "flex",
-  },
-  actionButtons: {
-    margin: "auto 0.3rem",
-    color: theme.palette.text.secondary,
   },
   postTitleAndBody: {
     margin: "0.5rem",
