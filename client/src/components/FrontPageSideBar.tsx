@@ -1,6 +1,8 @@
+import useSWR from "swr";
+
 import { Avatar, Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import useSWR from "swr";
+
 import { Sub } from "../types";
 
 const FrontPageSideBar: React.FC = () => {
@@ -8,7 +10,6 @@ const FrontPageSideBar: React.FC = () => {
 
   const { data: subs } = useSWR<Sub[]>("/subs");
 
-  console.log(subs);
   return (
     <Box className={classes.root}>
       <Box>

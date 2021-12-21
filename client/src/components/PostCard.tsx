@@ -1,15 +1,17 @@
+import Link from "next/link";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
 import { Box, Button, Typography } from "@mui/material";
 import CommentIcon from "@mui/icons-material/ModeCommentOutlined";
 import SaveIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import ShareIcon from "@mui/icons-material/ShareOutlined";
 import { makeStyles } from "@mui/styles";
 
-import Link from "next/link";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { Post } from "../types";
 import UpvoteDownVote from "./UpvoteDownVote";
 import PostData from "./PostData";
+
 dayjs.extend(relativeTime);
 
 interface PostProps {

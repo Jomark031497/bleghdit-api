@@ -1,14 +1,16 @@
-import { Box, Link as MuiLink, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import Image from "next/image";
 import Link from "next/link";
-import { Post } from "../types";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+
+import { Box, Link as MuiLink, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { Post } from "../types";
+
 dayjs.extend(relativeTime);
 
 interface Props {
-  post: Post | undefined;
+  post: Post;
 }
 
 const PostData: React.FC<Props> = ({ post }) => {
