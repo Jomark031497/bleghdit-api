@@ -43,8 +43,11 @@ const Post = () => {
                   <Box className={classes.postData}>
                     <PostData post={post} />
                     <Typography variant="h5">{post.title}</Typography>
-                    {post.body && <Typography variant="body1">{post.body}</Typography>}
-                    <Typography>{post.body}</Typography>
+                    {post.body && (
+                      <Typography variant="body1" className={classes.postBody}>
+                        {post.body}
+                      </Typography>
+                    )}
                     <PostActionButtons post={post} />
                   </Box>
                 </Box>
@@ -98,6 +101,9 @@ const useStyles = makeStyles((_) => ({
   },
   postData: {
     flex: 1,
+  },
+  postBody: {
+    margin: "0.5rem auto",
   },
 }));
 

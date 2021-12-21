@@ -4,6 +4,9 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { Post } from "../types";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { useRouter } from "next/router";
 
 interface Props {
   post: Post | undefined;
@@ -11,8 +14,11 @@ interface Props {
 
 const UpvoteDownVote: React.FC<Props> = ({ post }) => {
   const classes = useStyles();
+  const router = useRouter();
+  const { data } = useSelector((state: RootState) => state.login);
 
   const vote = async (value: number) => {
+    if (!data) router.push("/login");
     try {
       await axios.post("/vote", { identifier: post?.identifier, slug: post?.slug, value }, { withCredentials: true });
     } catch (err: any) {
