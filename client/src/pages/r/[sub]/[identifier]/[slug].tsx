@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, TextField } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR from "swr";
@@ -9,10 +9,13 @@ import UpvoteDownVote from "../../../../components/UpvoteDownVote";
 import PostData from "../../../../components/PostData";
 import SubSideBar from "../../../../components/SubSideBar";
 import PostActionButtons from "../../../../components/PostActionButtons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 
 const Post = () => {
   const classes = useStyles();
   const router = useRouter();
+  const { data } = useSelector((state: RootState) => state.login);
   const { identifier, slug } = router.query;
 
   const { data: post, error } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
@@ -52,8 +55,21 @@ const Post = () => {
                   </Box>
                 </Box>
 
-                <Box style={{ background: "white" }}>
-                  <h3>POST COMMENTS!</h3>
+                <Box className={classes.commentsContainer}>
+                  {data ? (
+                    <Box>
+                      {data && <Typography>Comment as {data.username}</Typography>}
+                      <TextField multiline rows={4} placeholder="What are your thoughts?" fullWidth />
+                    </Box>
+                  ) : (
+                    <Box>
+                      <Typography variant="h6" color="textSecondary">
+                        Login or sign up to leave a comment
+                      </Typography>
+                    </Box>
+                  )}
+
+                  <Box>Post Comments Container</Box>
                 </Box>
               </Box>
 
@@ -104,6 +120,10 @@ const useStyles = makeStyles((_) => ({
   },
   postBody: {
     margin: "0.5rem auto",
+  },
+  commentsContainer: {
+    background: "white",
+    marginTop: "1rem",
   },
 }));
 

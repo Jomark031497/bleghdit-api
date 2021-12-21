@@ -53,7 +53,7 @@ export const getPost = async (req: Request, res: Response) => {
     const post = await Post.findOneOrFail(
       { identifier, slug },
       {
-        relations: ["sub", "votes"], // add sub from the JSON
+        relations: ["sub", "votes", "comments"], // add sub from the JSON
       }
     );
 

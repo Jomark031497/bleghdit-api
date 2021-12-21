@@ -18,7 +18,10 @@ const UpvoteDownVote: React.FC<Props> = ({ post }) => {
   const { data } = useSelector((state: RootState) => state.login);
 
   const vote = async (value: number) => {
-    if (!data) router.push("/login");
+    if (!data) router.push("/login"); // if not logged in, redirect
+
+    if (value === post?.userVote) value = 0; // if vote is the same, reset the vote
+
     try {
       await axios.post("/vote", { identifier: post?.identifier, slug: post?.slug, value }, { withCredentials: true });
     } catch (err: any) {
