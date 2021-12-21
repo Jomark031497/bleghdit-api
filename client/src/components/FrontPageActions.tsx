@@ -2,16 +2,17 @@ import { Avatar, Box, Button, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import PhotoIcon from "@mui/icons-material/Photo";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
-import CTextField from "./CTextField";
 import BestIcon from "@mui/icons-material/RocketLaunch";
 import TopIcon from "@mui/icons-material/BarChart";
 import HotIcon from "@mui/icons-material/LocalFireDepartment";
 import NewIcon from "@mui/icons-material/NewReleases";
 
+import CTextField from "./CTextField";
+
 const FrontPageActions: React.FC = () => {
   const classes = useStyles();
   return (
-    <Box className={classes.root}>
+    <>
       <Box className={classes.createPostContainer}>
         <Avatar className={classes.userAvatar}>H</Avatar>
         <CTextField placeholder="Create Post" className={classes.textField} />
@@ -35,12 +36,11 @@ const FrontPageActions: React.FC = () => {
           New
         </Button>
       </Box>
-    </Box>
+    </>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {},
   createPostContainer: {
     display: "flex",
     alignItems: "center",
