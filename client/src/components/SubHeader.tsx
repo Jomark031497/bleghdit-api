@@ -9,7 +9,7 @@ import CButton from "./CButton";
 import { mutate } from "swr";
 
 interface SubProps {
-  sub: Sub | undefined;
+  sub: Sub;
 }
 
 const SubHeader: React.FC<SubProps> = ({ sub }) => {
