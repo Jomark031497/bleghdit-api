@@ -6,6 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Box, Link as MuiLink, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Post } from "../types";
+import CLink from "./CLink";
 
 dayjs.extend(relativeTime);
 
@@ -18,21 +19,19 @@ const PostData: React.FC<Props> = ({ post }) => {
   return (
     <>
       {post && (
-        <Box className={classes.postData}>
-          <Box className={classes.postDataSubreddit}>
+        <Box className={classes.root}>
+          <Box className={classes.postMetadata}>
             <Image src="/images/reddit_logo.png" width="20" height="20" />
-            <Link href={`/r/${post.subName}`} passHref>
-              <MuiLink variant="subtitle1" underline="hover" color="textPrimary" style={{ marginLeft: "0.3rem" }}>
-                r/{post.subName}
-              </MuiLink>
-            </Link>
+            <CLink href={`/r/${post.subName}`} variant="subtitle1" label={`r/${post.subName}`} color="textSecondary" />
           </Box>
 
-          <Link href={`/u/${post.username}`} passHref>
-            <MuiLink variant="subtitle2" underline="hover" color="textSecondary" style={{ margin: "0 0.3rem" }}>
-              Posted by u/{post.username}
-            </MuiLink>
-          </Link>
+          <CLink
+            href={`/u/${post.username}`}
+            variant="subtitle2"
+            color="textSecondary"
+            label={`Posted by u/${post.username}`}
+          />
+
           <Typography variant="subtitle2" color="textSecondary">
             {dayjs(post.createdAt).fromNow()}
           </Typography>
@@ -43,12 +42,11 @@ const PostData: React.FC<Props> = ({ post }) => {
 };
 
 const useStyles = makeStyles((_) => ({
-  root: {},
-  postData: {
+  root: {
     display: "flex",
     alignItems: "center",
   },
-  postDataSubreddit: {
+  postMetadata: {
     display: "flex",
     alignItems: "center",
   },
