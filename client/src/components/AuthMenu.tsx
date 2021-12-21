@@ -1,17 +1,18 @@
+import { useState } from "react";
+import axios from "axios";
+
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useState } from "react";
-import { User } from "../types";
+
 import { useAppDispatch } from "../redux/store";
 import { logoutUser } from "../redux/features/auth/loginSlice";
-import axios from "axios";
 
 interface AuthMenuProps {
-  data: User | null;
+  username: string;
 }
 
-const AuthMenu: React.FC<AuthMenuProps> = ({ data }) => {
+const AuthMenu: React.FC<AuthMenuProps> = ({ username }) => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -27,26 +28,22 @@ const AuthMenu: React.FC<AuthMenuProps> = ({ data }) => {
       setAnchorEl(null);
       window.location.reload();
     } catch (err: any) {
-      console.error(err.response.data);
+      console.error(err);
     }
   };
 
   return (
     <>
-      {data && (
-        <>
-          <IconButton disableRipple={true} onClick={handleClick}>
-            <AccountCircleIcon />
-            <Typography>{data.username}</Typography>
-            <ArrowDropDownIcon />
-          </IconButton>
-          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
-        </>
-      )}
+      <IconButton disableRipple={true} onClick={handleClick}>
+        <AccountCircleIcon />
+        <Typography>{username}</Typography>
+        <ArrowDropDownIcon />
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </Menu>
     </>
   );
 };

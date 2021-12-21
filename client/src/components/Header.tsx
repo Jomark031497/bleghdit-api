@@ -1,17 +1,18 @@
-import { AppBar, Box, InputAdornment, TextField, Toolbar, Link as MuiLink, Typography } from "@mui/material";
-
-import SearchIcon from "@mui/icons-material/Search";
-import { makeStyles } from "@mui/styles";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+
+import { AppBar, Box, InputAdornment, TextField, Toolbar, Link as MuiLink, Typography } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { makeStyles } from "@mui/styles";
 import CButton from "./CButton";
-import { useRouter } from "next/router";
+
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
-import AuthMenu from "./AuthMenu";
-import axios from "axios";
-import { useEffect } from "react";
 import { setCurrentUser } from "../redux/features/auth/loginSlice";
+import AuthMenu from "./AuthMenu";
 
 const Header: React.FC = () => {
   const classes = useStyles();
@@ -65,7 +66,7 @@ const Header: React.FC = () => {
 
           <Box className={classes.authContainer}>
             {data ? (
-              <AuthMenu data={data} />
+              <AuthMenu username={data.username} />
             ) : (
               <Box className={classes.buttonsContainer}>
                 <CButton variant="outlined" className={classes.buttons} onClick={() => router.push("/login")}>
@@ -92,7 +93,6 @@ const Header: React.FC = () => {
 const useStyles = makeStyles((_) => ({
   offset: {
     minHeight: "5vh",
-    background: "red",
   },
   root: {
     justifyContent: "center",
