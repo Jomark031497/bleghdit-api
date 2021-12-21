@@ -1,4 +1,5 @@
-import { Checkbox, Typography, Link as MuiLink } from "@mui/material";
+import { FormEvent, useState } from "react";
+import { Checkbox, Typography, Link as MuiLink, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
@@ -6,8 +7,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import React, { FormEvent, useEffect, useState } from "react";
-import CButton from "../components/CButton";
 import CTextField from "../components/CTextField";
 import { registerUser } from "../redux/features/auth/registerSlice";
 import { useAppDispatch } from "../redux/store";
@@ -98,9 +97,9 @@ const Register: NextPage = () => {
             {errors.password}
           </Typography>
 
-          <CButton type="submit" variant="contained" fullWidth>
+          <Button type="submit" variant="contained" fullWidth>
             REGISTER
-          </CButton>
+          </Button>
         </Box>
 
         <Typography>

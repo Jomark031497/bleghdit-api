@@ -1,7 +1,7 @@
+import { NextPage } from "next";
 import { Box, Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { NextPage } from "next";
-import Link from "next/link";
+import CLink from "../components/CLink";
 
 const NotFound: NextPage = () => {
   const classes = useStyles();
@@ -9,9 +9,7 @@ const NotFound: NextPage = () => {
     <div className={classes.root}>
       <Typography variant="h4">Page Not Found</Typography>
       <Box className={classes.back}>
-        <Link href="/">
-          <a className={classes.link}>Go back to homepage</a>
-        </Link>
+        <CLink href="/" label="Go back to homepage" variant="h4" />
       </Box>
     </div>
   );
@@ -30,10 +28,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "0.5rem",
     borderRadius: "1rem",
     margin: "2rem auto",
-  },
-  link: {
-    textDecoration: "none",
-    color: "white",
   },
 }));
 

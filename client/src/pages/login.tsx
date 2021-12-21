@@ -1,26 +1,28 @@
-import { Box, Typography, Link as MuiLink } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { FormEvent, useState } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
-import CButton from "../components/CButton";
-import CTextField from "../components/CTextField";
-import { loginUser } from "../redux/features/auth/loginSlice";
+import { useRouter } from "next/router";
+
+import { Box, Typography, Link as MuiLink, Button } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
 import { RootState, useAppDispatch } from "../redux/store";
+import { loginUser } from "../redux/features/auth/loginSlice";
+import CTextField from "../components/CTextField";
 
 const Login: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const [errors, setErrors] = useState<any>({});
   const { data } = useSelector((state: RootState) => state.login);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  const [errors, setErrors] = useState<any>({});
 
   if (data) router.push("/");
 
@@ -82,9 +84,9 @@ const Login: NextPage = () => {
             {errors.error}
           </Typography>
 
-          <CButton type="submit" variant="contained" fullWidth>
+          <Button type="submit" variant="contained" fullWidth>
             LOGIN
-          </CButton>
+          </Button>
         </Box>
 
         <Typography>

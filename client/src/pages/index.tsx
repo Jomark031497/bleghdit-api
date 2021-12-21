@@ -1,12 +1,12 @@
+import useSWR from "swr";
+import { NextPage } from "next";
+import Head from "next/head";
+
 import { Box, Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-import Head from "next/head";
 import { Post } from "../types";
-import { NextPage } from "next";
 import PostCard from "../components/PostCard";
-
-import useSWR from "swr";
 import FrontPageActions from "../components/FrontPageActions";
 import FrontPageSideBar from "../components/FrontPageSideBar";
 
