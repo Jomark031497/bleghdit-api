@@ -1,12 +1,14 @@
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { mutate } from "swr";
+import { useSelector } from "react-redux";
+
 import { Avatar, Box, Container, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import axios from "axios";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import CButton from "./CButton";
-import { mutate } from "swr";
 
 interface SubProps {
   sub: Sub;
@@ -34,7 +36,6 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     const file = files![0];
-
     const formData = new FormData();
     formData.append("file", file);
     formData.append("type", fileInputRef.current!.name);
