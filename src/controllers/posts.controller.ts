@@ -92,6 +92,8 @@ export const commentOnPost = async (req: Request, res: Response) => {
 
 export const getPostComments = async (req: Request, res: Response) => {
   const { identifier, slug } = req.params; // destructure the identifier and slug to fetch the post
+  const user: any = req.user; // get the user from session
+
   try {
     const post = await Post.findOneOrFail({ identifier, slug });
 
@@ -100,6 +102,11 @@ export const getPostComments = async (req: Request, res: Response) => {
       order: { createdAt: "DESC" },
       relations: ["votes"],
     });
+
+    // set the user vote if there is a user
+    if (user) {
+      comments.forEach((comment) => comment.setUserVote(user));
+    }
 
     return res.status(200).json({ comments });
   } catch (error) {

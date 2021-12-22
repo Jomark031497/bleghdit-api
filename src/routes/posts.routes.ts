@@ -8,6 +8,6 @@ router.post("/create", requireAuth, createPost);
 router.get("/", getPosts);
 router.get("/:identifier/:slug", getPost);
 router.post("/:identifier/:slug/comments", requireAuth, commentOnPost);
-router.get("/:identifier/:slug/comments", requireAuth, getPostComments);
+router.get("/:identifier/:slug/comments", getPostComments);
 
 export default router;
