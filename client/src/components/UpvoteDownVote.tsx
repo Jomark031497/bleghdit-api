@@ -2,17 +2,19 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { Post } from "../types";
+import { CommentType, Post } from "../types";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
+import { mutate } from "swr";
 
 interface Props {
-  post: Post | undefined;
+  post: Post;
+  comment?: CommentType;
 }
 
-const UpvoteDownVote: React.FC<Props> = ({ post }) => {
+const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
   const classes = useStyles();
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);
@@ -20,25 +22,53 @@ const UpvoteDownVote: React.FC<Props> = ({ post }) => {
   const vote = async (value: number) => {
     if (!data) router.push("/login"); // if not logged in, redirect
 
-    if (value === post?.userVote) value = 0; // if vote is the same, reset the vote
+    // if ((comment && comment?.userVote === value) || post?.userVote === value) {
+    //   value = 0;
+    // }
+
+    if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) value = 0;
 
     try {
-      await axios.post("/vote", { identifier: post?.identifier, slug: post?.slug, value }, { withCredentials: true });
+      await axios.post(
+        "/vote",
+        { identifier: post?.identifier, commentIdentifier: comment?.identifier, slug: post?.slug, value },
+        { withCredentials: true }
+      );
     } catch (err: any) {
       console.error(err);
+    }
+
+    if (!comment) {
+      mutate(`/posts/${post.identifier}/${post.slug}`);
+    } else {
+      mutate(`/posts/${post.identifier}/${post.slug}/comments`);
     }
   };
 
   return (
-    <Box className={classes.voteContainer}>
-      <IconButton onClick={() => vote(1)} style={{ color: post?.userVote === 1 ? "red" : "" }}>
-        <ArrowUpwardIcon className={classes.upvoteIcon} />
-      </IconButton>
-      <Typography variant="body2">{post?.voteScore}</Typography>
-      <IconButton onClick={() => vote(-1)} style={{ color: post?.userVote === -1 ? "blue" : "" }}>
-        <ArrowDownwardIcon className={classes.downvoteIcon} />
-      </IconButton>
-    </Box>
+    <>
+      {!comment ? (
+        <Box className={classes.voteContainer}>
+          <IconButton onClick={() => vote(1)} style={{ color: post?.userVote === 1 ? "red" : "" }}>
+            <ArrowUpwardIcon className={classes.upvoteIcon} />
+          </IconButton>
+          <Typography variant="body2">{post?.voteScore}</Typography>
+          <IconButton onClick={() => vote(-1)} style={{ color: post?.userVote === -1 ? "blue" : "" }}>
+            <ArrowDownwardIcon className={classes.downvoteIcon} />
+          </IconButton>
+        </Box>
+      ) : (
+        <Box className={classes.voteContainer}>
+          <IconButton onClick={() => vote(1)} style={{ color: comment?.userVote === 1 ? "red" : "" }}>
+            <ArrowUpwardIcon className={classes.upvoteIcon} />
+          </IconButton>
+          <Typography variant="body2">{comment?.voteScore}</Typography>
+          <IconButton onClick={() => vote(-1)} style={{ color: comment?.userVote === -1 ? "blue" : "" }}>
+            <ArrowDownwardIcon className={classes.downvoteIcon} />
+          </IconButton>
+        </Box>
+      )}
+    </>
   );
 };
 

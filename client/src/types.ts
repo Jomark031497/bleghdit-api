@@ -40,3 +40,14 @@ export interface ReduxState {
   isLoading: boolean;
   error: any;
 }
+
+export interface CommentType {
+  identifier: string;
+  username: string;
+  body: string;
+  createdAt: string;
+  updatedAt: string;
+  // virtuals
+  userVote: number;
+  voteScore: number;
+}

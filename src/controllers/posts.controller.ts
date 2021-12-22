@@ -108,7 +108,7 @@ export const getPostComments = async (req: Request, res: Response) => {
       comments.forEach((comment) => comment.setUserVote(user));
     }
 
-    return res.status(200).json({ comments });
+    return res.status(200).json(comments);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "something went wrong" });

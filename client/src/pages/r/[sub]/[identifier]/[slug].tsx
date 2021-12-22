@@ -2,7 +2,7 @@ import { Box, Container, Typography, TextField } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { Post } from "../../../../types";
+import { Post, CommentType } from "../../../../types";
 import ArticleIcon from "@mui/icons-material/Article";
 import { makeStyles } from "@mui/styles";
 import UpvoteDownVote from "../../../../components/UpvoteDownVote";
@@ -11,14 +11,16 @@ import SubSideBar from "../../../../components/SubSideBar";
 import PostActionButtons from "../../../../components/PostActionButtons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import { CommentOutlined } from "@mui/icons-material";
 
 const Post = () => {
   const classes = useStyles();
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);
   const { identifier, slug } = router.query;
-
   const { data: post, error } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
+  const { data: comments } = useSWR<CommentType[]>(identifier && slug ? `/posts/${identifier}/${slug}/comments` : null);
+  console.log(comments);
   if (error) router.push("/");
 
   return (
@@ -69,7 +71,17 @@ const Post = () => {
                     </Box>
                   )}
 
-                  <Box>Post Comments Container</Box>
+                  <Box>
+                    <Typography>Comment box</Typography>
+                    {comments &&
+                      comments.map((comment) => (
+                        <Box key={comment.identifier} className={classes.comment}>
+                          <UpvoteDownVote post={post} comment={comment} />
+                          <Typography variant="subtitle1">{comment.username}</Typography>
+                          <Typography variant="body1">{comment.body}</Typography>
+                        </Box>
+                      ))}
+                  </Box>
                 </Box>
               </Box>
 
@@ -126,6 +138,11 @@ const useStyles = makeStyles((_) => ({
   commentsContainer: {
     background: "white",
     marginTop: "1rem",
+  },
+  comment: {
+    background: "grey",
+    margin: "1rem auto",
+    display: "flex",
   },
 }));
 
