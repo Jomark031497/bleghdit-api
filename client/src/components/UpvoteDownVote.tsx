@@ -21,11 +21,6 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
 
   const vote = async (value: number) => {
     if (!data) router.push("/login"); // if not logged in, redirect
-
-    // if ((comment && comment?.userVote === value) || post?.userVote === value) {
-    //   value = 0;
-    // }
-
     if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) value = 0;
 
     try {
@@ -39,7 +34,9 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
     }
 
     if (!comment) {
-      mutate(`/posts/${post.identifier}/${post.slug}`);
+      if (router.pathname === "/") {
+        mutate(`/posts`);
+      } else mutate(`/posts/${post.identifier}/${post.slug}`);
     } else {
       mutate(`/posts/${post.identifier}/${post.slug}/comments`);
     }
@@ -48,7 +45,7 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
   return (
     <>
       {!comment ? (
-        <Box className={classes.voteContainer}>
+        <Box className={classes.postVoteContainer}>
           <IconButton onClick={() => vote(1)} style={{ color: post?.userVote === 1 ? "red" : "" }}>
             <ArrowUpwardIcon className={classes.upvoteIcon} />
           </IconButton>
@@ -58,7 +55,7 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
           </IconButton>
         </Box>
       ) : (
-        <Box className={classes.voteContainer}>
+        <Box className={classes.postVoteContainer}>
           <IconButton onClick={() => vote(1)} style={{ color: comment?.userVote === 1 ? "red" : "" }}>
             <ArrowUpwardIcon className={classes.upvoteIcon} />
           </IconButton>
@@ -73,7 +70,7 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
 };
 
 const useStyles = makeStyles((_) => ({
-  voteContainer: {
+  postVoteContainer: {
     display: "flex",
     flexDirection: "column",
     flex: 0.5,
