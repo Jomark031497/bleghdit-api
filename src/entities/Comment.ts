@@ -4,6 +4,7 @@ import Post from "./Post";
 import RootEntity from "./RootEntity";
 import User from "./User";
 import Vote from "./Vote";
+import { Expose } from "class-transformer";
 
 @Entity("comments")
 export default class Comment extends RootEntity {
@@ -34,6 +35,11 @@ export default class Comment extends RootEntity {
   // A Comment can have many votes
   @OneToMany(() => Vote, (vote) => vote.comment)
   votes: Vote[];
+
+  // virtual field: get the voteScore of a comment
+  @Expose() get voteScore(): number {
+    return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
+  }
 
   // virtual field
   protected userVote: number;

@@ -87,9 +87,11 @@ const Post = () => {
 const useStyles = makeStyles((_) => ({
   root: {
     backgroundColor: "#2e2f2f",
+    minHeight: "95vh",
   },
   container: {
     backgroundColor: "#edeff1",
+    minHeight: "95vh",
     paddingLeft: 0,
     paddingRight: 0,
   },

@@ -89,3 +89,21 @@ export const commentOnPost = async (req: Request, res: Response) => {
     return res.status(404).json({ error: "Post not found" });
   }
 };
+
+export const getPostComments = async (req: Request, res: Response) => {
+  const { identifier, slug } = req.params; // destructure the identifier and slug to fetch the post
+  try {
+    const post = await Post.findOneOrFail({ identifier, slug });
+
+    const comments = await Comment.find({
+      where: { post },
+      order: { createdAt: "DESC" },
+      relations: ["votes"],
+    });
+
+    return res.status(200).json({ comments });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "something went wrong" });
+  }
+};
