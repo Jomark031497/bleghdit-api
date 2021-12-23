@@ -1,19 +1,24 @@
-import { Box, Button, Container, TextField } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { Post } from "../../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const PostPage: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
 
+  const { data } = useSelector((state: RootState) => state.login);
+
   const [newPost, setNewPost] = useState({
     title: "",
     body: "",
   });
+
+  if (!data) router.push(`/r/${router.query.sub}`);
 
   const createPost = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +26,7 @@ const PostPage: NextPage = () => {
     if (!newPost.title) return;
     console.log(router.query);
     try {
-      const { data } = await axios.post(
+      const { data: post } = await axios.post(
         "/posts/create",
         {
           title: newPost.title,
@@ -31,7 +36,7 @@ const PostPage: NextPage = () => {
         { withCredentials: true }
       );
 
-      router.push(`/r/${data.subName}/${data.identifier}/${data.slug}`);
+      router.push(`/r/${post.subName}/${post.identifier}/${post.slug}`);
     } catch (error) {
       console.error(error);
     }
@@ -39,11 +44,12 @@ const PostPage: NextPage = () => {
   return (
     <Container maxWidth="md" className={classes.root}>
       <Box component="form" onSubmit={createPost}>
+        <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
         <TextField
           placeholder="title"
           fullWidth
           size="small"
-          className={classes.textfields}
+          margin="normal"
           value={newPost.title}
           onChange={(e: any) => setNewPost({ ...newPost, title: e.target.value })}
         />
@@ -51,8 +57,8 @@ const PostPage: NextPage = () => {
           multiline
           minRows={4}
           fullWidth
+          margin="normal"
           placeholder="text (optional)"
-          className={classes.textfields}
           value={newPost.body}
           onChange={(e: any) => setNewPost({ ...newPost, body: e.target.value })}
         />
@@ -70,11 +76,6 @@ const useStyles = makeStyles(() => ({
     background: "#fff",
     margin: "3rem auto",
     padding: "1rem 1rem",
-    display: "flex",
-    flexDirection: "column",
-  },
-  textfields: {
-    margin: "0.5rem auto",
   },
   button: {
     alignSelf: "flex-end",
