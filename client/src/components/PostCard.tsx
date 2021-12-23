@@ -14,9 +14,10 @@ dayjs.extend(relativeTime);
 
 interface PostProps {
   post: Post;
+  subImage?: string;
 }
 
-const PostCard: React.FC<PostProps> = ({ post }) => {
+const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
   const classes = useStyles();
 
   return (
@@ -26,7 +27,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
       <Box className={classes.postContentContainer}>
         <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>
           <div>
-            <PostData post={post} />
+            <PostData post={post} subImage={subImage} />
 
             <Box className={classes.postTitleAndBody}>
               <Typography variant="h5">{post.title}</Typography>

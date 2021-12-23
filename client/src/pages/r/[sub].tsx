@@ -29,7 +29,7 @@ const Subleddit: NextPage = () => {
             <Box className={classes.main}>
               <FrontPageActions />
               {sub.posts.map((post: Post) => (
-                <PostCard post={post} key={post.identifier} />
+                <PostCard post={post} subImage={sub.imageUrl} key={post.identifier} />
               ))}
             </Box>
 

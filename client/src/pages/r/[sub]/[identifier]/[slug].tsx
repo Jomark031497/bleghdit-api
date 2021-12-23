@@ -17,9 +17,10 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
+import { NextPage } from "next";
 dayjs.extend(relativeTime);
 
-const Post = () => {
+const Post: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);

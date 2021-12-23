@@ -10,16 +10,18 @@ dayjs.extend(relativeTime);
 
 interface Props {
   post: Post;
+  subImage: string | undefined;
 }
 
-const PostData: React.FC<Props> = ({ post }) => {
+const PostData: React.FC<Props> = ({ post, subImage }) => {
   const classes = useStyles();
+  console.log(post);
   return (
     <>
       {post && (
         <Box className={classes.root}>
           <Box className={classes.postMetadata}>
-            <Avatar src={post.sub.imageUrl} className={classes.avatar} />
+            <Avatar src={!subImage ? post.sub.imageUrl : subImage} className={classes.avatar} />
             <CLink href={`/r/${post.subName}`} variant="subtitle1" label={`r/${post.subName}`} color="textSecondary" />
           </Box>
 
