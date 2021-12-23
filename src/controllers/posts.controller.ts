@@ -73,7 +73,7 @@ export const commentOnPost = async (req: Request, res: Response) => {
   const { body } = req.body;
   const user: any = req.user; // get the current authorized user from session
   try {
-    const post = await Post.findOneOrFail({ identifier, slug });
+    const post = await Post.findOneOrFail({ identifier, slug }, { relations: ["post"] });
     const comment = new Comment({
       body,
       user,
@@ -145,7 +145,11 @@ export const getUserSubmissions = async (req: Request, res: Response) => {
       comments.forEach((p) => p.setUserVote(sessionUser));
     }
 
-    return res.json({ user, posts, comments });
+    let submissions: any = [];
+    posts.forEach((post) => submissions.push({ type: "POST", ...post }));
+    comments.forEach((comment) => submissions.push({ type: "COMMENT", ...comment }));
+
+    return res.json({ user, submissions });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "something went wrong" });

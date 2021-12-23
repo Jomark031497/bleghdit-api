@@ -11,13 +11,12 @@ import SubSideBar from "../../../../components/SubSideBar";
 import PostActionButtons from "../../../../components/PostActionButtons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import CLink from "../../../../components/CLink";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 import { NextPage } from "next";
+import CommentCard from "../../../../components/CommentCard";
 dayjs.extend(relativeTime);
 
 const Post: NextPage = () => {
@@ -125,36 +124,7 @@ const Post: NextPage = () => {
                     </Box>
                   )}
                   <hr />
-                  <Box>
-                    {comments &&
-                      comments.map((comment) => (
-                        <Box key={comment.identifier} className={classes.comment}>
-                          <Box>
-                            <UpvoteDownVote post={post} comment={comment} />
-                          </Box>
-                          <Box className={classes.commentData}>
-                            <Box className={classes.commentMetadata}>
-                              <Image src="/images/reddit_logo.png" width="20" height="20" />
-                              <CLink
-                                label={comment.username}
-                                href={`u/${comment.username}`}
-                                variant="subtitle1"
-                                color="textPrimary"
-                              />
-                              <CLink
-                                label={`· ${dayjs(comment.createdAt).fromNow()}`}
-                                href={`u/${comment.username}`}
-                                variant="subtitle2"
-                                color="textSecondary"
-                              />
-                            </Box>
-                            <Box>
-                              <Typography variant="body1">{comment.body}</Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-                      ))}
-                  </Box>
+                  <Box>{comments && comments.map((comment) => <CommentCard post={post} comment={comment} />)}</Box>
                 </Box>
               </Box>
 

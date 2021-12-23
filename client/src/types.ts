@@ -47,7 +47,13 @@ export interface CommentType {
   body: string;
   createdAt: string;
   updatedAt: string;
+  post: Post;
   // virtuals
   userVote: number;
   voteScore: number;
+}
+
+export interface UserSubmissions {
+  user: User;
+  submissions: [posts: Post[], comments: CommentType[]];
 }
