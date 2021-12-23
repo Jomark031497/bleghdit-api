@@ -10,12 +10,11 @@ dayjs.extend(relativeTime);
 
 interface Props {
   post: Post;
-  subImage: string | undefined;
+  subImage?: string | undefined;
 }
 
 const PostData: React.FC<Props> = ({ post, subImage }) => {
   const classes = useStyles();
-  console.log(post);
   return (
     <>
       {post && (

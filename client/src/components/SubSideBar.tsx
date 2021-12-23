@@ -3,6 +3,7 @@ import { makeStyles } from "@mui/styles";
 import { Sub } from "../types";
 import CakeIcon from "@mui/icons-material/Cake";
 import dayjs from "dayjs";
+import { useRouter } from "next/router";
 
 interface SubProp {
   sub: Sub;
@@ -10,6 +11,7 @@ interface SubProp {
 
 const SubSideBar: React.FC<SubProp> = ({ sub }) => {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Box className={classes.root}>
@@ -37,7 +39,7 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
           <Typography>Created {dayjs(sub.createdAt).format("D MMM YYYY")}</Typography>
         </Box>
 
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" fullWidth onClick={() => router.push(`/r/${sub.name}/create`)}>
           CREATE POST
         </Button>
       </Box>
