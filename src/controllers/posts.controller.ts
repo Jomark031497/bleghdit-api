@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Subs from "../entities/Subleddit";
 import Post from "../entities/Post";
 import Comment from "../entities/Comment";
+import User from "../entities/User";
 
 export const createPost = async (req: Request, res: Response) => {
   // destructure the fields
@@ -70,7 +71,6 @@ export const getPost = async (req: Request, res: Response) => {
 export const commentOnPost = async (req: Request, res: Response) => {
   const { identifier, slug } = req.params; // destructure the body, slug and identifier from params and body
   const { body } = req.body;
-  console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", identifier, slug, body);
   const user: any = req.user; // get the current authorized user from session
   try {
     const post = await Post.findOneOrFail({ identifier, slug });
@@ -86,7 +86,7 @@ export const commentOnPost = async (req: Request, res: Response) => {
     return res.status(200).json(comment);
   } catch (e) {
     console.error(e);
-    return res.status(404).json({ error: "Post not found" });
+    return res.status(404).json({ error: "Posts not found" });
   }
 };
 
@@ -111,6 +111,43 @@ export const getPostComments = async (req: Request, res: Response) => {
     return res.status(200).json(comments);
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ error: "something went wrong" });
+  }
+};
+
+export const getUserSubmissions = async (req: Request, res: Response) => {
+  const { username } = req.params;
+
+  const sessionUser: any = req.user;
+  try {
+    const user = await User.findOneOrFail({
+      where: { username },
+      select: ["username", "createdAt"],
+    });
+
+    const posts = await Post.find({
+      where: { user },
+      order: { createdAt: "DESC" },
+      relations: ["comments", "votes", "sub"],
+    });
+
+    const comments = await Comment.find({
+      where: { username },
+      order: { createdAt: "DESC" },
+      relations: ["post"],
+    });
+
+    if (sessionUser) {
+      posts.forEach((p) => p.setUserVote(sessionUser));
+    }
+
+    if (sessionUser) {
+      comments.forEach((p) => p.setUserVote(sessionUser));
+    }
+
+    return res.json({ user, posts, comments });
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ error: "something went wrong" });
   }
 };
