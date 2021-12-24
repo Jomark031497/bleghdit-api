@@ -63,7 +63,12 @@ export const me = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  if (!req.user) return res.status(404).json({ error: "no user found" });
-  req.logout();
-  return res.status(200);
+  try {
+    console.log("***************************************************************************************88");
+    if (!req.user) return res.status(404).json({ error: "no user found" });
+    req.logout();
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    return res.status(500).json({ error: "something went wrong" });
+  }
 };
