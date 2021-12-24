@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import axios from "axios";
 import { Provider as ReduxProvider } from "react-redux";
 import Head from "next/head";
@@ -12,18 +11,24 @@ import Layout from "../components/Layout";
 import theme from "../styles/theme";
 import store from "../redux/store";
 import fetcher from "../lib/fetcher";
-import removeJSS from "../lib/removeJSS";
+import createEmotionCache from "../lib/createEmotionCache";
+import { CacheProvider, EmotionCache } from "@emotion/react";
 
 axios.defaults.baseURL = "http://localhost:8080/api";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const clientSideEmotionCache = createEmotionCache();
+
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
+
+function MyApp(props: MyAppProps) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const { pathname } = useRouter();
   const authRoute = ["/register", "/login"].includes(pathname);
-  useEffect(() => {
-    removeJSS();
-  }, []);
+
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       <Head>
         <title>leddit</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -42,7 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ThemeProvider>
         </ReduxProvider>
       </SWRConfig>
-    </>
+    </CacheProvider>
   );
 }
 

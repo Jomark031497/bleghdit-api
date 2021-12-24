@@ -6,7 +6,7 @@ import useSWR from "swr";
 import dayjs from "dayjs";
 import PostCard from "../../components/PostCard";
 import CommentCard from "../../components/CommentCard";
-import { CommentType, Post, UserSubmissions } from "../../types";
+import { CommentType, Post } from "../../types";
 
 const UserPage: NextPage = () => {
   const router = useRouter();

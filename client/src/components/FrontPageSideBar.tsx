@@ -1,55 +1,35 @@
 import useSWR from "swr";
 
 import { Avatar, Box, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 
 import { Sub } from "../types";
 
 const FrontPageSideBar: React.FC = () => {
-  const classes = useStyles();
-
   const { data: subs } = useSWR<Sub[]>("/subs");
 
   return (
-    <Box className={classes.root}>
-      <Box>
-        <Box>
-          <Typography variant="h6" className={classes.header}>
-            Top Growing Communities
-          </Typography>
-          {subs &&
-            subs.map((sub) => (
-              <Box key={sub.name} className={classes.subList}>
-                <Avatar src={sub.imageUrl} className={classes.avatar} />
-                <Typography variant="subtitle1">/r/{sub.name}</Typography>
-              </Box>
-            ))}
-        </Box>
-      </Box>
+    <Box sx={{ margin: "1rem" }}>
+      <Typography variant="h6" sx={{ paddingTop: "2rem", backgroundColor: "#000", color: "#fff", textAlign: "center" }}>
+        Top Growing Communities
+      </Typography>
+      {subs &&
+        subs.map((sub) => (
+          <Box
+            key={sub.name}
+            sx={{
+              backgroundColor: "white",
+              display: "flex",
+              alignItems: "center",
+              borderBottom: "1px solid lightgrey",
+              p: "0.2rem",
+            }}
+          >
+            <Avatar src={sub.imageUrl} sx={{ mx: "0.5rem" }} />
+            <Typography variant="subtitle1">/r/{sub.name}</Typography>
+          </Box>
+        ))}
     </Box>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  root: {
-    margin: "1rem",
-  },
-  header: {
-    paddingTop: "2rem",
-    backgroundColor: "#000",
-    color: "#fff",
-    textAlign: "center",
-  },
-  subList: {
-    backgroundColor: "white",
-    display: "flex",
-    alignItems: "center",
-    borderBottom: "1px solid lightgrey",
-    padding: "0.2rem",
-  },
-  avatar: {
-    margin: "auto 0.5rem",
-  },
-}));
 
 export default FrontPageSideBar;

@@ -1,5 +1,4 @@
 import { Box, Container } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -13,7 +12,6 @@ import { Post, Sub } from "../../types";
 
 const Subleddit: NextPage = () => {
   const router = useRouter();
-  const classes = useStyles();
 
   const { data: sub } = useSWR<Sub>(router.query.sub ? `/subs/${router.query.sub}` : null);
 
@@ -25,15 +23,15 @@ const Subleddit: NextPage = () => {
       {sub && (
         <>
           <SubHeader sub={sub} />
-          <Container className={classes.root} maxWidth="lg">
-            <Box className={classes.main}>
+          <Container maxWidth="lg" sx={{ background: "transparent", pb: "1rem", display: "flex" }}>
+            <Box sx={{ flex: 1 }}>
               <FrontPageActions />
               {sub.posts.map((post: Post) => (
                 <PostCard post={post} subImage={sub.imageUrl} key={post.identifier} />
               ))}
             </Box>
 
-            <Box className={classes.sidebar}>
+            <Box sx={{ flex: 0.4 }}>
               <SubSideBar sub={sub} />
             </Box>
           </Container>
@@ -42,19 +40,5 @@ const Subleddit: NextPage = () => {
     </>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  root: {
-    background: "transparent",
-    paddingBottom: "1rem",
-    display: "flex",
-  },
-  main: {
-    flex: 1,
-  },
-  sidebar: {
-    flex: 0.4,
-  },
-}));
 
 export default Subleddit;

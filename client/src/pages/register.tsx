@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
 import { Checkbox, Typography, Link as MuiLink, Button } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -12,7 +11,6 @@ import { registerUser } from "../redux/features/auth/registerSlice";
 import { useAppDispatch } from "../redux/store";
 
 const Register: NextPage = () => {
-  const classes = useStyles();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -34,15 +32,24 @@ const Register: NextPage = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <Box sx={{ display: "flex", background: "white" }}>
       <Head>
         <title>leddit.com: Join the worldwide conversation</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Box className={classes.imageContainer} />
-      <Box className={classes.formContainer}>
-        <Box className={classes.labels}>
+      <Box sx={{ width: "10%", height: "100vh", backgroundImage: "url('/images/bricks.jpg') " }} />
+      <Box
+        sx={{
+          maxWidth: "23rem",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          p: "0rem 1.5rem",
+          pb: "5rem",
+        }}
+      >
+        <Box sx={{ pb: "3rem" }}>
           <Typography variant="h6">Sign up</Typography>
           <Typography variant="subtitle2" color="textSecondary">
             By continuing, you are setting up a Reddit account and agree to our
@@ -52,8 +59,8 @@ const Register: NextPage = () => {
           </Typography>
         </Box>
 
-        <Box className={classes.checkboxContainer}>
-          <Checkbox size="small" disableRipple className={classes.checkbox} />
+        <Box sx={{ display: "flex" }}>
+          <Checkbox size="small" disableRipple sx={{ mr: "0.3rem", p: 0 }} />
           <Typography variant="subtitle2" color="textSecondary">
             I agree to get emails about cool stuff on Reddit
           </Typography>
@@ -109,38 +116,8 @@ const Register: NextPage = () => {
           </Link>
         </Typography>
       </Box>
-    </div>
+    </Box>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  root: {
-    display: "flex",
-    background: "white",
-  },
-  imageContainer: {
-    width: "10%",
-    height: "100vh",
-    backgroundImage: "url('/images/bricks.jpg') ",
-  },
-  formContainer: {
-    maxWidth: "23rem",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: "0rem 1.5rem",
-    paddingBottom: "5rem",
-  },
-  checkboxContainer: {
-    display: "flex",
-  },
-  checkbox: {
-    marginRight: "0.3rem",
-    padding: 0,
-  },
-  labels: {
-    paddingBottom: "3rem",
-  },
-}));
 
 export default Register;

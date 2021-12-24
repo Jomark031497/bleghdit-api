@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
 import { Post, CommentType } from "../../../../types";
 import ArticleIcon from "@mui/icons-material/Article";
-import { makeStyles } from "@mui/styles";
 import UpvoteDownVote from "../../../../components/UpvoteDownVote";
 import PostData from "../../../../components/PostData";
 import SubSideBar from "../../../../components/SubSideBar";
@@ -20,7 +19,6 @@ import CommentCard from "../../../../components/CommentCard";
 dayjs.extend(relativeTime);
 
 const Post: NextPage = () => {
-  const classes = useStyles();
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);
   const { identifier, slug } = router.query;
@@ -57,25 +55,25 @@ const Post: NextPage = () => {
         </title>
       </Head>
       {post && (
-        <Box className={classes.root}>
-          <Container maxWidth="lg" className={classes.container}>
-            <Box className={classes.postHeader}>
-              <ArticleIcon style={{ marginRight: "0.5rem" }} />
+        <Box sx={{ backgroundColor: "#2e2f2f", minHeight: "95vh" }}>
+          <Container maxWidth="lg" sx={{ backgroundColor: "#edeff1", minHeight: "95vh", py: 0 }}>
+            <Box sx={{ display: "flex", backgroundColor: "#000", color: "#fff", p: "1rem 2rem", width: "100%" }}>
+              <ArticleIcon sx={{ mr: "0.5rem" }} />
               <Typography variant="subtitle1">{post.title}</Typography>
             </Box>
 
-            <Box className={classes.mainContainer}>
-              <Box className={classes.mainContent}>
-                <Box className={classes.postContents}>
+            <Box sx={{ backgroundColor: "transparent", display: "flex" }}>
+              <Box sx={{ flex: 1, m: "1rem 0rem 1rem 1rem" }}>
+                <Box sx={{ background: "white", display: "flex" }}>
                   <Box>
                     <UpvoteDownVote post={post} />
                   </Box>
 
-                  <Box className={classes.postData}>
+                  <Box sx={{ flex: 1, pt: "0.5rem" }}>
                     <PostData post={post} />
                     <Typography variant="h5">{post.title}</Typography>
                     {post.body && (
-                      <Typography variant="body1" className={classes.postBody}>
+                      <Typography variant="body1" sx={{ margin: "0.5rem auto" }}>
                         {post.body}
                       </Typography>
                     )}
@@ -83,7 +81,7 @@ const Post: NextPage = () => {
                   </Box>
                 </Box>
 
-                <Box className={classes.commentsContainer}>
+                <Box sx={{ background: "white", marginTop: "1rem", padding: "1rem" }}>
                   {data ? (
                     <form onSubmit={addComment}>
                       {data && <Typography>Comment as {data.username}</Typography>}
@@ -100,7 +98,7 @@ const Post: NextPage = () => {
                       </Button>
                     </form>
                   ) : (
-                    <Box className={classes.unauthenticated}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                       <Typography variant="h6" color="textSecondary">
                         Login or sign up to leave a comment
                       </Typography>
@@ -128,7 +126,7 @@ const Post: NextPage = () => {
                 </Box>
               </Box>
 
-              <Box className={classes.sidebarContainer}>
+              <Box sx={{ flex: 0.4 }}>
                 <SubSideBar sub={post.sub} />
               </Box>
             </Box>
@@ -138,77 +136,5 @@ const Post: NextPage = () => {
     </>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  root: {
-    backgroundColor: "#2e2f2f",
-    minHeight: "95vh",
-  },
-  container: {
-    backgroundColor: "#edeff1",
-    minHeight: "95vh",
-    paddingLeft: 0,
-    paddingRight: 0,
-  },
-  postHeader: {
-    display: "flex",
-    backgroundColor: "#000",
-    color: "#fff",
-    padding: "1rem 2rem",
-    width: "100%",
-  },
-  mainContainer: {
-    backgroundColor: "transparent",
-    display: "flex",
-  },
-  mainContent: {
-    flex: 1,
-    margin: "1rem 0rem 1rem 1rem",
-  },
-  sidebarContainer: {
-    flex: 0.4,
-  },
-  postContents: {
-    background: "white",
-    display: "flex",
-  },
-  postData: {
-    flex: 1,
-    paddingTop: "0.5rem",
-  },
-  postBody: {
-    margin: "0.5rem auto",
-  },
-  commentsContainer: {
-    background: "white",
-    marginTop: "1rem",
-    padding: "1rem",
-  },
-  comment: {
-    margin: "1rem auto",
-    display: "flex",
-    background: "#eee",
-    borderRadius: "0.5rem",
-  },
-  commentData: {
-    padding: "0.5rem",
-  },
-  commentMetadata: {
-    display: "flex",
-    alignItems: "center",
-  },
-  unauthenticated: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  textArea: {
-    width: "100%",
-    border: "1px solid lightgray",
-    "&:focus": {
-      outline: "none",
-      border: "1px solid gray",
-    },
-  },
-}));
 
 export default Post;

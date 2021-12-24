@@ -4,16 +4,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-
 import { Box, Typography, Link as MuiLink, Button } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-
 import { RootState, useAppDispatch } from "../redux/store";
 import { loginUser } from "../redux/features/auth/loginSlice";
 import CTextField from "../components/CTextField";
 
 const Login: NextPage = () => {
-  const classes = useStyles();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -36,15 +32,24 @@ const Login: NextPage = () => {
     }
   };
   return (
-    <div className={classes.root}>
+    <Box sx={{ display: "flex", backgroundColor: "white" }}>
       <Head>
         <title>leddit.com: Log in</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Box className={classes.imageContainer} />
-      <Box className={classes.formContainer}>
-        <Box className={classes.labels}>
+      <Box sx={{ width: "10%", height: "100vh", backgroundImage: "url('/images/bricks.jpg') " }} />
+      <Box
+        sx={{
+          maxWidth: "23rem",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          p: "0rem 1.5rem",
+          pb: "5rem",
+        }}
+      >
+        <Box sx={{ paddingBottom: "3rem" }}>
           <Typography variant="h6">Login</Typography>
           <Typography variant="subtitle2" color="textSecondary">
             By continuing, you agree to our
@@ -96,32 +101,8 @@ const Login: NextPage = () => {
           </Link>
         </Typography>
       </Box>
-    </div>
+    </Box>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  root: {
-    display: "flex",
-    background: "white",
-  },
-  imageContainer: {
-    width: "10%",
-    height: "100vh",
-    backgroundImage: "url('/images/bricks.jpg') ",
-  },
-  formContainer: {
-    maxWidth: "23rem",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: "0rem 1.5rem",
-    paddingBottom: "5rem",
-  },
-
-  labels: {
-    paddingBottom: "3rem",
-  },
-}));
 
 export default Login;

@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { Avatar, Box } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import { Post } from "../types";
 import CLink from "./CLink";
 
@@ -14,13 +13,12 @@ interface Props {
 }
 
 const PostData: React.FC<Props> = ({ post, subImage }) => {
-  const classes = useStyles();
   return (
     <>
       {post && (
-        <Box className={classes.root}>
-          <Box className={classes.postMetadata}>
-            <Avatar src={!subImage ? post.sub.imageUrl : subImage} className={classes.avatar} />
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Avatar src={!subImage ? post.sub.imageUrl : subImage} sx={{ width: "2rem", height: "2rem" }} />
             <CLink href={`/r/${post.subName}`} variant="subtitle1" label={`r/${post.subName}`} color="textSecondary" />
           </Box>
 
@@ -42,20 +40,5 @@ const PostData: React.FC<Props> = ({ post, subImage }) => {
     </>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  root: {
-    display: "flex",
-    alignItems: "center",
-  },
-  postMetadata: {
-    display: "flex",
-    alignItems: "center",
-  },
-  avatar: {
-    width: "2rem",
-    height: "2rem",
-  },
-}));
 
 export default PostData;

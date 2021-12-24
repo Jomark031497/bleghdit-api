@@ -1,5 +1,4 @@
 import { Box, IconButton, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { CommentType, Post } from "../types";
@@ -15,7 +14,6 @@ interface Props {
 }
 
 const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
-  const classes = useStyles();
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);
 
@@ -45,48 +43,40 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
   return (
     <>
       {!comment ? (
-        <Box className={classes.postVoteContainer}>
+        <Box sx={{ display: "flex", flexDirection: "column", flex: 0.5, ml: "0.2rem", alignItems: "center" }}>
           <IconButton onClick={() => vote(1)} style={{ color: post?.userVote === 1 ? "red" : "" }}>
-            <ArrowUpwardIcon className={classes.upvoteIcon} />
+            <ArrowUpwardIcon
+              sx={{
+                ":hover": {
+                  color: "red",
+                },
+              }}
+            />
           </IconButton>
           <Typography variant="body2">{post?.voteScore}</Typography>
-          <IconButton onClick={() => vote(-1)} style={{ color: post?.userVote === -1 ? "blue" : "" }}>
-            <ArrowDownwardIcon className={classes.downvoteIcon} />
+          <IconButton onClick={() => vote(-1)} sx={{ color: post?.userVote === -1 ? "blue" : "" }}>
+            <ArrowDownwardIcon sx={{ ":hover": { color: "blue" } }} />
           </IconButton>
         </Box>
       ) : (
-        <Box className={classes.postVoteContainer}>
-          <IconButton onClick={() => vote(1)} style={{ color: comment?.userVote === 1 ? "red" : "" }}>
-            <ArrowUpwardIcon className={classes.upvoteIcon} />
+        <Box sx={{ display: "flex", flexDirection: "column", flex: 0.5, ml: "0.2rem", alignItems: "center" }}>
+          <IconButton onClick={() => vote(1)} sx={{ color: comment?.userVote === 1 ? "red" : "" }}>
+            <ArrowUpwardIcon
+              sx={{
+                ":hover": {
+                  color: "red",
+                },
+              }}
+            />
           </IconButton>
           <Typography variant="body2">{comment?.voteScore}</Typography>
-          <IconButton onClick={() => vote(-1)} style={{ color: comment?.userVote === -1 ? "blue" : "" }}>
-            <ArrowDownwardIcon className={classes.downvoteIcon} />
+          <IconButton onClick={() => vote(-1)} sx={{ color: comment?.userVote === -1 ? "blue" : "" }}>
+            <ArrowDownwardIcon sx={{ ":hover": { color: "blue" } }} />
           </IconButton>
         </Box>
       )}
     </>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  postVoteContainer: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 0.5,
-    marginLeft: "0.2rem",
-    alignItems: "center",
-  },
-  upvoteIcon: {
-    "&:hover": {
-      color: "red",
-    },
-  },
-  downvoteIcon: {
-    "&:hover": {
-      color: "blue",
-    },
-  },
-}));
 
 export default UpvoteDownVote;

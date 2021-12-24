@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import Image from "next/image";
 
 import { CommentType, Post } from "../types";
@@ -15,14 +14,13 @@ interface Props {
 }
 
 const CommentCard: React.FC<Props> = ({ post, comment }) => {
-  const classes = useStyles();
   return (
-    <Box key={comment.identifier} className={classes.comment}>
+    <Box key={comment.identifier} sx={{ m: "1rem auto", display: "flex", background: "#eee", borderRadius: "0.5rem" }}>
       <Box>
         <UpvoteDownVote post={post} comment={comment} />
       </Box>
-      <Box className={classes.commentData}>
-        <Box className={classes.commentMetadata}>
+      <Box sx={{ p: "0.5rem" }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           <Image src="/images/reddit_logo.png" width="20" height="20" />
           <CLink label={comment.username} href={`u/${comment.username}`} variant="subtitle1" color="textPrimary" />
           <CLink
@@ -39,21 +37,5 @@ const CommentCard: React.FC<Props> = ({ post, comment }) => {
     </Box>
   );
 };
-
-const useStyles = makeStyles(() => ({
-  comment: {
-    margin: "1rem auto",
-    display: "flex",
-    background: "#eee",
-    borderRadius: "0.5rem",
-  },
-  commentData: {
-    padding: "0.5rem",
-  },
-  commentMetadata: {
-    display: "flex",
-    alignItems: "center",
-  },
-}));
 
 export default CommentCard;

@@ -1,34 +1,25 @@
 import { NextPage } from "next";
-import { Box, Theme, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Box, Typography } from "@mui/material";
 import CLink from "../components/CLink";
 
 const NotFound: NextPage = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center", height: "90vh", justifyContent: "center" }}
+    >
       <Typography variant="h4">Page Not Found</Typography>
-      <Box className={classes.back}>
+      <Box
+        sx={{
+          backgroundColor: "primary.main",
+          p: "0.5rem",
+          borderRadius: "1rem",
+          m: "2rem auto",
+        }}
+      >
         <CLink href="/" label="Go back to homepage" variant="h4" />
       </Box>
-    </div>
+    </Box>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "90vh",
-    justifyContent: "center",
-  },
-  back: {
-    backgroundColor: theme.palette.primary.main,
-    padding: "0.5rem",
-    borderRadius: "1rem",
-    margin: "2rem auto",
-  },
-}));
 
 export default NotFound;

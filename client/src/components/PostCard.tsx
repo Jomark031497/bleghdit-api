@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { Box, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 
 import { Post } from "../types";
 import UpvoteDownVote from "./UpvoteDownVote";
@@ -18,21 +17,32 @@ interface PostProps {
 }
 
 const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
-  const classes = useStyles();
-
   return (
-    <Box className={classes.root} key={post.identifier}>
+    <Box
+      sx={{
+        display: "flex",
+        my: "0.5rem",
+        background: "white",
+        border: "0.3px solid transparent",
+        "&:hover": {
+          border: "0.3px solid black",
+          transition: "0.1s ease-in",
+          cursor: "pointer",
+        },
+      }}
+    >
       <UpvoteDownVote post={post} />
 
-      <Box className={classes.postContentContainer}>
+      <Box sx={{ display: "flex", flexDirection: "column", flex: 8.5, m: "0.3rem 0.5rem" }}>
         <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>
           <div>
             <PostData post={post} subImage={subImage} />
 
-            <Box className={classes.postTitleAndBody}>
+            <Box sx={{ m: "0.5rem" }}>
               <Typography variant="h5">{post.title}</Typography>
+
               {post.body && (
-                <Typography variant="body1" className={classes.postBody}>
+                <Typography variant="body1" sx={{ my: "0.5rem" }}>
                   {post.body}
                 </Typography>
               )}
@@ -45,31 +55,5 @@ const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
     </Box>
   );
 };
-
-const useStyles = makeStyles(() => ({
-  root: {
-    display: "flex",
-    margin: "0.5rem auto",
-    background: "white",
-    border: "0.3px solid transparent",
-    "&:hover": {
-      border: "0.3px solid black",
-      transition: "0.1s ease-in",
-      cursor: "pointer",
-    },
-  },
-  postContentContainer: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 8.5,
-    margin: "0.3rem 0.5rem",
-  },
-  postTitleAndBody: {
-    margin: "0.5rem",
-  },
-  postBody: {
-    margin: "0.5rem auto",
-  },
-}));
 
 export default PostCard;

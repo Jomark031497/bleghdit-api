@@ -1,5 +1,4 @@
-import { Box, Button, Theme } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Box, Button } from "@mui/material";
 import CommentIcon from "@mui/icons-material/ModeCommentOutlined";
 import SaveIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import ShareIcon from "@mui/icons-material/ShareOutlined";
@@ -10,31 +9,19 @@ interface Props {
 }
 
 const PostActionButtons: React.FC<Props> = ({ post }) => {
-  const classes = useStyles();
-
   return (
-    <Box className={classes.actionButtonsContainer}>
-      <Button className={classes.actionButtons} startIcon={<CommentIcon />} size="small">
+    <Box sx={{ display: "flex" }}>
+      <Button startIcon={<CommentIcon />} size="small" sx={{ mx: "0.3rem", color: "text.secondary" }}>
         {post.commentCount} Comments
       </Button>
-      <Button className={classes.actionButtons} startIcon={<ShareIcon />} size="small">
+      <Button startIcon={<ShareIcon />} size="small" sx={{ mx: "0.3rem", color: "text.secondary" }}>
         Share
       </Button>
-      <Button className={classes.actionButtons} startIcon={<SaveIcon />} size="small">
+      <Button startIcon={<SaveIcon />} size="small" sx={{ mx: "0.3rem", color: "text.secondary" }}>
         Save
       </Button>
     </Box>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) => ({
-  actionButtonsContainer: {
-    display: "flex",
-  },
-  actionButtons: {
-    margin: "auto 0.3rem",
-    color: theme.palette.text.secondary,
-  },
-}));
 
 export default PostActionButtons;

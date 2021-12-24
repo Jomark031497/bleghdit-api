@@ -4,7 +4,6 @@ import { mutate } from "swr";
 import { useSelector } from "react-redux";
 
 import { Avatar, Box, Container, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
@@ -15,8 +14,6 @@ interface SubProps {
 }
 
 const SubHeader: React.FC<SubProps> = ({ sub }) => {
-  const classes = useStyles();
-
   const [ownsSub, setOwnsSub] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { data } = useSelector((state: RootState) => state.login);
@@ -56,10 +53,10 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
       {sub && (
         <>
           <input type="file" hidden={true} ref={fileInputRef} onChange={uploadImage} />
-          <Box className={classes.subHeaderContainer}>
+          <Box sx={{ background: "white" }}>
             {sub.bannerUrl ? (
               <Box
-                style={{
+                sx={{
                   height: "24vh",
                   backgroundImage: `url(${sub.bannerUrl})`,
                   backgroundRepeat: "no-repeat",
@@ -73,23 +70,23 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
               <Box style={{ height: "24vh", background: "skyblue" }} />
             )}
 
-            <Container maxWidth="md" className={classes.subDataContainer}>
-              <Box className={classes.avatarContainer} style={{ cursor: ownsSub ? "pointer" : "" }}>
+            <Container maxWidth="md" sx={{ height: "103px", display: "flex", position: "relative" }}>
+              <Box sx={{ position: "absolute", top: -15, cursor: ownsSub ? "pointer" : "" }}>
                 <Avatar
                   src={`${sub.imageUrl}`}
                   alt="subreddit image"
-                  className={classes.subAvatar}
+                  sx={{ height: "80px", width: "80px" }}
                   onClick={() => openFileInput("image")}
                 />
               </Box>
-              <Box className={classes.subTitle}>
+              <Box sx={{ pl: "6rem" }}>
                 <Typography variant="h4">{sub.title}</Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   /r/{sub.name}
                 </Typography>
               </Box>
               <Box>
-                <CButton variant="contained" className={classes.buttons}>
+                <CButton variant="contained" sx={{ mx: "0.5rem" }}>
                   Join
                 </CButton>
               </Box>
@@ -100,30 +97,5 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
     </>
   );
 };
-
-const useStyles = makeStyles((_) => ({
-  subHeaderContainer: {
-    background: "white",
-  },
-  subDataContainer: {
-    height: "103px",
-    display: "flex",
-    position: "relative",
-  },
-  avatarContainer: {
-    position: "absolute",
-    top: -15,
-  },
-  subAvatar: {
-    height: "80px",
-    width: "80px",
-  },
-  subTitle: {
-    paddingLeft: "6rem",
-  },
-  buttons: {
-    margin: "auto 0.5rem",
-  },
-}));
 
 export default SubHeader;

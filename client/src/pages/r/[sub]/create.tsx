@@ -1,5 +1,4 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import axios from "axios";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -8,7 +7,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
 const PostPage: NextPage = () => {
-  const classes = useStyles();
   const router = useRouter();
 
   const { data } = useSelector((state: RootState) => state.login);
@@ -42,7 +40,7 @@ const PostPage: NextPage = () => {
     }
   };
   return (
-    <Container maxWidth="md" className={classes.root}>
+    <Container maxWidth="md" sx={{ background: "#fff", m: "3rem auto", p: "1rem 1rem" }}>
       <Box component="form" onSubmit={createPost}>
         <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
         <TextField
@@ -63,23 +61,12 @@ const PostPage: NextPage = () => {
           onChange={(e: any) => setNewPost({ ...newPost, body: e.target.value })}
         />
 
-        <Button type="submit" variant="contained" className={classes.button}>
+        <Button type="submit" variant="contained" sx={{ alignSelf: "flex-end" }}>
           POST
         </Button>
       </Box>
     </Container>
   );
 };
-
-const useStyles = makeStyles(() => ({
-  root: {
-    background: "#fff",
-    margin: "3rem auto",
-    padding: "1rem 1rem",
-  },
-  button: {
-    alignSelf: "flex-end",
-  },
-}));
 
 export default PostPage;
