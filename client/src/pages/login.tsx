@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { Box, Typography, Link as MuiLink, Button } from "@mui/material";
 import { RootState, useAppDispatch } from "../redux/store";
 import { loginUser } from "../redux/features/auth/loginSlice";
-import CTextField from "../components/CTextField";
+import CTextField from "../components/custom/CTextField";
 
 const Login: NextPage = () => {
   const router = useRouter();

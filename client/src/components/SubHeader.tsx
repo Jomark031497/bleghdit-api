@@ -7,7 +7,7 @@ import { Avatar, Box, Container, Typography } from "@mui/material";
 
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
-import CButton from "./CButton";
+import CButton from "./custom/CButton";
 
 interface SubProps {
   sub: Sub;

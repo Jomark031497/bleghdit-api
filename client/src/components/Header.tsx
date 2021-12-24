@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { AppBar, Box, InputAdornment, TextField, Toolbar, Link as MuiLink, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import CButton from "./CButton";
+import CButton from "./custom/CButton";
 
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";

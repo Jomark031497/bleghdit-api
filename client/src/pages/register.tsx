@@ -6,7 +6,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import CTextField from "../components/CTextField";
+import CTextField from "../components/custom/CTextField";
 import { registerUser } from "../redux/features/auth/registerSlice";
 import { useAppDispatch } from "../redux/store";
 

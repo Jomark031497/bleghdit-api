@@ -3,7 +3,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 import { Avatar, Box } from "@mui/material";
 import { Post } from "../types";
-import CLink from "./CLink";
+import CLink from "./custom/CLink";
 
 dayjs.extend(relativeTime);
 

@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { Box, Typography } from "@mui/material";
-import CLink from "../components/CLink";
+import CLink from "../components/custom/CLink";
 
 const NotFound: NextPage = () => {
   return (
