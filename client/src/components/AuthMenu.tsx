@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
@@ -14,13 +14,14 @@ interface AuthMenuProps {
 
 const AuthMenu: React.FC<AuthMenuProps> = ({ username }) => {
   const dispatch = useAppDispatch();
+
+  // state
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  // event functions
   const handleClick = (ev: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(ev.currentTarget);
-
   const handleClose = () => setAnchorEl(null);
-
   const handleLogout = async () => {
     try {
       await axios.get("/auth/logout", { withCredentials: true });
@@ -35,8 +36,8 @@ const AuthMenu: React.FC<AuthMenuProps> = ({ username }) => {
   return (
     <>
       <IconButton disableRipple={true} onClick={handleClick}>
-        <AccountCircleIcon />
-        <Typography>{username}</Typography>
+        <AccountCircleIcon sx={{ mr: "0.3rem" }} />
+        <Typography variant="subtitle1">{username}</Typography>
         <ArrowDropDownIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
