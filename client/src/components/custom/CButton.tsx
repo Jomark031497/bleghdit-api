@@ -1,7 +1,13 @@
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
+import React from "react";
 
-const CButton = ({ ...props }) => {
-  return <Button {...props} sx={{ m: "auto 0.5rem", p: "0.3rem 2.5rem", borderRadius: "1rem" }} />;
+interface IButtonProps extends ButtonProps {
+  mx?: string;
+  my?: string;
+}
+
+const CButton: React.FC<IButtonProps> = ({ ...props }) => {
+  return <Button {...props} sx={{ p: "0.3rem 2.5rem", borderRadius: "1rem", mx: props.mx, my: props.my }} />;
 };
 
 export default CButton;

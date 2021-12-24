@@ -1,13 +1,21 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Box, Typography, Link as MuiLink, Button } from "@mui/material";
+import { Box, Typography, Link as MuiLink } from "@mui/material";
 import { RootState, useAppDispatch } from "../redux/store";
 import { loginUser } from "../redux/features/auth/loginSlice";
 import CTextField from "../components/custom/CTextField";
+import { Field, Form, Formik } from "formik";
+import CButton from "../components/custom/CButton";
+
+import CLink from "../components/custom/CLink";
+
+interface AuthProps {
+  username: string;
+  password: string;
+}
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -15,17 +23,12 @@ const Login: NextPage = () => {
 
   const [errors, setErrors] = useState<any>({});
   const { data } = useSelector((state: RootState) => state.login);
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
 
   if (data) router.push("/");
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (values: AuthProps) => {
     try {
-      await dispatch(loginUser(user)).unwrap();
+      await dispatch(loginUser(values)).unwrap();
       router.push("/");
     } catch (err: any) {
       setErrors(err);
@@ -38,7 +41,7 @@ const Login: NextPage = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Box sx={{ width: "10%", height: "100vh", backgroundImage: "url('/images/bricks.jpg') " }} />
+      <Box sx={{ width: { xs: 0, sm: "10%" }, height: "100vh", backgroundImage: "url('/images/bricks.jpg') " }} />
       <Box
         sx={{
           maxWidth: "23rem",
@@ -58,47 +61,33 @@ const Login: NextPage = () => {
             <MuiLink underline="none"> Privacy Policy </MuiLink>.
           </Typography>
         </Box>
+        <Formik initialValues={{ username: "", password: "" }} onSubmit={(values) => handleSubmit(values)}>
+          {() => (
+            <Box component={Form}>
+              <Field as={CTextField} name="username" label="username" error={errors.username ? true : false} />
+              <Typography color="error" variant="subtitle2">
+                {errors.username}
+              </Typography>
+              <Field
+                as={CTextField}
+                type="password"
+                name="password"
+                label="password"
+                error={errors.password ? true : false}
+              />
+              <Typography color="error" variant="subtitle2">
+                {errors.password}
+              </Typography>
+              <CButton type="submit" variant="contained" my="0.5rem" fullWidth>
+                LOGIN
+              </CButton>
+            </Box>
+          )}
+        </Formik>
 
-        <Box component="form" onSubmit={handleSubmit}>
-          <CTextField
-            variant="outlined"
-            label="username"
-            fullWidth
-            error={errors.error ? true : false}
-            value={user.username}
-            onChange={(e: any) => setUser({ ...user, username: e.target.value })}
-          />
-          <Typography color="error" variant="subtitle2">
-            {errors.username}
-          </Typography>
-
-          <CTextField
-            variant="outlined"
-            label="password"
-            type="password"
-            fullWidth
-            error={errors.error ? true : false}
-            value={user.password}
-            onChange={(e: any) => setUser({ ...user, password: e.target.value })}
-          />
-          <Typography color="error" variant="subtitle2">
-            {errors.password}
-          </Typography>
-
-          <Typography color="error" variant="subtitle2">
-            {errors.error}
-          </Typography>
-
-          <Button type="submit" variant="contained" fullWidth>
-            LOGIN
-          </Button>
-        </Box>
-
-        <Typography>
+        <Typography sx={{ mt: "0.5rem" }}>
           New to leddit?
-          <Link href="/register" passHref>
-            <MuiLink underline="none"> Sign up</MuiLink>
-          </Link>
+          <CLink href="/register" label="Sign up" color="textSecondary" variant="subtitle1" />
         </Typography>
       </Box>
     </Box>

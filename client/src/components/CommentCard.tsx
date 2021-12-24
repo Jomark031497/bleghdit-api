@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
 import { CommentType, Post } from "../types";
-import CLink from "./CLink";
+import CLink from "./custom/CLink";
 import UpvoteDownVote from "./UpvoteDownVote";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

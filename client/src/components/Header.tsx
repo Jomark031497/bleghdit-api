@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 
-import { AppBar, Box, InputAdornment, TextField, Toolbar, Link as MuiLink, Typography } from "@mui/material";
+import { AppBar, Box, InputAdornment, Toolbar, Link as MuiLink, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CButton from "./custom/CButton";
 
@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
 import { setCurrentUser } from "../redux/features/auth/loginSlice";
 import AuthMenu from "./AuthMenu";
+import CTextField from "./custom/CTextField";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -46,11 +47,9 @@ const Header: React.FC = () => {
             </Link>
           </Box>
 
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
-            <TextField
+          <Box sx={{ flex: 1, display: "flex", maxWidth: "40%" }}>
+            <CTextField
               placeholder="Search Reddit"
-              size="small"
-              fullWidth
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -58,7 +57,6 @@ const Header: React.FC = () => {
                   </InputAdornment>
                 ),
               }}
-              sx={{ width: "40%" }}
             />
           </Box>
 
@@ -67,15 +65,10 @@ const Header: React.FC = () => {
               <AuthMenu username={data.username} />
             ) : (
               <Box sx={{ display: "flex" }}>
-                <CButton variant="outlined" onClick={() => router.push("/login")} sx={{ mX: " 0.5rem" }}>
+                <CButton variant="outlined" mx="0.3rem" onClick={() => router.push("/login")}>
                   Log In
                 </CButton>
-                <CButton
-                  color="primary"
-                  variant="contained"
-                  sx={{ mx: " 0.5rem" }}
-                  onClick={() => router.push("/register")}
-                >
+                <CButton variant="contained" mx="0.3rem" color="primary" onClick={() => router.push("/register")}>
                   Sign Up
                 </CButton>
               </Box>

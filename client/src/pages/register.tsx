@@ -1,30 +1,32 @@
-import { FormEvent, useState } from "react";
-import { Checkbox, Typography, Link as MuiLink, Button } from "@mui/material";
+import { useState } from "react";
+import { Checkbox, Typography, Link as MuiLink } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import CTextField from "../components/custom/CTextField";
 import { registerUser } from "../redux/features/auth/registerSlice";
 import { useAppDispatch } from "../redux/store";
+import { Field, Form, Formik } from "formik";
+import CButton from "../components/custom/CButton";
+import CLink from "../components/custom/CLink";
+
+interface AuthProps {
+  email: string;
+  username: string;
+  password: string;
+}
 
 const Register: NextPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [user, setUser] = useState({
-    email: "",
-    username: "",
-    password: "",
-  });
   const [errors, setErrors] = useState<any>({});
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (values: AuthProps) => {
     try {
-      await dispatch(registerUser(user)).unwrap();
+      await dispatch(registerUser(values)).unwrap();
       router.push("/login");
     } catch (err: any) {
       setErrors(err);
@@ -38,7 +40,7 @@ const Register: NextPage = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Box sx={{ width: "10%", height: "100vh", backgroundImage: "url('/images/bricks.jpg') " }} />
+      <Box sx={{ width: { xs: 0, sm: "10%" }, height: "100vh", backgroundImage: "url('/images/bricks.jpg') " }} />
       <Box
         sx={{
           maxWidth: "23rem",
@@ -60,60 +62,43 @@ const Register: NextPage = () => {
         </Box>
 
         <Box sx={{ display: "flex" }}>
-          <Checkbox size="small" disableRipple sx={{ mr: "0.3rem", p: 0 }} />
-          <Typography variant="subtitle2" color="textSecondary">
+          <Checkbox size="small" disableRipple sx={{ mr: "0.3rem", p: 0, alignSelf: "flex-start" }} />
+          <Typography variant="body2" color="textSecondary">
             I agree to get emails about cool stuff on Reddit
           </Typography>
         </Box>
 
-        <Box component="form" onSubmit={handleSubmit}>
-          <CTextField
-            variant="outlined"
-            label="email address"
-            fullWidth
-            error={errors.email ? true : false}
-            value={user.email}
-            onChange={(e: any) => setUser({ ...user, email: e.target.value })}
-          />
-          <Typography color="error" variant="subtitle2">
-            {errors.email}
-          </Typography>
+        <Formik initialValues={{ email: "", username: "", password: "" }} onSubmit={(values) => handleSubmit(values)}>
+          {() => (
+            <Box component={Form}>
+              <Field as={CTextField} type="email" name="email" label="email" error={errors.email ? true : false} />
+              <Typography color="error" variant="subtitle2">
+                {errors.email}
+              </Typography>
+              <Field as={CTextField} name="username" label="username" error={errors.username ? true : false} />
+              <Typography color="error" variant="subtitle2">
+                {errors.username}
+              </Typography>
+              <Field
+                as={CTextField}
+                type="password"
+                name="password"
+                label="password"
+                error={errors.password ? true : false}
+              />
+              <Typography color="error" variant="subtitle2">
+                {errors.password}
+              </Typography>
+              <CButton type="submit" variant="contained" my="0.5rem" fullWidth>
+                REGISTER
+              </CButton>
+            </Box>
+          )}
+        </Formik>
 
-          <CTextField
-            variant="outlined"
-            label="username"
-            fullWidth
-            error={errors.username ? true : false}
-            value={user.username}
-            onChange={(e: any) => setUser({ ...user, username: e.target.value })}
-          />
-          <Typography color="error" variant="subtitle2">
-            {errors.username}
-          </Typography>
-
-          <CTextField
-            variant="outlined"
-            label="password"
-            type="password"
-            fullWidth
-            error={errors.password ? true : false}
-            value={user.password}
-            onChange={(e: any) => setUser({ ...user, password: e.target.value })}
-          />
-          <Typography color="error" variant="subtitle2">
-            {errors.password}
-          </Typography>
-
-          <Button type="submit" variant="contained" fullWidth>
-            REGISTER
-          </Button>
-        </Box>
-
-        <Typography>
+        <Typography sx={{ mt: "0.5rem" }}>
           Already a ledditor?
-          <Link href="/login" passHref>
-            <MuiLink underline="none"> Log in</MuiLink>
-          </Link>
+          <CLink href="/login" variant="subtitle1" label="Log in" />
         </Typography>
       </Box>
     </Box>

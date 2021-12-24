@@ -1,4 +1,4 @@
-import { Box, Container, Typography, TextField, Button } from "@mui/material";
+import { Box, Container, Typography, Button } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
@@ -12,10 +12,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useState } from "react";
 import axios from "axios";
 import { NextPage } from "next";
 import CommentCard from "../../../../components/CommentCard";
+import { Field, Form, Formik } from "formik";
+import CTextField from "../../../../components/custom/CTextField";
+import CButton from "../../../../components/custom/CButton";
 dayjs.extend(relativeTime);
 
 const Post: NextPage = () => {
@@ -23,24 +25,20 @@ const Post: NextPage = () => {
   const { data } = useSelector((state: RootState) => state.login);
   const { identifier, slug } = router.query;
 
-  const [newComment, setNewComment] = useState("");
-
   const { data: post, error } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
   const { data: comments } = useSWR<CommentType[]>(identifier && slug ? `/posts/${identifier}/${slug}/comments` : null);
   if (error) router.push("/");
 
-  const addComment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newComment) return;
+  const addComment = async (values: string) => {
+    if (!values) return;
 
     try {
       await axios.post(
         `/posts/${post?.identifier}/${post?.slug}/comments`,
-        { body: newComment.trim() },
+        { body: values.trim() },
         { withCredentials: true }
       );
 
-      setNewComment("");
       mutate(`/posts/${identifier}/${slug}/comments`);
     } catch (error) {
       console.error(error);
@@ -83,20 +81,23 @@ const Post: NextPage = () => {
 
                 <Box sx={{ background: "white", marginTop: "1rem", padding: "1rem" }}>
                   {data ? (
-                    <form onSubmit={addComment}>
-                      {data && <Typography>Comment as {data.username}</Typography>}
-                      <TextField
-                        placeholder="What are your thoughts?"
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        minRows={4}
-                        multiline
-                        fullWidth
-                      />
-                      <Button type="submit" variant="contained">
-                        Comment
-                      </Button>
-                    </form>
+                    <Formik initialValues={{ body: "" }} onSubmit={(values) => addComment(values.body)}>
+                      {() => (
+                        <Box component={Form}>
+                          <Field
+                            as={CTextField}
+                            name="body"
+                            placeholder="What are your thoughts?"
+                            multiline
+                            minRows={5}
+                          />
+
+                          <CButton type="submit" variant="contained">
+                            Comment
+                          </CButton>
+                        </Box>
+                      )}
+                    </Formik>
                   ) : (
                     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                       <Typography variant="h6" color="textSecondary">

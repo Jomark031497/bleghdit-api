@@ -1,7 +1,7 @@
 import Link from "next/link";
-import MuiLink from "@mui/material/Link";
+import { Link as MuiLink, LinkBaseProps } from "@mui/material/";
 
-interface LinkProps {
+interface LinkProps extends LinkBaseProps {
   href: string;
   label: string;
   color?: "textPrimary" | "textSecondary";
@@ -27,7 +27,7 @@ const CLink: React.FC<LinkProps> = ({ ...props }) => {
   return (
     <>
       <Link href={props.href} passHref>
-        <MuiLink underline="hover" color={props.color} variant={props.variant} sx={{ m: "0 0.3rem" }}>
+        <MuiLink {...props} underline="hover" color={props.color} variant={props.variant} sx={{ m: "0 0.3rem" }}>
           {props.label}
         </MuiLink>
       </Link>
