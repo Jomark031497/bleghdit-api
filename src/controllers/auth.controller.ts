@@ -5,9 +5,8 @@ import { isEmpty, validate } from "class-validator";
 import { mapErrors } from "../utils/helpers";
 
 export const register = async (req: Request, res: Response) => {
-  const { email, username, password } = req.body; // destructure the fields
+  const { email, username, password } = req.body;
   try {
-    // validations
     let errors: any = {};
     // Check if there's already an existing username and password in the database
     const checkUser = await User.findOne({ username });
@@ -19,13 +18,8 @@ export const register = async (req: Request, res: Response) => {
     if (Object.keys(errors).length > 0) return res.status(400).json(errors); // return a 400 error if there are errors
 
     const user = new User({ email, username, password }); // create a new User
-
     errors = await validate(user); // validate the user using class validator
-
-    if (errors.length > 0) {
-      return res.status(400).json(mapErrors(errors));
-    }
-
+    if (errors.length > 0) return res.status(400).json(mapErrors(errors));
     // save the user to the database
     await user.save();
     return res.status(200).json(user);
@@ -36,10 +30,8 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { username, password } = req.body; // destructure from body
-
   try {
     let errors: any = {};
-
     // check if the fields are empty
     if (isEmpty(username)) errors.username = "Username must not be empty";
     if (isEmpty(password)) errors.password = "Password must not be empty";
@@ -49,7 +41,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       try {
         if (err) return next(err);
         if (!user) return res.status(400).json({ error: "Usernames/Password is incorrect" });
-
         // authorize the login
         req.logIn(user, (err: Error) => {
           if (err) return next(err);
@@ -72,11 +63,7 @@ export const me = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  try {
-    if (!req.user) return res.status(404).json({ error: "no user found" });
-    req.logout();
-    return res.status(200).json({ message: "logged out successfully" });
-  } catch (e) {
-    return res.status(500).json({ error: "something went wrong" });
-  }
+  if (!req.user) return res.status(404).json({ error: "no user found" });
+  req.logout();
+  return res.status(200);
 };
