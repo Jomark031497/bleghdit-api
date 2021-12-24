@@ -13,7 +13,7 @@ const FrontPageActions: React.FC = () => {
     <>
       <Box sx={{ display: "flex", alignItems: "center", backgroundColor: "white", m: "1rem auto" }}>
         <Avatar sx={{ m: "auto 0.5rem" }}>H</Avatar>
-        <CTextField placeholder="Create Post" sx={{ flex: 1 }} />
+        <CTextField placeholder="Create Post" fullWidth />
         <Box sx={{ display: "flex", m: "auto 0.5rem", color: "text.secondary" }}>
           <PhotoIcon sx={{ fontSize: "2rem", m: "auto 0.2rem" }} />
           <InsertLinkIcon sx={{ fontSize: "2rem", m: "auto 0.2rem" }} />
