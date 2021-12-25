@@ -110,10 +110,11 @@ export const getUserSubmissions = async (req: Request, res: Response) => {
       select: ["username", "createdAt"],
     });
     const posts = await Post.find({
-      where: { user },
-      order: { createdAt: "DESC" },
+      where: { username },
+      order: { createdAt: "DESC" }, // display the latest post
       relations: ["comments", "votes", "sub"],
     });
+
     const comments = await Comment.find({
       where: { username },
       order: { createdAt: "DESC" },
@@ -125,6 +126,7 @@ export const getUserSubmissions = async (req: Request, res: Response) => {
     if (sessionUser) {
       comments.forEach((p) => p.setUserVote(sessionUser));
     }
+
     let submissions: any = [];
     posts.forEach((post) => submissions.push({ type: "POST", ...post }));
     comments.forEach((comment) => submissions.push({ type: "COMMENT", ...comment }));
