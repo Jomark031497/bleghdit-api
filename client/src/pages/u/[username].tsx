@@ -25,7 +25,7 @@ const UserPage: NextPage = () => {
         <CButton onClick={() => setTab("comments")}>Comments</CButton>
       </Box>
       <Box sx={{ display: "flex", marginTop: "1rem" }}>
-        <Box sx={{ backgroundColor: "#fff", flex: 1, mr: "0.5rem", px: "1rem" }}>
+        <Box sx={{ backgroundColor: "#eee", flex: 1, mr: "0.5rem", px: "1rem" }}>
           {tab === "overview" && (
             <Box>
               {userSubmissions &&
@@ -36,7 +36,7 @@ const UserPage: NextPage = () => {
                   } else {
                     const comment: CommentType = submission;
                     return (
-                      <Box>
+                      <Box sx={{backgroundColor: "#fff"}}>
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                           <Box>
                             <Avatar src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_3.png" />

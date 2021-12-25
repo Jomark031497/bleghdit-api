@@ -15,7 +15,10 @@ interface Props {
 
 const CommentCard: React.FC<Props> = ({ post, comment }) => {
   return (
-    <Box key={comment.identifier} sx={{ m: "1rem auto", display: "flex", background: "#eee", borderRadius: "0.5rem" }}>
+    <Box
+      key={comment.identifier}
+      sx={{ m: "1rem auto", display: "flex", background: "#f2f8fd", borderRadius: "0.5rem" }}
+    >
       <Box>
         <UpvoteDownVote post={post} comment={comment} />
       </Box>

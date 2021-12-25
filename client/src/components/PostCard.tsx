@@ -24,6 +24,7 @@ const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
         my: "0.5rem",
         background: "white",
         border: "0.3px solid transparent",
+        borderRadius: "0.5rem",
         "&:hover": {
           border: "0.3px solid black",
           transition: "0.1s ease-in",
