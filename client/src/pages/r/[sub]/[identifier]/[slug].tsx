@@ -123,7 +123,10 @@ const Post: NextPage = () => {
                     </Box>
                   )}
                   <hr />
-                  <Box>{comments && comments.map((comment) => <CommentCard post={post} comment={comment} />)}</Box>
+                  <Box>
+                    {comments &&
+                      comments.map((comment) => <CommentCard post={post} comment={comment} key={comment.identifier} />)}
+                  </Box>
                 </Box>
               </Box>
 
