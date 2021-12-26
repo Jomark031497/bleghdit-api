@@ -4,7 +4,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
-import FrontPageActions from "../../components/FrontPageActions";
 import PostCard from "../../components/PostCard";
 import SubHeader from "../../components/SubHeader";
 import SubSideBar from "../../components/SubSideBar";
@@ -25,7 +24,6 @@ const Subleddit: NextPage = () => {
           <SubHeader sub={sub} />
           <Container maxWidth="lg" sx={{ background: "transparent", pb: "1rem", display: "flex" }}>
             <Box sx={{ flex: 1 }}>
-              <FrontPageActions />
               {sub.posts.map((post: Post) => (
                 <PostCard post={post} subImage={sub.imageUrl} key={post.identifier} />
               ))}

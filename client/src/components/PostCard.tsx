@@ -21,7 +21,7 @@ const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
     <Box
       sx={{
         display: "flex",
-        my: "0.5rem",
+        mb: "0.5rem",
         background: "white",
         border: "0.1px solid transparent",
         borderRadius: "0.5rem",

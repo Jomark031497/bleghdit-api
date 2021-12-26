@@ -53,7 +53,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
       {sub && (
         <>
           <input type="file" hidden={true} ref={fileInputRef} onChange={uploadImage} />
-          <Box sx={{ background: "white" }}>
+          <Box sx={{ background: "white", mb: "1rem" }}>
             {sub.bannerUrl ? (
               <Box
                 sx={{
@@ -70,7 +70,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
               <Box style={{ height: "24vh", background: "skyblue" }} />
             )}
 
-            <Container maxWidth="lg" sx={{ height: "103px", display: "flex", position: "relative" }}>
+            <Container maxWidth="lg" sx={{ height: "90px", display: "flex", position: "relative" }}>
               <Box sx={{ cursor: ownsSub ? "pointer" : "" }}>
                 <Avatar
                   src={`${sub.imageUrl}`}
@@ -80,12 +80,12 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                 />
               </Box>
               <Box sx={{ pl: "6rem" }}>
-                <Typography variant="h4">{sub.title}</Typography>
+                <Typography variant="h5">{sub.title}</Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   /r/{sub.name}
                 </Typography>
               </Box>
-              <Box sx={{ m: "1rem" }}>
+              <Box sx={{ m: "0.5rem 1rem" }}>
                 <CButton variant="contained">Join</CButton>
               </Box>
             </Container>
