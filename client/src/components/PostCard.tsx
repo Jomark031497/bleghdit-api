@@ -23,10 +23,11 @@ const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
         display: "flex",
         my: "0.5rem",
         background: "white",
-        border: "0.3px solid transparent",
+        border: "0.1px solid transparent",
         borderRadius: "0.5rem",
+        p: 0,
         "&:hover": {
-          border: "0.3px solid black",
+          border: "0.1px solid black",
           transition: "0.1s ease-in",
           cursor: "pointer",
         },
@@ -40,10 +41,10 @@ const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
             <PostData post={post} subImage={subImage} />
 
             <Box sx={{ m: "0.5rem" }}>
-              <Typography variant="h5">{post.title}</Typography>
+              <Typography variant="h6">{post.title}</Typography>
 
               {post.body && (
-                <Typography variant="body1" sx={{ my: "0.5rem" }}>
+                <Typography variant="body2" sx={{ my: "0.5rem" }}>
                   {post.body}
                 </Typography>
               )}

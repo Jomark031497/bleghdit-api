@@ -27,7 +27,7 @@ const CLink: React.FC<LinkProps> = ({ ...props }) => {
   return (
     <>
       <Link href={props.href} passHref>
-        <MuiLink {...props} underline="hover" color={props.color} variant={props.variant} sx={{ m: "0 0.3rem" }}>
+        <MuiLink {...props} underline="hover" color={props.color} variant={props.variant}>
           {props.label}
         </MuiLink>
       </Link>

@@ -10,11 +10,15 @@ const FrontPageSideBar: React.FC = () => {
 
   return (
     <Box sx={{ margin: "1rem" }}>
-      <Typography variant="h6" sx={{ paddingTop: "2rem", backgroundColor: "#000", color: "#fff", textAlign: "center" }}>
-        Top Growing Communities
+      <Typography
+        variant="subtitle1"
+        align="center"
+        sx={{ paddingTop: "3rem", backgroundColor: "#000", color: "#fff" }}
+      >
+        Today's Top Growing Communities
       </Typography>
       {subs &&
-        subs.map((sub) => (
+        subs.map((sub, index) => (
           <Box
             key={sub.name}
             sx={{
@@ -22,11 +26,20 @@ const FrontPageSideBar: React.FC = () => {
               display: "flex",
               alignItems: "center",
               borderBottom: "1px solid lightgrey",
-              p: "0.2rem",
+              p: "0.5rem",
             }}
           >
+            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+              {index + 1}
+            </Typography>
             <Avatar src={sub.imageUrl} sx={{ mx: "0.5rem" }} />
-            <CLink href={`/r/${sub.name}`} label={`r/${sub.name}`} variant="subtitle2" />
+            <CLink
+              href={`/r/${sub.name}`}
+              label={`r/${sub.name}`}
+              variant="subtitle2"
+              color="textPrimary"
+              sx={{ fontWeight: "bold" }}
+            />
           </Box>
         ))}
     </Box>

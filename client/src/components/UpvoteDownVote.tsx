@@ -43,7 +43,16 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
   return (
     <>
       {!comment ? (
-        <Box sx={{ display: "flex", flexDirection: "column", flex: 0.5, ml: "0.2rem", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 0.5,
+            alignItems: "center",
+            background: "#f7f9fa",
+            borderRadius: "0.5rem",
+          }}
+        >
           <IconButton onClick={() => vote(1)} style={{ color: post?.userVote === 1 ? "red" : "" }}>
             <ArrowUpwardIcon
               sx={{
