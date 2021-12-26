@@ -61,8 +61,8 @@ const Register: NextPage = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex" }}>
-          <Checkbox size="small" disableRipple sx={{ mr: "0.3rem", p: 0, alignSelf: "flex-start" }} />
+        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+          <Checkbox size="small" disableRipple sx={{ mr: "0.3rem", mt: "0.3rem", p: 0 }} />
           <Typography variant="body2" color="textSecondary">
             I agree to get emails about cool stuff on Reddit
           </Typography>
@@ -96,9 +96,9 @@ const Register: NextPage = () => {
           )}
         </Formik>
 
-        <Typography sx={{ mt: "0.5rem" }}>
+        <Typography variant="subtitle2" sx={{ mt: "0.5rem" }}>
           Already a ledditor?
-          <CLink href="/login" variant="subtitle1" label="Log in" />
+          <CLink href="/login" variant="subtitle2" label="Log in" sx={{ mx: "0.3rem" }} />
         </Typography>
       </Box>
     </Box>

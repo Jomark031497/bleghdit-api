@@ -89,9 +89,9 @@ const Login: NextPage = () => {
           )}
         </Formik>
 
-        <Typography sx={{ mt: "0.5rem" }}>
+        <Typography variant="subtitle2" sx={{ mt: "0.5rem" }}>
           New to leddit?
-          <CLink href="/register" label="Sign up" color="textSecondary" variant="subtitle1" />
+          <CLink href="/register" label="Sign up" variant="subtitle2" sx={{ mx: "0.3rem" }} />
         </Typography>
       </Box>
     </Box>
