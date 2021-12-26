@@ -5,7 +5,7 @@ import User from "./User";
 import Subs from "./Subleddit";
 import Comment from "./Comment";
 import Vote from "./Vote";
-import { Exclude, Expose } from "class-transformer";
+import { Expose } from "class-transformer";
 
 @Entity("posts")
 export default class Post extends RootEntity {
@@ -45,18 +45,12 @@ export default class Post extends RootEntity {
   sub: Subs;
 
   // A Post can have multiple comments
-  @Exclude()
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
   // A Post can have multiple votes
   @OneToMany(() => Vote, (vote) => vote.post)
   votes: Vote[];
-
-  // exposed virtual field to show comment count
-  @Expose() get commentCount(): number {
-    return this.comments?.length;
-  }
 
   // exposed virtual field to show voteScore
   @Expose() get voteScore(): number {

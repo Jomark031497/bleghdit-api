@@ -12,7 +12,7 @@ const PostActionButtons: React.FC<Props> = ({ post }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <Button startIcon={<CommentIcon />} size="small" sx={{ mx: "0.3rem", color: "text.secondary" }}>
-        {post.commentCount} Comments
+        {post.comments?.length} Comments
       </Button>
       <Button startIcon={<ShareIcon />} size="small" sx={{ mx: "0.3rem", color: "text.secondary" }}>
         Share

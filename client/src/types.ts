@@ -5,11 +5,11 @@ export interface Post {
   slug: string;
   subName: string;
   sub: Sub;
+  comments?: CommentType[];
   createdAt: string;
   updatedAt: string;
   username: string;
   voteScore?: number;
-  commentCount?: number;
   userVote?: number;
 }
 

@@ -17,6 +17,7 @@ interface PostProps {
 }
 
 const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
+  console.log(post);
   return (
     <Box
       sx={{

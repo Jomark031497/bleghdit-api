@@ -29,7 +29,7 @@ export default class Comment extends RootEntity {
   user: User;
 
   // A Post can have multiple comments
-  @ManyToOne(() => Post, (post) => post.comments, { nullable: false })
+  @ManyToOne(() => Post, (post) => post.comments)
   post: Post;
 
   // A Comment can have many votes

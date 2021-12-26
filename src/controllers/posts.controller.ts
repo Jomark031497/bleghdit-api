@@ -30,11 +30,13 @@ export const getPosts = async (req: Request, res: Response) => {
     // find all the posts
     const posts = await Post.find({
       order: { createdAt: "DESC" }, // display the latest post
-      relations: ["comments", "votes", "sub"],
+      relations: ["sub", "votes", "comments"],
     });
+
     if (user) posts.forEach((p) => p.setUserVote(user));
     return res.json(posts);
   } catch (e) {
+    console.log(e);
     return res.status(500).json({ error: "something went wrong" });
   }
 };
