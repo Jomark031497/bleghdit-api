@@ -70,12 +70,12 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
               <Box style={{ height: "24vh", background: "skyblue" }} />
             )}
 
-            <Container maxWidth="md" sx={{ height: "103px", display: "flex", position: "relative" }}>
-              <Box sx={{ position: "absolute", top: -15, cursor: ownsSub ? "pointer" : "" }}>
+            <Container maxWidth="lg" sx={{ height: "103px", display: "flex", position: "relative" }}>
+              <Box sx={{ cursor: ownsSub ? "pointer" : "" }}>
                 <Avatar
                   src={`${sub.imageUrl}`}
                   alt="subreddit image"
-                  sx={{ height: "80px", width: "80px" }}
+                  sx={{ height: "80px", width: "80px", position: "absolute", top: -15 }}
                   onClick={() => openFileInput("image")}
                 />
               </Box>
@@ -85,10 +85,8 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                   /r/{sub.name}
                 </Typography>
               </Box>
-              <Box>
-                <CButton variant="contained" sx={{ mx: "0.5rem" }}>
-                  Join
-                </CButton>
+              <Box sx={{ m: "1rem" }}>
+                <CButton variant="contained">Join</CButton>
               </Box>
             </Container>
           </Box>
