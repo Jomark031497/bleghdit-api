@@ -32,7 +32,7 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
     }
 
     if (!comment) {
-      if (router.pathname === "/") {
+      if (router.pathname === "/" || router.pathname.includes("/u/")) {
         mutate(`/posts`);
       } else mutate(`/posts/${post.identifier}/${post.slug}`);
     } else {
