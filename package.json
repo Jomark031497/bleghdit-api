@@ -32,8 +32,7 @@
     "@types/passport": "^1.0.7",
     "@types/passport-local": "^1.0.34",
     "concurrently": "^6.4.0",
-    "nodemon": "^2.0.15",
-    "typescript": "^4.5.2"
+    "nodemon": "^2.0.15"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -50,7 +49,8 @@
     "pg": "^8.7.1",
     "ts-node": "^10.4.0",
     "typeorm": "^0.2.41",
-    "typeorm-seeding": "^1.6.1"
+    "typeorm-seeding": "^1.6.1",
+    "typescript": "^4.5.4"
   },
   "engines": {
     "node": "16.13.1"
