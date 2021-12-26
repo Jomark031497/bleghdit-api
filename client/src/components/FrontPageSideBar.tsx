@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { Avatar, Box, Typography } from "@mui/material";
 
 import { Sub } from "../types";
+import CLink from "./custom/CLink";
 
 const FrontPageSideBar: React.FC = () => {
   const { data: subs } = useSWR<Sub[]>("/subs");
@@ -25,7 +26,7 @@ const FrontPageSideBar: React.FC = () => {
             }}
           >
             <Avatar src={sub.imageUrl} sx={{ mx: "0.5rem" }} />
-            <Typography variant="subtitle1">/r/{sub.name}</Typography>
+            <CLink href={`/r/${sub.name}`} label={`r/${sub.name}`} variant="subtitle2" />
           </Box>
         ))}
     </Box>
