@@ -18,43 +18,45 @@ interface PostProps {
 
 const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        mb: "0.5rem",
-        background: "white",
-        border: "0.1px solid transparent",
-        borderRadius: "0.5rem",
-        p: 0,
-        "&:hover": {
-          border: "0.1px solid black",
-          transition: "0.1s ease-in",
-          cursor: "pointer",
-        },
-      }}
-    >
-      <UpvoteDownVote post={post} />
+    <div id={post.identifier}>
+      <Box
+        sx={{
+          display: "flex",
+          mb: "0.5rem",
+          background: "white",
+          border: "0.1px solid transparent",
+          borderRadius: "0.5rem",
+          p: 0,
+          "&:hover": {
+            border: "0.1px solid black",
+            transition: "0.1s ease-in",
+            cursor: "pointer",
+          },
+        }}
+      >
+        <UpvoteDownVote post={post} />
 
-      <Box sx={{ display: "flex", flexDirection: "column", flex: 8.5, m: "0.3rem 0.5rem" }}>
-        <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>
-          <div>
-            <PostData post={post} subImage={subImage} />
+        <Box sx={{ display: "flex", flexDirection: "column", flex: 8.5, m: "0.3rem 0.5rem" }}>
+          <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>
+            <div>
+              <PostData post={post} subImage={subImage} />
 
-            <Box sx={{ m: "0.5rem" }}>
-              <Typography variant="h6">{post.title}</Typography>
+              <Box sx={{ m: "0.5rem" }}>
+                <Typography variant="h6">{post.title}</Typography>
 
-              {post.body && (
-                <Typography variant="body2" sx={{ my: "0.5rem" }}>
-                  {post.body}
-                </Typography>
-              )}
-            </Box>
+                {post.body && (
+                  <Typography variant="body2" sx={{ my: "0.5rem" }}>
+                    {post.body}
+                  </Typography>
+                )}
+              </Box>
 
-            <PostActionButtons post={post} />
-          </div>
-        </Link>
+              <PostActionButtons post={post} />
+            </div>
+          </Link>
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
 
