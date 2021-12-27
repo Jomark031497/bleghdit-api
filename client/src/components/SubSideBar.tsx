@@ -1,8 +1,9 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Avatar } from "@mui/material";
 import { Sub } from "../types";
 import CakeIcon from "@mui/icons-material/Cake";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
+import CLink from "./custom/CLink";
 
 interface SubProp {
   sub: Sub;
@@ -12,7 +13,7 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
   const router = useRouter();
 
   return (
-    <Box sx={{ background: "white", mx: "1rem" }}>
+    <Box sx={{ background: "white", ml: "1rem" }}>
       <Box sx={{ backgroundColor: "primary.main" }}>
         <Typography variant="subtitle1" sx={{ p: "0.7rem 0.5rem", color: "white" }}>
           About Community
@@ -20,7 +21,17 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
       </Box>
 
       <Box sx={{ p: "0.5rem" }}>
-        <Typography>{sub.description}</Typography>
+        <Box sx={{ display: "flex", alignItems: "center", my: "0.5rem" }}>
+          <Avatar src={sub.imageUrl} />
+          <CLink
+            href={`/r/${sub.name}`}
+            variant="h6"
+            color="textPrimary"
+            label={`r/${sub.name}`}
+            sx={{ mx: "0.3rem" }}
+          />
+        </Box>
+        <Typography variant="subtitle2">{sub.description}</Typography>
         <hr />
         <Box sx={{ display: "flex" }}>
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", m: "0.5rem" }}>

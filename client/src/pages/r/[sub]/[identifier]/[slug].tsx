@@ -53,15 +53,15 @@ const Post: NextPage = () => {
         </title>
       </Head>
       {post && (
-        <Box sx={{ backgroundColor: "#2e2f2f", minHeight: "95vh" }}>
-          <Container maxWidth="lg" sx={{ backgroundColor: "#edeff1", minHeight: "95vh", py: 0 }}>
+        <Box sx={{ backgroundColor: "#2e2f2f", minHeight: "95vh", width: "100%" }}>
+          <Container maxWidth="lg" disableGutters sx={{ backgroundColor: "#edeff1", minHeight: "95vh" }}>
             <Box sx={{ display: "flex", backgroundColor: "#000", color: "#fff", p: "1rem 2rem", width: "100%" }}>
               <ArticleIcon sx={{ mr: "0.5rem" }} />
               <Typography variant="subtitle1">{post.title}</Typography>
             </Box>
 
-            <Box sx={{ backgroundColor: "transparent", display: "flex" }}>
-              <Box sx={{ flex: 1, m: "1rem 0rem 1rem 1rem" }}>
+            <Box sx={{ backgroundColor: "transparent", display: "flex", p: "1rem" }}>
+              <Box sx={{ flex: 1 }}>
                 <Box sx={{ background: "white", display: "flex" }}>
                   <Box>
                     <UpvoteDownVote post={post} />
@@ -83,7 +83,10 @@ const Post: NextPage = () => {
                   {data ? (
                     <Formik initialValues={{ body: "" }} onSubmit={(values) => addComment(values.body)}>
                       {() => (
-                        <Box component={Form}>
+                        <Box
+                          component={Form}
+                          sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}
+                        >
                           <Field
                             as={CTextField}
                             name="body"
@@ -92,7 +95,7 @@ const Post: NextPage = () => {
                             minRows={5}
                           />
 
-                          <CButton type="submit" variant="contained">
+                          <CButton type="submit" variant="contained" sx={{ alignSelf: "stretch" }}>
                             Comment
                           </CButton>
                         </Box>

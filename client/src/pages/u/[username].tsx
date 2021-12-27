@@ -18,10 +18,16 @@ const UserPage: NextPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ background: "transparent", display: "flex", flexDirection: "column" }}>
-      <Box sx={{ width: "100%", backgroundColor: "#fff", display: "flex" }}>
-        <CButton onClick={() => setTab("overview")}>Overview</CButton>
-        <CButton onClick={() => setTab("posts")}>Posts</CButton>
-        <CButton onClick={() => setTab("comments")}>Comments</CButton>
+      <Box sx={{ width: "100%", backgroundColor: "#fff", display: "flex", py: "0.3rem" }}>
+        <CButton onClick={() => setTab("overview")} color={tab === "overview" ? "primary" : "inherit"}>
+          Overview
+        </CButton>
+        <CButton onClick={() => setTab("posts")} color={tab === "posts" ? "primary" : "inherit"}>
+          Posts
+        </CButton>
+        <CButton onClick={() => setTab("comments")} color={tab === "comments" ? "primary" : "inherit"}>
+          Comments
+        </CButton>
       </Box>
       <Box sx={{ display: "flex", marginTop: "1rem" }}>
         <Box sx={{ backgroundColor: "#eee", flex: 1, mr: "0.5rem", px: "1rem" }}>
@@ -31,7 +37,11 @@ const UserPage: NextPage = () => {
                 userSubmissions.submissions.map((submission: any) => {
                   if (submission.type === "POST") {
                     const post: Post = submission;
-                    return <PostCard post={post} key={post.identifier} />;
+                    return (
+                      <Box sx={{ pt: "0.5rem" }}>
+                        <PostCard post={post} key={post.identifier} />
+                      </Box>
+                    );
                   } else {
                     const comment: CommentType = submission;
                     return (
@@ -41,35 +51,31 @@ const UserPage: NextPage = () => {
                             <Avatar src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_3.png" />
                           </Box>
                           <Box sx={{ display: "flex", alignItems: "center" }}>
-                            <CLink href={`/u/${comment.username}`} label={comment.username} variant="subtitle1" />
-                            <Typography variant="subtitle2" color="textSecondary">
+                            <CLink
+                              href={`/u/${comment.username}`}
+                              label={comment.username}
+                              variant="subtitle2"
+                              sx={{ px: "0.3rem" }}
+                            />
+                            <Typography variant="body2" color="textSecondary">
                               commented on
                             </Typography>
                             <CLink
                               href={`/r/${comment.post.subName}/${comment.post.identifier}/${comment.post.slug}`}
-                              variant="subtitle1"
+                              variant="subtitle2"
                               label={comment.post.title}
                               color="textPrimary"
+                              sx={{ px: "0.3rem" }}
                             />
-                            <Typography variant="subtitle1" color="textSecondary">
+                            <Typography variant="subtitle2" color="textSecondary">
                               •
                             </Typography>
                             <CLink
                               href={`/r/${comment.post.subName}`}
-                              variant="subtitle1"
+                              variant="subtitle2"
                               label={`r/${comment.post.subName}`}
                               color="textPrimary"
-                            />
-                          </Box>
-                          <Box sx={{ display: "flex", alignItems: "center" }}>
-                            <Typography variant="subtitle1" color="textSecondary">
-                              •
-                            </Typography>
-                            <CLink
-                              label={`Posted by u/${comment.post.username}`}
-                              href={`/u/${comment.post.username}`}
-                              variant="subtitle2"
-                              color="textSecondary"
+                              sx={{ px: "0.3rem" }}
                             />
                           </Box>
                         </Box>

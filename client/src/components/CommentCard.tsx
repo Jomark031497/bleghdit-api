@@ -15,20 +15,24 @@ interface Props {
 
 const CommentCard: React.FC<Props> = ({ post, comment }) => {
   return (
-    <Box
-      key={comment.identifier}
-      sx={{ m: "1rem auto", display: "flex", background: "#f2f8fd", borderRadius: "0.5rem" }}
-    >
+    <Box key={comment.identifier} sx={{ m: "1rem auto", display: "flex", borderLeft: "1px solid #000" }}>
       <Box>
         <UpvoteDownVote post={post} comment={comment} />
       </Box>
       <Box sx={{ p: "0.5rem" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Image src="/images/reddit_logo.png" width="20" height="20" />
-          <CLink label={comment.username} href={`u/${comment.username}`} variant="subtitle1" color="textPrimary" />
+          <CLink
+            label={comment.username}
+            href={`/u/${comment.username}`}
+            variant="subtitle1"
+            color="textPrimary"
+            sx={{ mx: "0.3rem" }}
+          />
+          <Typography>•</Typography>
           <CLink
             label={`· ${dayjs(comment.createdAt).fromNow()}`}
-            href={`u/${comment.username}`}
+            href={`/u/${comment.username}`}
             variant="subtitle2"
             color="textSecondary"
           />
