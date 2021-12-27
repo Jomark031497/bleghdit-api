@@ -1,9 +1,10 @@
-import { TextField } from "@mui/material";
+import { BaseTextFieldProps, TextField } from "@mui/material";
 
-interface Props {
+interface Props extends BaseTextFieldProps {
   placeholder?: string;
   label?: string;
   InputProps?: any;
+  value?: any;
 }
 
 const CTextField: React.FC<Props> = ({ ...props }) => {
@@ -17,6 +18,7 @@ const CTextField: React.FC<Props> = ({ ...props }) => {
       label={props.label}
       placeholder={props.placeholder}
       InputProps={props.InputProps}
+      value={props.value}
     />
   );
 };

@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 
-import { AppBar, Box, InputAdornment, Toolbar, Link as MuiLink, Typography } from "@mui/material";
+import { AppBar, Box, InputAdornment, Toolbar, Link as MuiLink, Typography, TextField, Avatar } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CButton from "./custom/CButton";
 
@@ -12,13 +12,17 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
 import { setCurrentUser } from "../redux/features/auth/loginSlice";
 import AuthMenu from "./AuthMenu";
-import CTextField from "./custom/CTextField";
+import { Sub } from "../types";
 
 const Header: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const { data } = useSelector((state: RootState) => state.login);
+
+  const [name, setName] = useState("");
+  const [subs, setSubs] = useState<Sub[]>([]);
+  const [timer, setTimer] = useState<any>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -31,6 +35,39 @@ const Header: React.FC = () => {
     };
     checkAuth();
   }, []);
+
+  useEffect(() => {
+    if (name.trim() === "") {
+      clearTimeout(timer);
+      setSubs([]);
+      return;
+    }
+    searchSubs();
+
+    return () => {
+      clearTimeout(timer);
+      setSubs([]);
+    };
+  }, [name]);
+
+  const searchSubs = async () => {
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(async () => {
+        try {
+          const { data } = await axios.get(`/subs/search/${name}`);
+          setSubs(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }, 500)
+    );
+  };
+
+  const goToSub = (subName: string) => {
+    setName("");
+    router.push(`/r/${subName}`);
+  };
 
   return (
     <>
@@ -47,9 +84,14 @@ const Header: React.FC = () => {
             </Link>
           </Box>
 
-          <Box sx={{ flex: 1, display: "flex", maxWidth: "40%" }}>
-            <CTextField
+          <Box sx={{ flex: 1, display: "flex", maxWidth: "40%", position: "relative" }}>
+            <TextField
               placeholder="Search Reddit"
+              value={name}
+              fullWidth
+              variant="outlined"
+              size="small"
+              onChange={(e) => setName(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -58,6 +100,36 @@ const Header: React.FC = () => {
                 ),
               }}
             />
+            <Box
+              sx={{
+                position: "absolute",
+                background: "white",
+                color: "black",
+                top: "100%",
+                left: 0,
+                right: 0,
+              }}
+            >
+              {subs?.map((sub) => (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "0.5rem",
+                    "&:hover": {
+                      background: "lightgrey",
+                    },
+                  }}
+                  onClick={() => goToSub(sub.name)}
+                >
+                  <Avatar src={sub.imageUrl} sx={{ mr: "0.5rem" }} />
+                  <Box>
+                    <Typography variant="subtitle1">r/{sub.name}</Typography>
+                    <Typography variant="body2">{sub.title}</Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
