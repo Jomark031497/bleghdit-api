@@ -142,3 +142,22 @@ export const deleteSubImage = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "something went wrong" });
   }
 };
+
+export const searchSubs = async (req: Request, res: Response) => {
+  try {
+    const { name } = req.params;
+
+    if (isEmpty(name)) return res.status(400).json({ error: "Name must not be empty" });
+
+    const subs = await getRepository(Subs)
+      .createQueryBuilder()
+      .where("LOWER(name) LIKE :name", { name: `${name.toLowerCase().trim()}%` })
+      .getMany();
+
+    return res.status(200).json(subs);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({ error: "something went wrong" });
+  }
+};

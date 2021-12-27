@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createSub, deleteSubImage, getSub, getSubs, uploadSubImage } from "../controllers/subs.controller";
+import { createSub, deleteSubImage, getSub, getSubs, searchSubs, uploadSubImage } from "../controllers/subs.controller";
 import requireAuth from "../middlewares/requireAuth";
 import { userOwnsSub, upload } from "../middlewares/uploadImage";
 
@@ -14,5 +14,7 @@ router.get("/:name", getSub);
 router.post("/:name/image", requireAuth, userOwnsSub, upload.single("file"), uploadSubImage);
 
 router.delete("/:name/:type", requireAuth, userOwnsSub, deleteSubImage);
+
+router.get("/search/:name", searchSubs);
 
 export default router;
