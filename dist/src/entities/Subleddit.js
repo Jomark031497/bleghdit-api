@@ -22,6 +22,14 @@ let Subs = class Subs extends RootEntity_1.default {
         super();
         Object.assign(this, sub);
     }
+    name;
+    title;
+    description;
+    imageURN;
+    bannerURN;
+    username;
+    user;
+    posts;
     get imageUrl() {
         return this.imageURN
             ? `${process.env.APP_URL}/images/${this.imageURN}`

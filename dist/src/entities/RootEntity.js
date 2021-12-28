@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const class_transformer_1 = require("class-transformer");
 const typeorm_1 = require("typeorm");
 class RootEntity extends typeorm_1.BaseEntity {
+    id;
+    createdAt;
+    updatedAt;
     toJSON() {
         return (0, class_transformer_1.instanceToPlain)(this);
     }

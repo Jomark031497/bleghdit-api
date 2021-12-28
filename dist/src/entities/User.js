@@ -24,6 +24,11 @@ let User = class User extends RootEntity_1.default {
         super();
         Object.assign(this, user);
     }
+    username;
+    email;
+    password;
+    posts;
+    votes;
     async hashPassword() {
         const salt = await (0, bcrypt_1.genSalt)();
         this.password = await (0, bcrypt_1.hash)(this.password, salt);

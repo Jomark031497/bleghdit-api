@@ -22,6 +22,11 @@ let Vote = class Vote extends RootEntity_1.default {
         super();
         Object.assign(this, vote);
     }
+    value;
+    username;
+    user;
+    post;
+    comment;
 };
 __decorate([
     (0, typeorm_1.Column)(),

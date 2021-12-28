@@ -25,17 +25,22 @@ let Post = class Post extends RootEntity_1.default {
         super();
         Object.assign(this, post);
     }
-    get commentCount() {
-        var _a;
-        return (_a = this.comments) === null || _a === void 0 ? void 0 : _a.length;
-    }
+    identifier;
+    title;
+    slug;
+    body;
+    subName;
+    username;
+    user;
+    sub;
+    comments;
+    votes;
     get voteScore() {
-        var _a;
-        return (_a = this.votes) === null || _a === void 0 ? void 0 : _a.reduce((prev, curr) => prev + (curr.value || 0), 0);
+        return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
     }
+    userVote;
     setUserVote(user) {
-        var _a;
-        const index = (_a = this.votes) === null || _a === void 0 ? void 0 : _a.findIndex((v) => v.username === user.username);
+        const index = this.votes?.findIndex((v) => v.username === user.username);
         this.userVote = index > -1 ? this.votes[index].value : 0;
     }
     makeIdAndSlug() {
@@ -80,7 +85,6 @@ __decorate([
     __metadata("design:type", Subleddit_1.default)
 ], Post.prototype, "sub", void 0);
 __decorate([
-    (0, class_transformer_1.Exclude)(),
     (0, typeorm_1.OneToMany)(() => Comment_1.default, (comment) => comment.post),
     __metadata("design:type", Array)
 ], Post.prototype, "comments", void 0);
@@ -88,11 +92,6 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => Vote_1.default, (vote) => vote.post),
     __metadata("design:type", Array)
 ], Post.prototype, "votes", void 0);
-__decorate([
-    (0, class_transformer_1.Expose)(),
-    __metadata("design:type", Number),
-    __metadata("design:paramtypes", [])
-], Post.prototype, "commentCount", null);
 __decorate([
     (0, class_transformer_1.Expose)(),
     __metadata("design:type", Number),

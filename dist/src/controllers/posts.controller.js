@@ -27,16 +27,21 @@ const createPost = async (req, res) => {
 exports.createPost = createPost;
 const getPosts = async (req, res) => {
     const user = req.user;
+    const currentPage = (req.query.page || 0);
+    const postsPerPage = (req.query.count || 8);
     try {
         const posts = await Post_1.default.find({
             order: { createdAt: "DESC" },
-            relations: ["comments", "votes", "sub"],
+            relations: ["sub", "votes", "comments"],
+            skip: currentPage * postsPerPage,
+            take: postsPerPage,
         });
         if (user)
             posts.forEach((p) => p.setUserVote(user));
         return res.json(posts);
     }
     catch (e) {
+        console.log(e);
         return res.status(500).json({ error: "something went wrong" });
     }
 };
@@ -124,8 +129,8 @@ const getUserSubmissions = async (req, res) => {
             comments.forEach((p) => p.setUserVote(sessionUser));
         }
         let submissions = [];
-        posts.forEach((post) => submissions.push(Object.assign({ type: "POST" }, post)));
-        comments.forEach((comment) => submissions.push(Object.assign({ type: "COMMENT" }, comment)));
+        posts.forEach((post) => submissions.push({ type: "POST", ...post }));
+        comments.forEach((comment) => submissions.push({ type: "COMMENT", ...comment }));
         return res.json({ user, submissions });
     }
     catch (error) {

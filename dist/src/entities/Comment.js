@@ -24,13 +24,18 @@ let Comment = class Comment extends RootEntity_1.default {
         super();
         Object.assign(this, comment);
     }
+    identifier;
+    body;
+    username;
+    user;
+    post;
+    votes;
     get voteScore() {
-        var _a;
-        return (_a = this.votes) === null || _a === void 0 ? void 0 : _a.reduce((prev, curr) => prev + (curr.value || 0), 0);
+        return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
     }
+    userVote;
     setUserVote(user) {
-        var _a;
-        const index = (_a = this.votes) === null || _a === void 0 ? void 0 : _a.findIndex((v) => v.username === user.username);
+        const index = this.votes?.findIndex((v) => v.username === user.username);
         this.userVote = index > -1 ? this.votes[index].value : 0;
     }
     makeId() {
@@ -56,7 +61,7 @@ __decorate([
     __metadata("design:type", User_1.default)
 ], Comment.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Post_1.default, (post) => post.comments, { nullable: false }),
+    (0, typeorm_1.ManyToOne)(() => Post_1.default, (post) => post.comments),
     __metadata("design:type", Post_1.default)
 ], Comment.prototype, "post", void 0);
 __decorate([

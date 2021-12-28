@@ -13,5 +13,6 @@ router.get("/", subs_controller_1.getSubs);
 router.get("/:name", subs_controller_1.getSub);
 router.post("/:name/image", requireAuth_1.default, uploadImage_1.userOwnsSub, uploadImage_1.upload.single("file"), subs_controller_1.uploadSubImage);
 router.delete("/:name/:type", requireAuth_1.default, uploadImage_1.userOwnsSub, subs_controller_1.deleteSubImage);
+router.get("/search/:name", subs_controller_1.searchSubs);
 exports.default = router;
 //# sourceMappingURL=subs.routes.js.map

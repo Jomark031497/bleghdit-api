@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSubImage = exports.uploadSubImage = exports.getSub = exports.getSubs = exports.createSub = void 0;
+exports.searchSubs = exports.deleteSubImage = exports.uploadSubImage = exports.getSub = exports.getSubs = exports.createSub = void 0;
 const class_validator_1 = require("class-validator");
 const Subleddit_1 = __importDefault(require("../entities/Subleddit"));
 const typeorm_1 = require("typeorm");
@@ -129,4 +129,21 @@ const deleteSubImage = async (req, res) => {
     }
 };
 exports.deleteSubImage = deleteSubImage;
+const searchSubs = async (req, res) => {
+    try {
+        const { name } = req.params;
+        if ((0, class_validator_1.isEmpty)(name))
+            return res.status(400).json({ error: "Name must not be empty" });
+        const subs = await (0, typeorm_1.getRepository)(Subleddit_1.default)
+            .createQueryBuilder()
+            .where("LOWER(name) LIKE :name", { name: `${name.toLowerCase().trim()}%` })
+            .getMany();
+        return res.status(200).json(subs);
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "something went wrong" });
+    }
+};
+exports.searchSubs = searchSubs;
 //# sourceMappingURL=subs.controller.js.map
