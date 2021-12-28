@@ -7,7 +7,7 @@ import { config as dotenv } from "dotenv";
 import { createConnection } from "typeorm";
 
 import trim from "./middlewares/trimFields";
-import authenticate from "../passportconfig";
+import authenticate from "./passportconfig";
 
 import authRoutes from "./routes/auth.routes";
 import postRoutes from "./routes/posts.routes";
