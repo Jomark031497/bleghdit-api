@@ -112,6 +112,7 @@ const Header: React.FC = () => {
             >
               {subs?.map((sub) => (
                 <Box
+                  key={sub.name}
                   sx={{
                     display: "flex",
                     alignItems: "center",

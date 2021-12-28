@@ -15,7 +15,7 @@ const FrontPageSideBar: React.FC = () => {
         align="center"
         sx={{ paddingTop: "3rem", backgroundColor: "#000", color: "#fff" }}
       >
-        Today's Top Growing Communities
+        Today{"'"}s Top Growing Communities
       </Typography>
       {subs &&
         subs.map((sub, index) => (

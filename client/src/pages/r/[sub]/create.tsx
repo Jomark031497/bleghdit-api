@@ -3,6 +3,7 @@ import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import CTextField from "../../../components/custom/CTextField";
 import { RootState } from "../../../redux/store";
@@ -17,7 +18,9 @@ const PostPage: NextPage = () => {
 
   const { data } = useSelector((state: RootState) => state.login);
 
-  if (!data) router.push(`/r/${router.query.sub}`);
+  useEffect(() => {
+    if (!data) router.push(`/r/${router.query.sub}`);
+  }, []);
 
   const createPost = async (values: INewPost) => {
     if (!values.title) return;
