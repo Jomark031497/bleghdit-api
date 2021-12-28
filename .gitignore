@@ -8,5 +8,3 @@ temp/
 ormconfig.ts
 public/
 dist/
-
-*/**/dist
