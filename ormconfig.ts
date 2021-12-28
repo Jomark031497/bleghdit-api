@@ -6,6 +6,12 @@ const prodConfig = {
   entities: ["src/entities/**/*.ts"],
   migrations: ["src/migrations/**/*.ts"],
   subscribers: ["src/subscribers/**/*.ts"],
+  ssl: true,
+  extra: {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
 };
 
 const devConfig = {
