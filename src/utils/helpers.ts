@@ -1,5 +1,6 @@
 // make a random generated ID
-export const makeID = (length: number): string => {
+
+export function makeID(length: number) {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let charactersLength = characters.length;
@@ -7,10 +8,10 @@ export const makeID = (length: number): string => {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
-};
+}
 
 // convert a text to slug
-export const slugify = (str: string): string => {
+export function slugify(str: string) {
   str = str.trim();
   str = str.toLowerCase();
 
@@ -29,7 +30,7 @@ export const slugify = (str: string): string => {
     .replace(/^-+/, "") // trim - from start of text
     .replace(/-+$/, "") // trim - from end of text
     .replace(/-/g, "_");
-};
+}
 
 // map errors into an object
 export const mapErrors = (errors: Object[]) => {

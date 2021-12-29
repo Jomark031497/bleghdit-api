@@ -1,8 +1,8 @@
-import { makeID } from "../utils/helpers";
 import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import Post from "./Post";
 import RootEntity from "./RootEntity";
 import User from "./User";
+import { makeID } from "../utils/helpers";
 import Vote from "./Vote";
 import { Expose } from "class-transformer";
 
