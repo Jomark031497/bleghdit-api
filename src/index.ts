@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import session from "express-session";
 import cookierParser from "cookie-parser";
@@ -49,6 +49,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);
 app.use("/api/vote", voteRoutes);
+app.get("/", (_: Request, res: Response) => {
+  res.send("server is now working, dunno about your database tho");
+});
 
 app.listen(PORT, async () => {
   console.log(`listening to port ${PORT}`);
