@@ -54,11 +54,11 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
         <>
           <input type="file" hidden={true} ref={fileInputRef} onChange={uploadImage} />
           <Box sx={{ background: "white", mb: "1rem" }}>
-            {sub.bannerUrl ? (
+            {sub.bannerURN ? (
               <Box
                 sx={{
                   height: "24vh",
-                  backgroundImage: `url(${sub.bannerUrl})`,
+                  backgroundImage: `url(${sub.bannerURN})`,
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   cursor: ownsSub ? "pointer" : "",
@@ -73,7 +73,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
             <Container maxWidth="lg" sx={{ height: "90px", display: "flex", position: "relative" }}>
               <Box sx={{ cursor: ownsSub ? "pointer" : "" }}>
                 <Avatar
-                  src={`${sub.imageUrl}`}
+                  src={`${sub.imageURN}`}
                   alt="subreddit image"
                   sx={{ height: "80px", width: "80px", position: "absolute", top: -15 }}
                   onClick={() => openFileInput("image")}

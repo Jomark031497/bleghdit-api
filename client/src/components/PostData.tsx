@@ -18,7 +18,7 @@ const PostData: React.FC<Props> = ({ post, subImage }) => {
       {post && (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Avatar src={!subImage ? post.sub.imageUrl : subImage} sx={{ width: "2rem", height: "2rem" }} />
+            <Avatar src={!subImage ? post.sub.imageURN : subImage} sx={{ width: "2rem", height: "2rem" }} />
             <CLink
               href={`/r/${post.subName}`}
               variant="subtitle2"
