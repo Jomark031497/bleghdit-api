@@ -43,7 +43,7 @@ export const createSub = async (req: Request, res: Response) => {
 
 export const getSubs = async (_: Request, res: Response) => {
   try {
-    const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageURN" , '')`;
+    const imageUrlExp = `COALESCE('${process.env.SERVER_URL}/images/' || s."imageURN" , '')`;
     const subs = await getConnection()
       .createQueryBuilder()
       .select(`s.title, s.name, ${imageUrlExp} as "imageUrl", count(p.id) as "postCount"`)

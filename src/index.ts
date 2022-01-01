@@ -27,7 +27,7 @@ app.use(express.static("public")); // expose public folder
 // restricts allowed hosts to a single origin
 app.use(
   cors({
-    origin: process.env.ORIGIN, // client origin
+    origin: process.env.CLIENT_URL, // client origin
     credentials: true, // allow http sessions
   })
 );

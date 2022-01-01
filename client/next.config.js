@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['gravatar.com', 'localhost']
+    domains: ['gravatar.com', 'localhost', process.env.CLIENT_URL]
   }
 }
 

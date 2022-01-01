@@ -72,7 +72,7 @@ export const commentOnPost = async (req: Request, res: Response) => {
   const { body } = req.body;
   const user: any = req.user; // get the current authorized user from session
   try {
-    const post = await Post.findOneOrFail({ identifier, slug }, { relations: ["post"] });
+    const post = await Post.findOneOrFail({ identifier, slug });
     const comment = new Comment({
       body,
       user,

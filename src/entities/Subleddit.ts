@@ -43,13 +43,13 @@ export default class Subs extends RootEntity {
   @Expose()
   get imageUrl(): string {
     return this.imageURN
-      ? `${process.env.APP_URL}/images/${this.imageURN}`
+      ? `${process.env.SERVER_URL}/images/${this.imageURN}`
       : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
   }
 
   // virtual field for banner URL
   @Expose()
   get bannerUrl(): string | undefined {
-    return this.bannerURN ? `${process.env.APP_URL}/images/${this.bannerURN}` : undefined;
+    return this.bannerURN ? `${process.env.SERVER_URL}/images/${this.bannerURN}` : undefined;
   }
 }
