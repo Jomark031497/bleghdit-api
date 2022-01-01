@@ -32,7 +32,7 @@ const FrontPageSideBar: React.FC = () => {
             <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
               {index + 1}
             </Typography>
-            <Avatar src={sub.imageUrl} sx={{ mx: "0.5rem" }} />
+            <Avatar src={sub.imageURN} sx={{ mx: "0.5rem" }} />
             <CLink
               href={`/r/${sub.name}`}
               label={`r/${sub.name}`}

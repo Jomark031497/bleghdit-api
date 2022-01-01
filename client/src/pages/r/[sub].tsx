@@ -25,7 +25,7 @@ const Subleddit: NextPage = () => {
           <Container maxWidth="lg" sx={{ background: "transparent", pb: "1rem", display: "flex" }}>
             <Box sx={{ flex: 1 }}>
               {sub.posts.map((post: Post) => (
-                <PostCard post={post} subImage={sub.imageUrl} key={post.identifier} />
+                <PostCard post={post} key={post.identifier} />
               ))}
             </Box>
 

@@ -13,10 +13,9 @@ dayjs.extend(relativeTime);
 
 interface PostProps {
   post: Post;
-  subImage?: string;
 }
 
-const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
+const PostCard: React.FC<PostProps> = ({ post }) => {
   return (
     <div id={post.identifier}>
       <Box
@@ -39,7 +38,7 @@ const PostCard: React.FC<PostProps> = ({ post, subImage }) => {
         <Box sx={{ display: "flex", flexDirection: "column", flex: 8.5, m: "0.3rem 0.5rem" }}>
           <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>
             <div>
-              <PostData post={post} subImage={subImage} />
+              <PostData post={post} />
 
               <Box sx={{ m: "0.5rem" }}>
                 <Typography variant="h6">{post.title}</Typography>
