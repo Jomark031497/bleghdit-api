@@ -4,7 +4,7 @@
   "description": "a reddit clone created using react/next, typescript, nodeJS/express, typeorm, and PostgreSQL",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/src/index.js",
+    "start": "node dist/index.js",
     "devStart": "tsnode src/index.ts",
     "server": "nodemon --exec ts-node src/index.ts",
     "client": "cd client && npm run dev",
