@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['gravatar.com', 'localhost', 'https://res.cloudinary.com/dljwfddln']
+    domains: ['gravatar.com', 'localhost', 'res.cloudinary.com']
   }
 }
 

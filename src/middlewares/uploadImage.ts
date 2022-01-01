@@ -1,6 +1,9 @@
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { config as dotenv } from "dotenv";
+
+dotenv();
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,

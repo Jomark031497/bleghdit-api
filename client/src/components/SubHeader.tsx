@@ -8,6 +8,7 @@ import { Avatar, Box, Container, Typography } from "@mui/material";
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import CButton from "./custom/CButton";
+import Image from "next/image";
 
 interface SubProps {
   sub: Sub;
@@ -57,15 +58,16 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
             {sub.bannerURN ? (
               <Box
                 sx={{
-                  height: "24vh",
-                  backgroundImage: `url(${sub.bannerURN})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  cursor: ownsSub ? "pointer" : "",
+                  height: "30vh",
+                  width: "100vw",
                   backgroundColor: "skyblue",
+                  position: "relative",
+                  cursor: ownsSub ? "pointer" : "",
                 }}
                 onClick={() => openFileInput("banner")}
-              ></Box>
+              >
+                <Image src={sub.bannerURN} layout="fill" objectFit="cover" />
+              </Box>
             ) : (
               <Box style={{ height: "24vh", background: "skyblue" }} />
             )}
