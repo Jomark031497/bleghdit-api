@@ -3,9 +3,9 @@ const prodConfig = {
   url: process.env.DATABASE_URL,
   synchronize: true,
   logging: true,
-  entities: ["src/entities/**/*.ts"],
-  migrations: ["src/migrations/**/*.ts"],
-  subscribers: ["src/subscribers/**/*.ts"],
+  entities: ["dist/entities/**/*.js"],
+  migrations: ["dist/migrations/**/*.js"],
+  subscribers: ["dist/subscribers/**/*.js"],
   ssl: true,
   extra: {
     ssl: {
