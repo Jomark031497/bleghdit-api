@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import Subs from "../entities/Subleddit";
 import { getConnection, getRepository } from "typeorm";
 import Post from "../entities/Post";
-import fs from "fs";
 
 export const createSub = async (req: Request, res: Response) => {
   // destructure the fields
@@ -90,25 +89,16 @@ export const uploadSubImage = async (req: Request, res: Response) => {
   const sub: Subs = user.sub;
   const type = req.body.type; // get the type (image/bannner) from req.body
   try {
-    // return an error if the type isn't image or banner
-    if (type !== "image" && type !== "banner") {
-      fs.unlinkSync(req.file!.path); // delete the photo
-      return res.status(400).json({ error: "invalid type" }); // return an error
-    }
-
-    let oldImageUrn: string = ""; // store the old image here
+    // check if type is banner or image
+    if (type !== "image" && type !== "banner") return res.status(400).json({ error: "invalid type" });
 
     if (type === "image") {
-      oldImageUrn = sub.imageURN || ""; // store the old imageURN
-      sub.imageURN = req.file!.filename; // add the imageURN to the sub
-    } else if (type === "banner") {
-      oldImageUrn = sub.bannerURN || ""; // store the old bannerURN
-      sub.bannerURN = req.file!.filename; // add the new banner URN
+      sub.imageURN = req.file!.path;
+    } else {
+      sub.bannerURN = req.file!.path;
     }
 
     await sub.save();
-
-    if (oldImageUrn !== "") fs.unlinkSync(`public/images/${oldImageUrn}`); // filesystem made  me up lmao, windows = \\ ; linux = /
 
     return res.status(200).json(sub);
   } catch (error) {
