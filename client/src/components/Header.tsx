@@ -123,7 +123,7 @@ const Header: React.FC = () => {
                   }}
                   onClick={() => goToSub(sub.name)}
                 >
-                  <Avatar src={sub.imageUrl} sx={{ mr: "0.5rem" }} />
+                  <Avatar src={sub.imageURN} sx={{ mr: "0.5rem" }} />
                   <Box>
                     <Typography variant="subtitle1">r/{sub.name}</Typography>
                     <Typography variant="body2">{sub.title}</Typography>

@@ -22,7 +22,7 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
 
       <Box sx={{ p: "0.5rem" }}>
         <Box sx={{ display: "flex", alignItems: "center", my: "0.5rem" }}>
-          <Avatar src={sub.imageUrl} />
+          <Avatar src={sub.imageURN} />
           <CLink
             href={`/r/${sub.name}`}
             variant="h6"

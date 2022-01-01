@@ -30,9 +30,6 @@ export interface Sub {
   createdAt: string;
   updatedAt: string;
   username: string;
-  // virtuals
-  imageUrl: string;
-  bannerUrl?: string;
 }
 
 export interface ReduxState {
