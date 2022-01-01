@@ -21,12 +21,22 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
     if (!data) router.push("/login"); // if not logged in, redirect
     if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) value = 0;
 
+    const vals = {
+      value,
+      userVote: post.userVote,
+      commentVote: comment?.userVote,
+    };
+
+    console.log(vals);
+
     try {
-      await axios.post(
+      const { data } = await axios.post(
         "/vote",
         { identifier: post?.identifier, commentIdentifier: comment?.identifier, slug: post?.slug, value },
         { withCredentials: true }
       );
+
+      console.log(data);
     } catch (err: any) {
       console.error(err);
     }

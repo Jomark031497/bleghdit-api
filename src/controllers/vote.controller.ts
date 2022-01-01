@@ -10,7 +10,7 @@ export const vote = async (req: Request, res: Response) => {
   if (![-1, 0, 1].includes(value)) {
     return res.status(400).json({ value: "Value must be -1, 0 or 1" });
   }
-
+  console.log("**********************************************", value);
   try {
     const user: any = req.user;
     let post = await Post.findOneOrFail({ identifier, slug });
