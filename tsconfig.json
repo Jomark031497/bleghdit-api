@@ -13,7 +13,7 @@
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    // "noUnusedParameters": true, 
+    "noUnusedParameters": true, 
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
@@ -23,6 +23,6 @@
     "resolveJsonModule": true,
     "baseUrl": "."
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "client"],
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }

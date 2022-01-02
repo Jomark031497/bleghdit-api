@@ -49,7 +49,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);
 app.use("/api/vote", voteRoutes);
-app.get("/", (_: Request, res: Response) => {
+app.get("/api", (_: Request, res: Response) => {
   res.send("server is now working, dunno about your database tho");
 });
 

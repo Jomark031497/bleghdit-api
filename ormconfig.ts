@@ -1,20 +1,4 @@
-const prodConfig = {
-  type: "postgres",
-  url: process.env.DATABASE_URL,
-  synchronize: true,
-  logging: true,
-  entities: ["dist/entities/**/*.js"],
-  migrations: ["dist/migrations/**/*.js"],
-  subscribers: ["dist/subscribers/**/*.js"],
-  ssl: true,
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
-};
-
-const devConfig = {
+module.exports = {
   type: "postgres",
   host: process.env.TYPEORM_HOST,
   port: process.env.TYPEORM_PORT,
@@ -33,7 +17,3 @@ const devConfig = {
     subscribersDir: "dist/subscriber",
   },
 };
-
-const config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
-
-module.exports = config;
