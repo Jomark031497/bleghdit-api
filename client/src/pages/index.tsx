@@ -15,10 +15,11 @@ const Home: NextPage = () => {
     mutate,
     size: page,
     setSize: setPage,
+    error,
   } = useSWRInfinite((index) => `/posts?page=${index}`);
 
   const posts: Post[] = data ? [].concat(...data) : [];
-  // const isLoadingInitialData = !data && !error;
+  const isLoadingInitialData = !data && !error;
 
   useEffect(() => {
     if (!posts || posts.length === 0) return;
@@ -57,6 +58,8 @@ const Home: NextPage = () => {
 
       <Container maxWidth="lg" sx={{ py: "3rem", display: "flex" }}>
         <Box sx={{ flex: 1, mt: "0.5rem" }}>
+          {isLoadingInitialData && posts.length > 0 && <Box>loading...</Box>}
+
           {posts && posts.map((post: Post) => <PostCard post={post} mutate={mutate} key={post.identifier} />)}
           {isValidating && posts.length > 0 && <Box>loading...</Box>}
         </Box>
