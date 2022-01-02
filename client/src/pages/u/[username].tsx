@@ -38,8 +38,8 @@ const UserPage: NextPage = () => {
                   if (submission.type === "POST") {
                     const post: Post = submission;
                     return (
-                      <Box sx={{ pt: "0.5rem" }}>
-                        <PostCard post={post} key={post.identifier} />
+                      <Box sx={{ pt: "0.5rem" }} key={post.identifier}>
+                        <PostCard post={post} />
                       </Box>
                     );
                   } else {
