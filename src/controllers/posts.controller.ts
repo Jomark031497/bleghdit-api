@@ -50,6 +50,7 @@ export const getPosts = async (req: Request, res: Response) => {
 export const getPost = async (req: Request, res: Response) => {
   const { slug, identifier } = req.params; // destructure the slug and identifier from params
   const user: any = req.user;
+
   try {
     // find the specific post
     const post = await Post.findOneOrFail(

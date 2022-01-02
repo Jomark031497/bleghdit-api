@@ -13,9 +13,10 @@ dayjs.extend(relativeTime);
 
 interface PostProps {
   post: Post;
+  mutate?: Function;
 }
 
-const PostCard: React.FC<PostProps> = ({ post }) => {
+const PostCard: React.FC<PostProps> = ({ post, mutate }) => {
   return (
     <div id={post.identifier}>
       <Box
@@ -33,7 +34,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
           },
         }}
       >
-        <UpvoteDownVote post={post} />
+        <UpvoteDownVote post={post} mutate={mutate} />
 
         <Box sx={{ display: "flex", flexDirection: "column", flex: 8.5, m: "0.3rem 0.5rem" }}>
           <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>

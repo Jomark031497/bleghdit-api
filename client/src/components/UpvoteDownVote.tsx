@@ -6,14 +6,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
-import { mutate } from "swr";
+import { mutate as normalMutate } from "swr";
 
 interface Props {
   post: Post;
   comment?: CommentType;
+  mutate?: any;
 }
 
-const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
+const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);
 
@@ -40,10 +41,12 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
 
     if (!comment) {
       if (router.pathname === "/" || router.pathname.includes("/u/")) {
-        mutate(`/posts`);
-      } else mutate(`/posts/${post.identifier}/${post.slug}`);
+        mutate();
+      } else {
+        normalMutate(`/posts/${post.identifier}/${post.slug}`);
+      }
     } else {
-      mutate(`/posts/${post.identifier}/${post.slug}/comments`);
+      normalMutate(`/posts/${post.identifier}/${post.slug}/comments`);
     }
   };
 
