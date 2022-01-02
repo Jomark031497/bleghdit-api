@@ -20,7 +20,7 @@ import CTextField from "../../../../components/custom/CTextField";
 import CButton from "../../../../components/custom/CButton";
 dayjs.extend(relativeTime);
 
-const Post: NextPage = () => {
+const PostPage: NextPage = () => {
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);
   const { identifier, slug } = router.query;
@@ -144,4 +144,4 @@ const Post: NextPage = () => {
   );
 };
 
-export default Post;
+export default PostPage;

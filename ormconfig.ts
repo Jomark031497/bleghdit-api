@@ -22,7 +22,7 @@ const devConfig = {
   password: process.env.TYPEORM_PASSWORD,
   database: process.env.TYPEORM_DATABASE,
   synchronize: true,
-  logging: true,
+  logging: false,
   entities: ["dist/entities/**/*.js"],
   migrations: ["dist/migrations/**/*.js"],
   subscribers: ["dist/subscribers/**/*.js"],

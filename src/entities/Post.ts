@@ -52,18 +52,17 @@ export default class Post extends RootEntity {
   @OneToMany(() => Vote, (vote) => vote.post)
   votes: Vote[];
 
-  // exposed virtual field to show voteScore
   @Expose() get voteScore(): number {
     return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
   }
 
   protected userVote: number;
+
   setUserVote(user: User) {
     const index = this.votes?.findIndex((v) => v.username === user.username);
     this.userVote = index > -1 ? this.votes[index].value : 0;
   }
 
-  // Lifecycle hook to create a slug and identifier
   @BeforeInsert()
   makeIdAndSlug() {
     this.identifier = makeID(7);

@@ -19,7 +19,7 @@ const PostData: React.FC<Props> = ({ post }) => {
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box>
-              {post.sub.imageURN ? (
+              {post.sub?.imageURN ? (
                 <Box
                   sx={{
                     borderRadius: "50px",

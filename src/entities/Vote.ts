@@ -1,4 +1,5 @@
-import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Column, ManyToOne, JoinColumn, Entity } from "typeorm";
+
 import Post from "./Post";
 import User from "./User";
 import Comment from "./Comment";
@@ -12,21 +13,18 @@ export default class Vote extends RootEntity {
   }
 
   @Column()
-  value: number; // vote value: -1(downvote), 0(remove vote), 1(upvote)
+  value: number;
 
-  @Column()
-  username: string;
-
-  // A User can have many votes
   @ManyToOne(() => User)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
-  // A Post can have many votes
+  @Column()
+  username: string;
+
   @ManyToOne(() => Post)
   post: Post;
 
-  // A Comment can have many votes
   @ManyToOne(() => Comment)
   comment: Comment;
 }

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import Vote from "../entities/Vote";
-import Post from "../entities/Post";
 import Comment from "../entities/Comment";
+import Post from "../entities/Post";
+import Vote from "../entities/Vote";
 
 export const vote = async (req: Request, res: Response) => {
   const { identifier, slug, commentIdentifier, value } = req.body;
@@ -10,7 +10,6 @@ export const vote = async (req: Request, res: Response) => {
   if (![-1, 0, 1].includes(value)) {
     return res.status(400).json({ value: "Value must be -1, 0 or 1" });
   }
-  console.log("**********************************************", value);
   try {
     const user: any = req.user;
     let post = await Post.findOneOrFail({ identifier, slug });

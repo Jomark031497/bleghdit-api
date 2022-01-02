@@ -19,24 +19,21 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment }) => {
 
   const vote = async (value: number) => {
     if (!data) router.push("/login"); // if not logged in, redirect
-    if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) value = 0;
+    if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) {
+      value = 0;
+    }
 
-    const vals = {
-      value,
-      userVote: post.userVote,
-      commentVote: comment?.userVote,
-    };
-
-    console.log(vals);
+    // set the value to 0 if the user voted the same vote
+    if (value === post.userVote) {
+      value = 0;
+    }
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "/vote",
         { identifier: post?.identifier, commentIdentifier: comment?.identifier, slug: post?.slug, value },
         { withCredentials: true }
       );
-
-      console.log(data);
     } catch (err: any) {
       console.error(err);
     }

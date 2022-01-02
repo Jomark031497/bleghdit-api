@@ -36,21 +36,18 @@ export default class Comment extends RootEntity {
   @OneToMany(() => Vote, (vote) => vote.comment)
   votes: Vote[];
 
-  // virtual field: get the voteScore of a comment
   @Expose() get voteScore(): number {
     return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
   }
 
-  // virtual field
   protected userVote: number;
   setUserVote(user: User) {
     const index = this.votes?.findIndex((v) => v.username === user.username);
     this.userVote = index > -1 ? this.votes[index].value : 0;
   }
 
-  // Lifecycle hook to create a identifier
   @BeforeInsert()
-  makeId() {
+  makeIdAndSlug() {
     this.identifier = makeID(8);
   }
 }
