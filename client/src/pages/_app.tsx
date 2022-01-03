@@ -14,7 +14,7 @@ import fetcher from "../lib/fetcher";
 import createEmotionCache from "../lib/createEmotionCache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 
-axios.defaults.baseURL = "http://localhost:8080/api";
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
 
 const clientSideEmotionCache = createEmotionCache();
 

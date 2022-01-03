@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['gravatar.com', 'localhost', 'res.cloudinary.com']
+    domains: ['www.gravatar.com', 'res.cloudinary.com', process.env.APP_DOMAIN] 
   }
 }
 
