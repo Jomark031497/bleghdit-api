@@ -76,7 +76,11 @@ const Header: React.FC = () => {
           <Box sx={{ mr: "2rem" }}>
             <Link href="/" passHref>
               <MuiLink underline="none" color="textPrimary" sx={{ display: "flex", alignItems: "start" }}>
-                <Image src="/images/reddit_logo.svg" height={40} width={40} />
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/reddit_logo.svg`}
+                  height={40}
+                  width={40}
+                />
                 <Typography variant="h5" sx={{ fontWeight: "bolder", margin: "auto 0.3rem" }}>
                   leddit.
                 </Typography>

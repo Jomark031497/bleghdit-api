@@ -41,7 +41,13 @@ const Login: NextPage = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Box sx={{ width: { xs: 0, sm: "10%" }, height: "100vh", backgroundImage: "url('/images/bricks.jpg') " }} />
+      <Box
+        sx={{
+          width: { xs: 0, sm: "10%" },
+          height: "100vh",
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/bricks.jpg')`,
+        }}
+      />
       <Box
         sx={{
           maxWidth: "23rem",

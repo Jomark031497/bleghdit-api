@@ -21,7 +21,7 @@ const CommentCard: React.FC<Props> = ({ post, comment }) => {
       </Box>
       <Box sx={{ p: "0.5rem" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Image src="/images/reddit_logo.png" width="20" height="20" />
+          <Image src={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/reddit_logo.png`} width="20" height="20" />
           <CLink
             label={comment.username}
             href={`/u/${comment.username}`}
