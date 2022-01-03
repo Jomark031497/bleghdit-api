@@ -1,4 +1,4 @@
-name: Pull code, rebuild files and restart pm2 processes
+name: pull,rebuild, restart
 
 on:
   push:
@@ -23,4 +23,4 @@ jobs:
             pm2 restart server client
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          privateKey: ${{ secrets.PRIVATE_KEY}}
