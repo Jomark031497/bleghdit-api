@@ -22,11 +22,10 @@ const PostCard: React.FC<PostProps> = ({ post, mutate }) => {
       <Box
         sx={{
           display: "flex",
-          mb: "0.5rem",
+          mb: "0.7rem",
           background: "white",
           border: "0.1px solid transparent",
           borderRadius: "0.5rem",
-          p: 0,
           "&:hover": {
             border: "0.1px solid black",
             transition: "0.1s ease-in",

@@ -35,72 +35,74 @@ const Login: NextPage = () => {
     }
   };
   return (
-    <Box sx={{ display: "flex", backgroundColor: "white" }}>
+    <>
       <Head>
         <title>leddit.com: Log in</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Box
-        sx={{
-          width: { xs: 0, sm: "10%" },
-          height: "100vh",
-          backgroundImage: `url('${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/bricks.jpg')`,
-        }}
-      />
-      <Box
-        sx={{
-          maxWidth: "23rem",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          p: "0rem 1.5rem",
-          pb: "5rem",
-        }}
-      >
-        <Box sx={{ paddingBottom: "3rem" }}>
-          <Typography variant="h6">Login</Typography>
-          <Typography variant="subtitle2" color="textSecondary">
-            By continuing, you agree to our
-            <MuiLink underline="none"> User Agreement </MuiLink>
-            and
-            <MuiLink underline="none"> Privacy Policy </MuiLink>.
+      <Box sx={{ display: "flex", backgroundColor: "white" }}>
+        <Box
+          sx={{
+            width: { xs: 0, sm: "10%" },
+            height: "100vh",
+            backgroundImage: `url('${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/bricks.jpg')`,
+          }}
+        />
+        <Box
+          sx={{
+            maxWidth: "23rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            p: "0rem 1.5rem",
+            pb: "5rem",
+          }}
+        >
+          <Box sx={{ paddingBottom: "3rem" }}>
+            <Typography variant="h6">Login</Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              By continuing, you agree to our
+              <MuiLink underline="none"> User Agreement </MuiLink>
+              and
+              <MuiLink underline="none"> Privacy Policy </MuiLink>.
+            </Typography>
+          </Box>
+          <Formik initialValues={{ username: "", password: "" }} onSubmit={(values) => handleSubmit(values)}>
+            {() => (
+              <Box component={Form}>
+                <Field as={CTextField} name="username" label="username" error={errors.username ? true : false} />
+                <Typography color="error" variant="subtitle2">
+                  {errors.username}
+                </Typography>
+                <Field
+                  as={CTextField}
+                  type="password"
+                  name="password"
+                  label="password"
+                  error={errors.password ? true : false}
+                />
+                <Typography color="error" variant="subtitle2">
+                  {errors.password}
+                </Typography>
+
+                <Typography color="error" variant="subtitle2">
+                  {errors.error}
+                </Typography>
+                <CButton type="submit" variant="contained" my="0.5rem" fullWidth>
+                  LOGIN
+                </CButton>
+              </Box>
+            )}
+          </Formik>
+
+          <Typography variant="subtitle2" sx={{ mt: "0.5rem" }}>
+            New to leddit?
+            <CLink href="/register" label="Sign up" variant="subtitle2" sx={{ mx: "0.3rem" }} />
           </Typography>
         </Box>
-        <Formik initialValues={{ username: "", password: "" }} onSubmit={(values) => handleSubmit(values)}>
-          {() => (
-            <Box component={Form}>
-              <Field as={CTextField} name="username" label="username" error={errors.username ? true : false} />
-              <Typography color="error" variant="subtitle2">
-                {errors.username}
-              </Typography>
-              <Field
-                as={CTextField}
-                type="password"
-                name="password"
-                label="password"
-                error={errors.password ? true : false}
-              />
-              <Typography color="error" variant="subtitle2">
-                {errors.password}
-              </Typography>
-
-              <Typography color="error" variant="subtitle2">
-                {errors.error}
-              </Typography>
-              <CButton type="submit" variant="contained" my="0.5rem" fullWidth>
-                LOGIN
-              </CButton>
-            </Box>
-          )}
-        </Formik>
-
-        <Typography variant="subtitle2" sx={{ mt: "0.5rem" }}>
-          New to leddit?
-          <CLink href="/register" label="Sign up" variant="subtitle2" sx={{ mx: "0.3rem" }} />
-        </Typography>
       </Box>
-    </Box>
+    </>
   );
 };
 

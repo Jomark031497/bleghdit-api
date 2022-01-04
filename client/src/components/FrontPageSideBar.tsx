@@ -9,7 +9,7 @@ const FrontPageSideBar: React.FC = () => {
   const { data: subs } = useSWR<Sub[]>("/subs");
 
   return (
-    <Box sx={{ ml: "1rem", mt: "0.5rem" }}>
+    <Box sx={{ ml: "1rem" }}>
       <Typography
         variant="subtitle1"
         align="center"

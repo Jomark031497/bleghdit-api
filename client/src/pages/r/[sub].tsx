@@ -18,6 +18,7 @@ const Subleddit: NextPage = () => {
     <>
       <Head>
         <title>{sub?.title}</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       {sub && (
         <>
@@ -29,7 +30,7 @@ const Subleddit: NextPage = () => {
               ))}
             </Box>
 
-            <Box sx={{ flex: 0.4 }}>
+            <Box sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
               <SubSideBar sub={sub} />
             </Box>
           </Container>

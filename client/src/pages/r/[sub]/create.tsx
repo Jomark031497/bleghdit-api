@@ -2,6 +2,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -42,21 +43,28 @@ const PostPage: NextPage = () => {
     }
   };
   return (
-    <Container maxWidth="md" sx={{ background: "#fff", m: "3rem auto", p: "1rem 1rem" }}>
-      <Formik initialValues={{ title: "", body: "" }} onSubmit={(values) => createPost(values)}>
-        {() => (
-          <Box component={Form}>
-            <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
-            <Field as={CTextField} placeholder="title" name="title" />
-            <TextField multiline minRows={4} name="body" placeholder="text (optional)" fullWidth />
+    <>
+      <Head>
+        <title>{router.query?.sub}: submit a post!</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
 
-            <Button type="submit" variant="contained" sx={{ alignSelf: "flex-end" }}>
-              POST
-            </Button>
-          </Box>
-        )}
-      </Formik>
-    </Container>
+      <Container maxWidth="md" sx={{ background: "#fff", m: "3rem auto", p: "1rem 1rem" }}>
+        <Formik initialValues={{ title: "", body: "" }} onSubmit={(values) => createPost(values)}>
+          {() => (
+            <Box component={Form}>
+              <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
+              <Field as={CTextField} placeholder="title" name="title" />
+              <TextField multiline minRows={4} name="body" placeholder="text (optional)" fullWidth />
+
+              <Button type="submit" variant="contained" sx={{ alignSelf: "flex-end" }}>
+                POST
+              </Button>
+            </Box>
+          )}
+        </Formik>
+      </Container>
+    </>
   );
 };
 

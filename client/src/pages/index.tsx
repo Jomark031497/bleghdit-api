@@ -23,9 +23,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!posts || posts.length === 0) return;
-
     const id = posts[posts.length - 1].identifier;
-
     if (id !== observedPost) {
       setObservedPost(id);
       observeElement(document.getElementById(id));
@@ -38,7 +36,6 @@ const Home: NextPage = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting === true) {
-          console.log("reached bottom of posts");
           setPage(page + 1);
           observer.unobserve(element);
         }
@@ -56,14 +53,13 @@ const Home: NextPage = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Container maxWidth="lg" sx={{ py: "3rem", display: "flex" }}>
-        <Box sx={{ flex: 1, mt: "0.5rem" }}>
+      <Container maxWidth="lg" sx={{ display: "flex", my: "3rem" }}>
+        <Box sx={{ flex: 1 }}>
           {isLoadingInitialData && posts.length > 0 && <Box>loading...</Box>}
-
           {posts && posts.map((post: Post) => <PostCard post={post} mutate={mutate} key={post.identifier} />)}
           {isValidating && posts.length > 0 && <Box>loading...</Box>}
         </Box>
-        <Box sx={{ flex: 0.4 }}>
+        <Box sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
           <FrontPageSideBar />
         </Box>
       </Container>
