@@ -5,6 +5,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { Post } from "../types";
 import CLink from "./custom/CLink";
 import Image from "next/image";
+import { getFirstLetter } from "../lib/getFirstLetter";
 
 dayjs.extend(relativeTime);
 
@@ -16,56 +17,62 @@ const PostData: React.FC<Props> = ({ post }) => {
   return (
     <>
       {post && (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box>
-              {post.sub?.imageURN ? (
-                <Box
-                  sx={{
-                    borderRadius: "50px",
-                    overflow: "hidden",
-                    position: "relative",
-                    width: "2.5rem",
-                    height: "2.5rem",
-                  }}
-                >
-                  <Image src={post.sub.imageURN} layout="fill" objectFit="cover" />
-                </Box>
-              ) : (
-                <Avatar
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                  sx={{ width: "2.5rem", height: "2.5rem" }}
-                />
-              )}
+        <Box
+          id="post-data-container"
+          sx={{
+            display: "flex",
+            alignItems: { xs: "flex-start", sm: "center" },
+            flexDirection: { xs: "column", sm: "row" },
+          }}
+        >
+          {post.sub?.imageURN ? (
+            <Box id="sub-image-container" sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  borderRadius: "50px",
+                  overflow: "hidden",
+                  position: "relative",
+                  width: "2.5rem",
+                  height: "2.5rem",
+                }}
+              >
+                <Image src={post.sub.imageURN} layout="fill" objectFit="cover" />
+              </Box>
+              <CLink
+                href={`/r/${post.subName}`}
+                variant="subtitle2"
+                label={`r/${post.subName}`}
+                color="textPrimary"
+                sx={{ ml: "0.3rem" }}
+              />
             </Box>
+          ) : (
+            <Avatar sx={{ width: "2.5rem", height: "2.5rem" }}>{getFirstLetter(post.subName)}</Avatar>
+          )}
+
+          <Box id="sub-name-container" sx={{ display: "flex", alignItems: "center" }}></Box>
+          <Box id="post-metadata-container" sx={{ display: "flex", alignItems: "center" }}>
+            <Typography variant="subtitle2" color="textSecondary" sx={{ mx: "0.2rem" }}>
+              •
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              Posted by
+            </Typography>
             <CLink
-              href={`/r/${post.subName}`}
+              href={`/u/${post.username}`}
               variant="subtitle2"
-              label={`r/${post.subName}`}
-              color="textPrimary"
-              sx={{ ml: "0.3rem" }}
+              color="textSecondary"
+              label={`u/${post.username}`}
+              sx={{ mx: "0.3rem" }}
+            />
+
+            <CLink
+              href={`/u/${post.username}`}
+              variant="subtitle2"
+              color="textSecondary"
+              label={dayjs(post.createdAt).fromNow()}
             />
           </Box>
-          <Typography variant="subtitle2" color="textSecondary" sx={{ mx: "0.2rem" }}>
-            •
-          </Typography>
-          <Typography variant="subtitle2" color="textSecondary">
-            Posted by
-          </Typography>
-          <CLink
-            href={`/u/${post.username}`}
-            variant="subtitle2"
-            color="textSecondary"
-            label={`u/${post.username}`}
-            sx={{ mx: "0.3rem" }}
-          />
-
-          <CLink
-            href={`/u/${post.username}`}
-            variant="subtitle2"
-            color="textSecondary"
-            label={dayjs(post.createdAt).fromNow()}
-          />
         </Box>
       )}
     </>
