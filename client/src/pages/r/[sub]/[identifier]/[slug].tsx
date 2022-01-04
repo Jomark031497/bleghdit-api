@@ -70,12 +70,14 @@ const PostPage: NextPage = () => {
 
                   <Box sx={{ flex: 1, pt: "0.5rem" }}>
                     <PostData post={post} />
-                    <Typography variant="h5">{post.title}</Typography>
-                    {post.body && (
-                      <Typography variant="body1" sx={{ margin: "0.5rem auto" }}>
-                        {post.body}
-                      </Typography>
-                    )}
+                    <Box sx={{ p: "0.5rem" }}>
+                      <Typography variant="h5">{post.title}</Typography>
+                      {post.body && (
+                        <Typography variant="body1" sx={{ margin: "0.5rem auto" }}>
+                          {post.body}
+                        </Typography>
+                      )}
+                    </Box>
                     <PostActionButtons post={post} />
                   </Box>
                 </Box>
@@ -103,7 +105,13 @@ const PostPage: NextPage = () => {
                       )}
                     </Formik>
                   ) : (
-                    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        flexDirection: { xs: "column", md: "row" },
+                      }}
+                    >
                       <Typography variant="h6" color="textSecondary">
                         Login or sign up to leave a comment
                       </Typography>
@@ -134,7 +142,7 @@ const PostPage: NextPage = () => {
                 </Box>
               </Box>
 
-              <Box sx={{ flex: 0.4 }}>
+              <Box sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
                 <SubSideBar sub={post.sub} />
               </Box>
             </Box>
