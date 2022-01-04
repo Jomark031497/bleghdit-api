@@ -9,14 +9,7 @@ import useSWRInfinite from "swr/infinite";
 
 const Home: NextPage = () => {
   const [observedPost, setObservedPost] = useState("");
-  const {
-    data,
-    isValidating,
-    mutate,
-    size: page,
-    setSize: setPage,
-    error,
-  } = useSWRInfinite((index) => `/posts?page=${index}`);
+  const { data, mutate, size: page, setSize: setPage, error } = useSWRInfinite((index) => `/posts?page=${index}`);
 
   const posts: Post[] = data ? [].concat(...data) : [];
   const isLoadingInitialData = !data && !error;
@@ -55,9 +48,11 @@ const Home: NextPage = () => {
 
       <Container maxWidth="lg" sx={{ display: "flex", my: "3rem" }}>
         <Box sx={{ flex: 1 }}>
-          {isLoadingInitialData && posts.length > 0 && <Box>loading...</Box>}
-          {posts && posts.map((post: Post) => <PostCard post={post} mutate={mutate} key={post.identifier} />)}
-          {isValidating && posts.length > 0 && <Box>loading...</Box>}
+          {isLoadingInitialData ? (
+            <Box>loading...</Box>
+          ) : (
+            <> {posts && posts.map((post: Post) => <PostCard post={post} mutate={mutate} key={post.identifier} />)}</>
+          )}
         </Box>
         <Box sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
           <FrontPageSideBar />

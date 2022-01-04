@@ -1,7 +1,10 @@
 import { red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
+import { responsiveFontSizes } from "@mui/material";
 
-const theme = createTheme({
+let theme = createTheme();
+
+theme = createTheme(theme, {
   palette: {
     primary: {
       main: "#556cd6",
@@ -21,6 +24,30 @@ const theme = createTheme({
     button: {
       textTransform: "none",
     },
+    h5: {
+      fontSize: "1.5rem",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "1.3rem",
+      },
+    },
+    h6: {
+      fontSize: "1.25rem",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "1rem",
+      },
+    },
+    subtitle1: {
+      fontSize: "1rem",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "0.8rem",
+      },
+    },
+    subtitle2: {
+      fontSize: "0.875rem",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "0.7rem",
+      },
+    },
   },
   mixins: {
     toolbar: {
@@ -28,5 +55,7 @@ const theme = createTheme({
     },
   },
 });
+
+responsiveFontSizes(theme);
 
 export default theme;

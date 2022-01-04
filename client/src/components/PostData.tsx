@@ -44,7 +44,6 @@ const PostData: React.FC<Props> = ({ post }) => {
               label={`r/${post.subName}`}
               color="textPrimary"
               sx={{ ml: "0.3rem" }}
-              noWrap
             />
           </Box>
           <Typography variant="subtitle2" color="textSecondary" sx={{ mx: "0.2rem" }}>
@@ -59,7 +58,6 @@ const PostData: React.FC<Props> = ({ post }) => {
             color="textSecondary"
             label={`u/${post.username}`}
             sx={{ mx: "0.3rem" }}
-            noWrap
           />
 
           <CLink
@@ -67,7 +65,6 @@ const PostData: React.FC<Props> = ({ post }) => {
             variant="subtitle2"
             color="textSecondary"
             label={dayjs(post.createdAt).fromNow()}
-            noWrap
           />
         </Box>
       )}
