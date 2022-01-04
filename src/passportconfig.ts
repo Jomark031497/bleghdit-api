@@ -15,7 +15,6 @@ export default function (passport: any) {
           if (!user) return done(null, false, { message: "User not found" });
           const passwordMatched = await compare(password, user.password);
           if (!passwordMatched) return done(null, false);
-
           return done(null, user);
         } catch (e) {
           console.error(e);

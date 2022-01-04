@@ -6,10 +6,8 @@ import cookierParser from "cookie-parser";
 import passport from "passport";
 import { config as dotenv } from "dotenv";
 import { createConnection } from "typeorm";
-
 import trim from "./middlewares/trimFields";
 import authenticate from "./passportconfig";
-
 import authRoutes from "./routes/auth.routes";
 import postRoutes from "./routes/posts.routes";
 import subRoutes from "./routes/subs.routes";
@@ -50,12 +48,12 @@ app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);
 app.use("/api/vote", voteRoutes);
 app.get("/api", (_: Request, res: Response) => {
-  res.send("server is now working, dunno about your database tho");
+  // test endpoint
+  res.send("test endpoint: working");
 });
 
 app.listen(PORT, async () => {
   console.log(`listening to port ${PORT}`);
-
   try {
     await createConnection();
     console.log("connected to database");

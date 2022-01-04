@@ -4,15 +4,11 @@ import Post from "../entities/Post";
 import Vote from "../entities/Vote";
 
 export const vote = async (req: Request, res: Response) => {
-  const { identifier, slug, commentIdentifier, value } = req.body;
-
-  // Validate vote value
-  if (![-1, 0, 1].includes(value)) {
-    return res.status(400).json({ value: "Value must be -1, 0 or 1" });
-  }
+  const { identifier, slug, commentIdentifier, value } = req.body; // destructure the fields
+  const user: any = req.user; // get session user
+  if (![-1, 0, 1].includes(value)) return res.status(400).json({ value: "Value must be -1, 0 or 1" }); // Validate vote value
   try {
-    const user: any = req.user;
-    let post = await Post.findOneOrFail({ identifier, slug });
+    let post = await Post.findOneOrFail({ identifier, slug }); // find the post
     let vote: Vote | undefined;
     let comment: Comment | undefined;
 
