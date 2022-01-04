@@ -101,8 +101,8 @@ const Header: React.FC = () => {
   return (
     <Box>
       <AppBar position="fixed" elevation={0} sx={{ justifyContent: "center", backgroundColor: "white", height: "5vh" }}>
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Box sx={{ mr: { xs: "0", md: " 2rem" } }}>
+        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center", px: "0.1rem" }}>
+          <Box sx={{ mx: { xs: "0", md: " 2rem" } }}>
             <Link href="/" passHref>
               <MuiLink underline="none" color="textPrimary" sx={{ display: "flex", alignItems: "start" }}>
                 <Image
@@ -110,16 +110,19 @@ const Header: React.FC = () => {
                   height={40}
                   width={40}
                 />
-                <Typography variant="h5" sx={{ fontWeight: "bolder", margin: "auto 0.3rem" }}>
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bolder", margin: "auto 0.3rem", display: { xs: "none", md: "block" } }}
+                >
                   leddit.
                 </Typography>
               </MuiLink>
             </Link>
           </Box>
 
-          <Box sx={{ flex: 1, display: "flex", maxWidth: "40%", position: "relative" }}>
+          <Box sx={{ flex: 1, display: "flex", maxWidth: { xs: "50%", md: "40%" }, position: "relative" }}>
             <TextField
-              placeholder="Search Reddit"
+              placeholder="Search a subleddit"
               value={name}
               fullWidth
               variant="outlined"
@@ -131,6 +134,14 @@ const Header: React.FC = () => {
                     <SearchIcon />
                   </InputAdornment>
                 ),
+              }}
+              sx={{
+                "& input::placeholder": {
+                  fontSize: {
+                    xs: "0.7rem",
+                    md: "1rem",
+                  },
+                },
               }}
             />
             <Box
