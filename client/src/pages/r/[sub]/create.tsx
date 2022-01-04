@@ -17,15 +17,15 @@ interface INewPost {
 const PostPage: NextPage = () => {
   const router = useRouter();
 
-  const { data } = useSelector((state: RootState) => state.login);
+  const { data: user } = useSelector((state: RootState) => state.login);
 
   useEffect(() => {
-    if (!data) router.push(`/r/${router.query.sub}`);
+    // redirect to sub's homepage if not authenticated
+    if (!user) router.push(`/r/${router.query.sub}`);
   }, []);
 
   const createPost = async (values: INewPost) => {
     if (!values.title) return;
-
     try {
       const { data: post } = await axios.post(
         "/posts/create",
@@ -37,6 +37,7 @@ const PostPage: NextPage = () => {
         { withCredentials: true }
       );
 
+      // redirect to the created post if successful
       router.push(`/r/${post.subName}/${post.identifier}/${post.slug}`);
     } catch (error) {
       console.error(error);
@@ -49,15 +50,15 @@ const PostPage: NextPage = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Container maxWidth="md" sx={{ background: "#fff", m: "3rem auto", p: "1rem 1rem" }}>
+      <Container maxWidth="md" sx={{ my: "3rem" }}>
         <Formik initialValues={{ title: "", body: "" }} onSubmit={(values) => createPost(values)}>
           {() => (
-            <Box component={Form}>
+            <Box id="form-container" component={Form} sx={{ background: "#fff", p: "1rem", borderRadius: "0.5rem" }}>
               <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
               <Field as={CTextField} placeholder="title" name="title" />
               <TextField multiline minRows={4} name="body" placeholder="text (optional)" fullWidth />
 
-              <Button type="submit" variant="contained" sx={{ alignSelf: "flex-end" }}>
+              <Button type="submit" variant="contained" sx={{ my: "0.3rem" }}>
                 POST
               </Button>
             </Box>

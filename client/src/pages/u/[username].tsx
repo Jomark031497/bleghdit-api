@@ -164,7 +164,10 @@ const UserPage: NextPage = () => {
             )}
           </Box>
 
-          <Box sx={{ backgroundColor: "#fff", flex: 0.3, height: "40vh" }}>
+          <Box
+            id="sidebar"
+            sx={{ backgroundColor: "#fff", flex: 0.3, height: "40vh", display: { xs: "none", md: "block" } }}
+          >
             <Box sx={{ background: "#4386bd", height: "8vh" }} />
             <Box sx={{ display: "flex", alignItems: "center", padding: "1rem 0.5rem" }}>
               <Avatar src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_3.png" />

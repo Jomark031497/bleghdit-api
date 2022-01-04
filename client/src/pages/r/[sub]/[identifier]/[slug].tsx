@@ -27,11 +27,12 @@ const PostPage: NextPage = () => {
 
   const { data: post, error } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
   const { data: comments } = useSWR<CommentType[]>(identifier && slug ? `/posts/${identifier}/${slug}/comments` : null);
-  if (error) router.push("/");
+  if (error) {
+    router.push("/");
+  } // redirtect to homepage if no post is found
 
   const addComment = async (values: string) => {
     if (!values) return;
-
     try {
       await axios.post(
         `/posts/${post?.identifier}/${post?.slug}/comments`,

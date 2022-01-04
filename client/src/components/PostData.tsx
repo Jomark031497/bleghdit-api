@@ -38,6 +38,7 @@ const PostData: React.FC<Props> = ({ post }) => {
               >
                 <Image src={post.sub.imageURN} layout="fill" objectFit="cover" />
               </Box>
+
               <CLink
                 href={`/r/${post.subName}`}
                 variant="subtitle2"
@@ -47,7 +48,16 @@ const PostData: React.FC<Props> = ({ post }) => {
               />
             </Box>
           ) : (
-            <Avatar sx={{ width: "2.5rem", height: "2.5rem" }}>{getFirstLetter(post.subName)}</Avatar>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Avatar sx={{ width: "2.5rem", height: "2.5rem" }}>{getFirstLetter(post.subName)}</Avatar>
+              <CLink
+                href={`/r/${post.subName}`}
+                variant="subtitle2"
+                label={`r/${post.subName}`}
+                color="textPrimary"
+                sx={{ ml: "0.3rem" }}
+              />
+            </Box>
           )}
 
           <Box id="sub-name-container" sx={{ display: "flex", alignItems: "center" }}></Box>

@@ -11,6 +11,7 @@ import { useAppDispatch } from "../redux/store";
 import { Field, Form, Formik } from "formik";
 import CButton from "../components/custom/CButton";
 import CLink from "../components/custom/CLink";
+import Image from "next/image";
 
 interface AuthProps {
   email: string;
@@ -40,20 +41,12 @@ const Register: NextPage = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <Box sx={{ display: "flex", background: "white" }}>
-        <Head>
-          <title>leddit.com: Join the worldwide conversation</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-
+      <Box id="main-container" sx={{ display: "flex", background: "#fff", height: "100vh" }}>
+        <Box id="image-container" sx={{ position: "relative", width: { sm: 0, md: "10%" } }}>
+          <Image src={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/bricks.jpg`} layout="fill" objectFit="cover" />
+        </Box>
         <Box
-          sx={{
-            width: { xs: 0, sm: "10%" },
-            height: "100vh",
-            backgroundImage: `url('${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/bricks.jpg')`,
-          }}
-        />
-        <Box
+          id="main-content"
           sx={{
             maxWidth: "23rem",
             display: "flex",

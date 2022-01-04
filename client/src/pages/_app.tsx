@@ -14,10 +14,11 @@ import fetcher from "../lib/fetcher";
 import createEmotionCache from "../lib/createEmotionCache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 
+// set the server's base URL to default for QoL
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
 
+// for serverside MUI
 const clientSideEmotionCache = createEmotionCache();
-
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
@@ -25,7 +26,8 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const { pathname } = useRouter();
-  const authRoute = ["/register", "/login"].includes(pathname);
+
+  const authRoute = ["/register", "/login"].includes(pathname); // variable that contains the authRoutes to not display the header
 
   return (
     <CacheProvider value={emotionCache}>

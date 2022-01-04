@@ -20,17 +20,18 @@ const Subleddit: NextPage = () => {
         <title>{sub?.title}</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
+
       {sub && (
         <>
           <SubHeader sub={sub} />
-          <Container maxWidth="lg" sx={{ background: "transparent", pb: "1rem", display: "flex" }}>
-            <Box sx={{ flex: 1 }}>
+          <Container id="main-container" maxWidth="lg" sx={{ background: "transparent", pb: "1rem", display: "flex" }}>
+            <Box id="main-content" sx={{ flex: 1 }}>
               {sub.posts.map((post: Post) => (
                 <PostCard post={post} key={post.identifier} />
               ))}
             </Box>
 
-            <Box sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
+            <Box id="sidebar" sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
               <SubSideBar sub={sub} />
             </Box>
           </Container>
