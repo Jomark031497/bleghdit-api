@@ -4,13 +4,16 @@
   "description": "a reddit clone created using react/next, typescript, nodeJS/express, typeorm, and PostgreSQL",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build-server": "tsc",
+    "build-client": "cd client && npm run build",
     "start": "node dist/index.js",
     "dev": "nodemon dist/index.js",
     "watch": "tsc -w",
     "typeorm": "ts-node/register ./node_modules/typeorm/cli.js",
     "client": "cd client && npm run dev",
     "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
+    "install-server": "npm install",
+    "install-client": "cd client && npm install",
     "postinstall": "tsc"
   },
   "repository": {
