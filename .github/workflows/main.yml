@@ -14,7 +14,8 @@ jobs:
         with:
           command: |
             cd leddit
-            npm install
+            node --version
+            npm --version
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
