@@ -6,6 +6,7 @@ import useSWRInfinite from "swr/infinite";
 import { Post } from "../types";
 import PostCard from "../components/PostCard";
 import FrontPageSideBar from "../components/FrontPageSideBar";
+import CLink from "../components/custom/CLink";
 
 const Home: NextPage = () => {
   const [observedPost, setObservedPost] = useState("");
@@ -47,6 +48,25 @@ const Home: NextPage = () => {
 
       <Container id="main-page-container" maxWidth="lg" sx={{ display: "flex", my: "3rem" }}>
         <Box id="main-content" sx={{ flex: 1 }}>
+          <Box
+            sx={{
+              backgroundColor: "#fff",
+              borderRadius: "0.5rem",
+              mb: "1rem",
+              p: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography>Recent Posts</Typography>
+            <CLink
+              label="create a subleddit"
+              href="/create-sub"
+              variant="subtitle1"
+              sx={{ backgroundColor: "primary.main", color: "#fff", p: 1, borderRadius: 1 }}
+            />
+          </Box>
           {isLoadingInitialData ? (
             <Typography variant="subtitle1">loading...</Typography>
           ) : (

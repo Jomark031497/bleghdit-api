@@ -56,7 +56,7 @@ const PostPage: NextPage = () => {
             <Box id="form-container" component={Form} sx={{ background: "#fff", p: "1rem", borderRadius: "0.5rem" }}>
               <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
               <Field as={CTextField} placeholder="title" name="title" />
-              <TextField multiline minRows={4} name="body" placeholder="text (optional)" fullWidth />
+              <Field as={CTextField} multiline minRows={4} name="body" placeholder="text (optional)" fullWidth />
 
               <Button type="submit" variant="contained" sx={{ my: "0.3rem" }}>
                 POST
