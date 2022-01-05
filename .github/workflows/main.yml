@@ -15,12 +15,11 @@ jobs:
           command: |
             cd leddit
             git pull
-            npm install
-            npx tsc
-            cd client
-            npm install
-            npm run build
-            pm2 restart server client
+            npm run install-server
+            npm run build-server
+            npm run install-client
+            npm run build-client
+            pm2 restart all
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
