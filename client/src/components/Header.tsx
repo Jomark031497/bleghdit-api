@@ -160,7 +160,9 @@ const Header: React.FC = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    padding: "0.5rem",
+                    p: "0.5rem",
+                    m: "0.5rem",
+                    borderBottom: "1px solid #000",
                     "&:hover": {
                       background: "lightgrey",
                     },
