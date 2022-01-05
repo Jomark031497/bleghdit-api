@@ -85,7 +85,13 @@ const PostPage: NextPage = () => {
 
                 <Box sx={{ background: "white", marginTop: "1rem", padding: "1rem" }}>
                   {data ? (
-                    <Formik initialValues={{ body: "" }} onSubmit={(values) => addComment(values.body)}>
+                    <Formik
+                      initialValues={{ body: "" }}
+                      onSubmit={(values) => {
+                        addComment(values.body);
+                        values.body = "";
+                      }}
+                    >
                       {() => (
                         <Box
                           component={Form}
