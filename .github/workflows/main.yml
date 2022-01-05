@@ -14,12 +14,7 @@ jobs:
         with:
           command: |
             cd leddit
-            git pull
-            npm run install-server
-            npm run build-server
-            npm run install-client
-            npm run build-client
-            pm2 restart all
+            ls
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
