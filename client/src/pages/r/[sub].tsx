@@ -24,14 +24,18 @@ const Subleddit: NextPage = () => {
       {sub && (
         <>
           <SubHeader sub={sub} />
-          <Container id="main-container" maxWidth="lg" sx={{ background: "transparent", pb: "1rem", display: "flex" }}>
-            <Box id="main-content" sx={{ flex: 1 }}>
+          <Container
+            id="main-container"
+            maxWidth="lg"
+            sx={{ background: "transparent", pb: "1rem", display: "flex", flexDirection: { xs: "column", md: "row" } }}
+          >
+            <Box id="main-content" sx={{ flex: 1, order: { xs: 2, md: 1 }, my: "1rem" }}>
               {sub.posts.map((post: Post) => (
                 <PostCard post={post} key={post.identifier} />
               ))}
             </Box>
 
-            <Box id="sidebar" sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
+            <Box id="sidebar" sx={{ flex: 0.4, ml: { xs: 0, md: "1rem" }, order: { xs: 1, md: 2 }, my: "1rem" }}>
               <SubSideBar sub={sub} />
             </Box>
           </Container>

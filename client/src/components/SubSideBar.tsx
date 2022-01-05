@@ -13,7 +13,7 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
   const router = useRouter();
 
   return (
-    <Box sx={{ background: "white", ml: "1rem" }}>
+    <Box sx={{ background: "white" }}>
       <Box sx={{ backgroundColor: "primary.main" }}>
         <Typography variant="subtitle1" sx={{ p: "0.7rem 0.5rem", color: "white" }}>
           About Community

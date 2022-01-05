@@ -62,8 +62,16 @@ const PostPage: NextPage = () => {
               <Typography variant="subtitle1">{post.title}</Typography>
             </Box>
 
-            <Box sx={{ backgroundColor: "transparent", display: "flex", p: "1rem" }}>
-              <Box sx={{ flex: 1 }}>
+            <Box
+              sx={{
+                backgroundColor: "transparent",
+                display: "flex",
+                p: "1rem",
+
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
+              <Box sx={{ flex: 1, mt: "1rem" }}>
                 <Box sx={{ background: "white", display: "flex" }}>
                   <Box>
                     <UpvoteDownVote post={post} />
@@ -149,7 +157,7 @@ const PostPage: NextPage = () => {
                 </Box>
               </Box>
 
-              <Box sx={{ flex: 0.4, display: { xs: "none", md: "block" } }}>
+              <Box sx={{ flex: 0.4, ml: { xs: 0, md: "1rem" }, my: "1rem" }}>
                 <SubSideBar sub={post.sub} />
               </Box>
             </Box>
