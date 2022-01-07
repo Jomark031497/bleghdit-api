@@ -9,11 +9,17 @@ const FrontPageSideBar: React.FC = () => {
   const { data: subs } = useSWR<Sub[]>("/subs");
 
   return (
-    <Box sx={{ ml: "1rem" }}>
+    <Box sx={{ ml: "1rem", borderRadius: "0.5rem" }}>
       <Typography
         variant="subtitle1"
         align="center"
-        sx={{ paddingTop: "3rem", backgroundColor: "#000", color: "#fff" }}
+        sx={{
+          paddingTop: "3rem",
+          backgroundColor: "#000",
+          color: "#fff",
+          borderTopRightRadius: "0.5rem",
+          borderTopLeftRadius: "0.5rem",
+        }}
       >
         Today{"'"}s Top Growing Communities
       </Typography>
