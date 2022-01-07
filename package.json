@@ -13,8 +13,7 @@
     "watch": "tsc -w",
     "typeorm": "ts-node/register ./node_modules/typeorm/cli.js",
     "client": "cd client && npm run dev",
-    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
-    "postinstall": "tsc"
+    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "repository": {
     "type": "git",
