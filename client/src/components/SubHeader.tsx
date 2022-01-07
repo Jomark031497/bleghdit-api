@@ -87,9 +87,9 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                   /r/{sub.name}
                 </Typography>
               </Box>
-              <Box sx={{ m: "0.5rem 1rem" }}>
+              {/* <Box sx={{ m: "0.5rem 1rem" }}>
                 <CButton variant="contained">Join</CButton>
-              </Box>
+              </Box> */}
             </Container>
           </Box>
         </>
