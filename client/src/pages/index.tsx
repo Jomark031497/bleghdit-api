@@ -61,7 +61,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>leddit: the frontpage of the internet.</title>
+        <title>bleghdit: the backpage of the internet.</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
           >
             <Typography>Recent Posts</Typography>
             <Button variant="contained" onClick={handleCreate}>
-              CREATE A SUBLEDDIT
+              CREATE A SUBBLEGHDIT
             </Button>
           </Box>
           {isLoadingInitialData ? (

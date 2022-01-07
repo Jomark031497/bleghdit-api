@@ -17,7 +17,9 @@ const Subleddit: NextPage = () => {
   return (
     <>
       <Head>
-        <title>{sub?.title}</title>
+        <title>
+          {sub?.title}: {sub?.description}
+        </title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 

@@ -114,7 +114,7 @@ const Header: React.FC = () => {
                   variant="h5"
                   sx={{ fontWeight: "bolder", margin: "auto 0.3rem", display: { xs: "none", md: "block" } }}
                 >
-                  leddit.
+                  bleghdit.
                 </Typography>
               </MuiLink>
             </Link>
@@ -122,7 +122,7 @@ const Header: React.FC = () => {
 
           <Box sx={{ flex: 1, display: "flex", maxWidth: { xs: "50%", md: "40%" }, position: "relative" }}>
             <TextField
-              placeholder="Search a subleddit"
+              placeholder="Search a subbleghdit"
               value={name}
               fullWidth
               variant="outlined"
