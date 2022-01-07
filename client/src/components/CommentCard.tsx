@@ -21,7 +21,21 @@ const CommentCard: React.FC<Props> = ({ post, comment }) => {
       </Box>
       <Box sx={{ p: "0.5rem" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Image src={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/reddit_logo.png`} width="20" height="20" />
+          <Box
+            sx={{
+              borderRadius: "50px",
+              overflow: "hidden",
+              position: "relative",
+              width: "2.5rem",
+              height: "2.5rem",
+            }}
+          >
+            <Image
+              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+              layout="fill"
+              objectFit="cover"
+            />
+          </Box>
           <CLink
             label={comment.username}
             href={`/u/${comment.username}`}
