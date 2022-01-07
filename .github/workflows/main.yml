@@ -15,13 +15,12 @@ jobs:
           command: |
             cd leddit
             git pull
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            npm run install-server
-            npm run build-server
-            npm run install-client
-            npm run build-client
-            pm2 restart all
+            npm install
+            npx tsc
+            cd client
+            npm install
+            npm run build
+            pm2 restart all --update-env
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
