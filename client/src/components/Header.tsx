@@ -106,7 +106,7 @@ const Header: React.FC = () => {
             <Link href="/" passHref>
               <MuiLink underline="none" color="textPrimary" sx={{ display: "flex", alignItems: "start" }}>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/reddit_logo.svg`}
+                  src="https://res.cloudinary.com/dljwfddln/image/upload/v1641559699/leddit/bleghdit_logo.svg"
                   height={40}
                   width={40}
                 />

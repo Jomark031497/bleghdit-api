@@ -43,7 +43,11 @@ const Register: NextPage = () => {
 
       <Box id="main-container" sx={{ display: "flex", background: "#fff", height: "100vh" }}>
         <Box id="image-container" sx={{ position: "relative", width: { sm: 0, md: "10%" } }}>
-          <Image src={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/bricks.jpg`} layout="fill" objectFit="cover" />
+          <Image
+            src="https://res.cloudinary.com/dljwfddln/image/upload/v1641559701/leddit/bricks.jpg"
+            layout="fill"
+            objectFit="cover"
+          />
         </Box>
         <Box
           id="main-content"
