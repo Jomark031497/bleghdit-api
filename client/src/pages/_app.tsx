@@ -16,6 +16,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 
 // set the server's base URL to default for QoL
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
+axios.defaults.withCredentials = true;
 
 // for serverside MUI
 const clientSideEmotionCache = createEmotionCache();

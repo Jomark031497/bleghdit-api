@@ -16,7 +16,7 @@ const initialState: ReduxState = {
 // Async thunk
 export const loginUser = createAsyncThunk("user/login", async (payload: LoginPayload, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post("/auth/login", payload, { withCredentials: true });
+    const { data } = await axios.post("/auth/login", payload);
 
     return data;
   } catch (e: any) {

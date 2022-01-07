@@ -27,15 +27,11 @@ const PostPage: NextPage = () => {
   const createPost = async (values: INewPost) => {
     if (!values.title) return;
     try {
-      const { data: post } = await axios.post(
-        "/posts/create",
-        {
-          title: values.title,
-          body: values.body,
-          sub: router.query.sub,
-        },
-        { withCredentials: true }
-      );
+      const { data: post } = await axios.post("/posts/create", {
+        title: values.title,
+        body: values.body,
+        sub: router.query.sub,
+      });
 
       // redirect to the created post if successful
       router.push(`/r/${post.subName}/${post.identifier}/${post.slug}`);

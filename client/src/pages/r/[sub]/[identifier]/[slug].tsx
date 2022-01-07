@@ -34,11 +34,7 @@ const PostPage: NextPage = () => {
   const addComment = async (values: string) => {
     if (!values) return;
     try {
-      await axios.post(
-        `/posts/${post?.identifier}/${post?.slug}/comments`,
-        { body: values.trim() },
-        { withCredentials: true }
-      );
+      await axios.post(`/posts/${post?.identifier}/${post?.slug}/comments`, { body: values.trim() });
 
       mutate(`/posts/${identifier}/${slug}/comments`);
     } catch (error) {

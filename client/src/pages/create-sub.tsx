@@ -20,7 +20,7 @@ const CreateSub: NextPage = () => {
 
   const createSub = async (values: any) => {
     try {
-      const { data: sub } = await axios.post("/subs/create", values, { withCredentials: true });
+      const { data: sub } = await axios.post("/subs/create", values);
 
       router.push(`/r/${sub.name}`);
     } catch (error) {
