@@ -99,7 +99,7 @@ const Home: NextPage = () => {
         message="You must be logged in"
         action={
           <>
-            <Button color="secondary" size="small" onClick={handleClose}>
+            <Button color="secondary" size="small" onClick={() => router.push("/login")}>
               Log In
             </Button>
             <IconButton size="small" color="inherit">
