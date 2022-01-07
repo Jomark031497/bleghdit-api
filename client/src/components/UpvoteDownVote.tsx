@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Snackbar, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { CommentType, Post } from "../types";
@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
 import { mutate as normalMutate } from "swr";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 
 interface Props {
   post: Post;
@@ -18,36 +20,33 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
   const router = useRouter();
   const { data } = useSelector((state: RootState) => state.login);
 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
   const vote = async (value: number) => {
-    if (!data) router.push("/login"); // if not logged in, redirect
-    if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) {
-      value = 0;
+    if (!data) {
+      setOpenSnackbar(true);
+      return;
     }
-
+    if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) value = 0;
     // set the value to 0 if the user voted the same vote
-    if (value === post.userVote) {
-      value = 0;
-    }
-
+    if (value === post.userVote) value = 0;
     try {
       await axios.post(
         "/vote",
         { identifier: post?.identifier, commentIdentifier: comment?.identifier, slug: post?.slug, value },
         { withCredentials: true }
       );
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
     }
-
     if (!comment) {
-      if (router.pathname === "/" || router.pathname.includes("/u/")) {
-        mutate();
-      } else {
-        normalMutate(`/posts/${post.identifier}/${post.slug}`);
-      }
-    } else {
-      normalMutate(`/posts/${post.identifier}/${post.slug}/comments`);
-    }
+      if (router.pathname === "/" || router.pathname.includes("/u/")) mutate();
+      else normalMutate(`/posts/${post.identifier}/${post.slug}`);
+    } else normalMutate(`/posts/${post.identifier}/${post.slug}/comments`);
+  };
+
+  const handleClose = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -94,6 +93,23 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
           </IconButton>
         </Box>
       )}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        message="You must be logged in"
+        action={
+          <>
+            <Button color="secondary" size="small" onClick={handleClose}>
+              Log In
+            </Button>
+            <IconButton size="small" color="inherit">
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </>
+        }
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        onClose={handleClose}
+      />
     </>
   );
 };
