@@ -1,15 +1,15 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { Container, Typography, Box, Snackbar, Button, IconButton } from "@mui/material";
+import { Container, Typography, Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { Post } from "../types";
 import PostCard from "../components/PostCard";
 import FrontPageSideBar from "../components/FrontPageSideBar";
-import CloseIcon from "@mui/icons-material/Close";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
+import CSnackBar from "../components/custom/CSnackBar";
 
 const Home: NextPage = () => {
   const [observedPost, setObservedPost] = useState("");
@@ -93,23 +93,7 @@ const Home: NextPage = () => {
           <FrontPageSideBar />
         </Box>
       </Container>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        message="You must be logged in"
-        action={
-          <>
-            <Button color="secondary" size="small" onClick={() => router.push("/login")}>
-              Log In
-            </Button>
-            <IconButton size="small" color="inherit">
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </>
-        }
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        onClose={handleClose}
-      />
+      <CSnackBar openSnackbar={openSnackbar} closeSnackbar={handleClose} />
     </>
   );
 };

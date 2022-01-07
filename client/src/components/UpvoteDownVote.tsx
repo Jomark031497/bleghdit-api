@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Snackbar, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { CommentType, Post } from "../types";
@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
 import { mutate as normalMutate } from "swr";
-import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import CSnackBar from "./custom/CSnackBar";
 
 interface Props {
   post: Post;
@@ -58,7 +58,7 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
             flexDirection: "column",
             flex: 0.5,
             alignItems: "center",
-            background: "#f7f9fa",
+            backgroundColor: "#f7f9fa",
             borderRadius: "0.5rem",
           }}
         >
@@ -77,7 +77,16 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
           </IconButton>
         </Box>
       ) : (
-        <Box sx={{ display: "flex", flexDirection: "column", flex: 0.5, ml: "0.2rem", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 0.5,
+            ml: "0.2rem",
+            alignItems: "center",
+            backgroundColor: "#f7f9fa",
+          }}
+        >
           <IconButton onClick={() => vote(1)} sx={{ color: comment?.userVote === 1 ? "red" : "" }}>
             <ArrowUpwardIcon
               sx={{
@@ -93,23 +102,7 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
           </IconButton>
         </Box>
       )}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        message="You must be logged in"
-        action={
-          <>
-            <Button color="secondary" size="small" onClick={() => router.push("/login")}>
-              Log In
-            </Button>
-            <IconButton size="small" color="inherit">
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </>
-        }
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        onClose={handleClose}
-      />
+      <CSnackBar openSnackbar={openSnackbar} closeSnackbar={handleClose} />
     </>
   );
 };

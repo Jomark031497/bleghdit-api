@@ -1,22 +1,22 @@
-import { Box, Typography, Button, Avatar, Snackbar, IconButton, Divider } from "@mui/material";
+import { Box, Typography, Button, Avatar, Divider } from "@mui/material";
 import { Sub } from "../types";
 import CakeIcon from "@mui/icons-material/Cake";
 import dayjs from "dayjs";
-import { useRouter } from "next/router";
 import CLink from "./custom/CLink";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import CSnackBar from "./custom/CSnackBar";
+import { useRouter } from "next/router";
 
 interface SubProp {
   sub: Sub;
 }
 
 const SubSideBar: React.FC<SubProp> = ({ sub }) => {
-  const router = useRouter();
   const { data: user } = useSelector((state: RootState) => state.login);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const router = useRouter();
 
   const handleCreatePost = () => {
     if (!user) {
@@ -73,23 +73,7 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
           CREATE POST
         </Button>
       </Box>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        message="You must be logged in"
-        action={
-          <>
-            <Button color="secondary" size="small" onClick={() => router.push("/login")}>
-              Log In
-            </Button>
-            <IconButton size="small" color="inherit">
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </>
-        }
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        onClose={handleClose}
-      />
+      <CSnackBar openSnackbar={openSnackbar} closeSnackbar={handleClose} />
     </Box>
   );
 };
