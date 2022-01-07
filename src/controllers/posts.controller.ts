@@ -90,7 +90,7 @@ export const getPostComments = async (req: Request, res: Response) => {
     // find the comments of the post
     const comments = await Comment.find({
       where: { post },
-      order: { createdAt: "DESC" },
+      order: { createdAt: "ASC" },
       relations: ["votes"],
     });
     if (user) comments.forEach((comment) => comment.setUserVote(user)); // set the user vote if there is a user
