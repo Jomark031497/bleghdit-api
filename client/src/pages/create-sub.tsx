@@ -34,7 +34,7 @@ const CreateSub: NextPage = () => {
         <Formik initialValues={{ title: "", name: "", description: "" }} onSubmit={(values) => createSub(values)}>
           {() => (
             <Box id="form-container" component={Form} sx={{ background: "#fff", p: "1rem", borderRadius: "0.5rem" }}>
-              <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
+              <Typography variant="h5">Create a Subleddit</Typography>
               <Field as={CTextField} placeholder="subleddit name (ex. funny, reactjs)" name="name" />
               <Field as={CTextField} placeholder="subleddit title (ex. Everything Funny, ReactJS)" name="title" />
               <Field as={CTextField} multiline minRows={4} name="description" placeholder="text (optional)" fullWidth />
