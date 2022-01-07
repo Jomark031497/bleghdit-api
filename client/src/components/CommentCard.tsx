@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 
 import { CommentType, Post } from "../types";
@@ -45,13 +45,14 @@ const CommentCard: React.FC<Props> = ({ post, comment }) => {
           />
           <Typography>•</Typography>
           <CLink
-            label={`· ${dayjs(comment.createdAt).fromNow()}`}
+            label={`${dayjs(comment.createdAt).fromNow()}`}
             href={`/u/${comment.username}`}
             variant="subtitle2"
             color="textSecondary"
+            sx={{ mx: "0.3rem" }}
           />
         </Box>
-        <Box>
+        <Box sx={{ m: "0.5rem 1rem" }}>
           <Typography variant="body1">{comment.body}</Typography>
         </Box>
       </Box>
