@@ -49,7 +49,9 @@ const PostData: React.FC<Props> = ({ post }) => {
             </Box>
           ) : (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar sx={{ width: "2.5rem", height: "2.5rem" }}>{getFirstLetter(post.subName)}</Avatar>
+              <Avatar sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111" }}>
+                {getFirstLetter(post.subName)}
+              </Avatar>
               <CLink
                 href={`/r/${post.subName}`}
                 variant="subtitle2"

@@ -4,6 +4,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 
 import { Sub } from "../types";
 import CLink from "./custom/CLink";
+import { getFirstLetter } from "../lib/getFirstLetter";
 
 const FrontPageSideBar: React.FC = () => {
   const { data: subs } = useSWR<Sub[]>("/subs");
@@ -36,9 +37,11 @@ const FrontPageSideBar: React.FC = () => {
             }}
           >
             <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              {index + 1}
+              {index + 1}.
             </Typography>
-            <Avatar src={sub.imageURN} sx={{ mx: "0.5rem" }} />
+            <Avatar sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111", mx: "0.5rem" }}>
+              {getFirstLetter(sub.name)}
+            </Avatar>
             <CLink
               href={`/r/${sub.name}`}
               label={`r/${sub.name}`}
