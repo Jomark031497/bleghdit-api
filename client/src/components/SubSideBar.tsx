@@ -1,9 +1,13 @@
-import { Box, Typography, Button, Avatar } from "@mui/material";
+import { Box, Typography, Button, Avatar, Snackbar, IconButton } from "@mui/material";
 import { Sub } from "../types";
 import CakeIcon from "@mui/icons-material/Cake";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import CLink from "./custom/CLink";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 
 interface SubProp {
   sub: Sub;
@@ -11,6 +15,21 @@ interface SubProp {
 
 const SubSideBar: React.FC<SubProp> = ({ sub }) => {
   const router = useRouter();
+  const { data: user } = useSelector((state: RootState) => state.login);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleCreatePost = () => {
+    if (!user) {
+      setOpenSnackbar(true);
+      return;
+    }
+
+    router.push(`/r/${sub.name}/create`);
+  };
+
+  const handleClose = () => {
+    setOpenSnackbar(false);
+  };
 
   return (
     <Box sx={{ background: "white" }}>
@@ -48,10 +67,27 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
           <Typography>Created {dayjs(sub.createdAt).format("D MMM YYYY")}</Typography>
         </Box>
 
-        <Button variant="contained" fullWidth onClick={() => router.push(`/r/${sub.name}/create`)}>
+        <Button variant="contained" fullWidth onClick={handleCreatePost}>
           CREATE POST
         </Button>
       </Box>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        message="You must be logged in"
+        action={
+          <>
+            <Button color="secondary" size="small" onClick={() => router.push("/login")}>
+              Log In
+            </Button>
+            <IconButton size="small" color="inherit">
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </>
+        }
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        onClose={handleClose}
+      />
     </Box>
   );
 };
