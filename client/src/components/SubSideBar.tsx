@@ -32,8 +32,8 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
   };
 
   return (
-    <Box sx={{ background: "white" }}>
-      <Box sx={{ backgroundColor: "primary.main" }}>
+    <Box sx={{ background: "white", borderRadius: "0.5rem" }}>
+      <Box sx={{ backgroundColor: "primary.main", borderTopLeftRadius: "0.5rem", borderTopRightRadius: "0.5rem" }}>
         <Typography variant="subtitle1" sx={{ p: "0.7rem 0.5rem", color: "white" }}>
           About Community
         </Typography>
