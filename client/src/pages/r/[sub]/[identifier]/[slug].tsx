@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Button } from "@mui/material";
+import { Box, Container, Typography, Button, Divider } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
@@ -152,7 +152,12 @@ const PostPage: NextPage = () => {
                   <hr />
                   <Box>
                     {comments &&
-                      comments.map((comment) => <CommentCard post={post} comment={comment} key={comment.identifier} />)}
+                      comments.map((comment) => (
+                        <Box key={comment.identifier}>
+                          <CommentCard post={post} comment={comment} />
+                          <Divider />
+                        </Box>
+                      ))}
                   </Box>
                 </Box>
               </Box>
