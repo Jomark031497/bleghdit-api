@@ -1,4 +1,4 @@
-import { Box, Container, SpeedDial, SpeedDialAction, styled } from "@mui/material";
+import { Box, Container, SpeedDial, SpeedDialAction, SpeedDialIcon, styled } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,8 +8,6 @@ import PostCard from "../../components/PostCard";
 import SubHeader from "../../components/SubHeader";
 import SubSideBar from "../../components/SubSideBar";
 import { Post, Sub } from "../../types";
-
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 
 import CreatePost from "@mui/icons-material/Create";
 

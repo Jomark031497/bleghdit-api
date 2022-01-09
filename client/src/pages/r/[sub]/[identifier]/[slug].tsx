@@ -1,4 +1,14 @@
-import { Box, Container, Typography, Button, Divider } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Divider,
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
+  styled,
+} from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
@@ -19,6 +29,7 @@ import { Field, Form, Formik } from "formik";
 import CTextField from "../../../../components/custom/CTextField";
 import CButton from "../../../../components/custom/CButton";
 dayjs.extend(relativeTime);
+import CreatePost from "@mui/icons-material/Create";
 
 const PostPage: NextPage = () => {
   const router = useRouter();
@@ -30,6 +41,20 @@ const PostPage: NextPage = () => {
   if (error) {
     router.push("/");
   } // redirtect to homepage if no post is found
+
+  const actions = [
+    {
+      icon: <CreatePost />,
+      name: "Create Post",
+      action: {},
+    },
+  ];
+
+  const handleClick = (operation: string) => {
+    if (operation === "Create Post") {
+      router.push(`/r/${router.query.sub}/create`);
+    }
+  };
 
   const addComment = async (values: string) => {
     if (!values) return;
@@ -63,8 +88,6 @@ const PostPage: NextPage = () => {
                 backgroundColor: "transparent",
                 display: "flex",
                 p: "1rem",
-
-                flexDirection: { xs: "column", md: "row" },
               }}
             >
               <Box sx={{ flex: 1, mt: "1rem" }}>
@@ -158,15 +181,40 @@ const PostPage: NextPage = () => {
                 </Box>
               </Box>
 
-              <Box sx={{ flex: 0.4, ml: { xs: 0, md: "1rem" }, my: "1rem" }}>
+              <Box sx={{ flex: 0.4, my: "1rem", display: { xs: "none", md: "block" } }}>
                 <SubSideBar sub={post.sub} />
               </Box>
             </Box>
           </Container>
+          <Box sx={{ display: { xs: "block", md: "none" }, position: "relative", mt: 3, height: 320 }}>
+            <StyledSpeedDial ariaLabel="speed dial" icon={<SpeedDialIcon />} direction="up">
+              {actions.map((action) => (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipTitle={action.name}
+                  onClick={() => handleClick(action.name)}
+                  tooltipOpen
+                />
+              ))}
+            </StyledSpeedDial>
+          </Box>
         </Box>
       )}
     </>
   );
 };
+
+const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
+  position: "fixed",
+  "&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft": {
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+  "&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight": {
+    top: theme.spacing(2),
+    left: theme.spacing(2),
+  },
+}));
 
 export default PostPage;
