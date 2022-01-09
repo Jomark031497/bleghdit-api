@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Avatar, Divider } from "@mui/material";
+import { Box, Typography, Button, Avatar, Divider, Alert, Snackbar } from "@mui/material";
 import { Sub } from "../types";
 import CakeIcon from "@mui/icons-material/Cake";
 import dayjs from "dayjs";
@@ -6,7 +6,6 @@ import CLink from "./custom/CLink";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useState } from "react";
-import CSnackBar from "./custom/CSnackBar";
 import { useRouter } from "next/router";
 
 interface SubProp {
@@ -73,7 +72,25 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
           CREATE POST
         </Button>
       </Box>
-      <CSnackBar openSnackbar={openSnackbar} closeSnackbar={handleClose} />
+      <Snackbar
+        open={openSnackbar}
+        onClose={handleClose}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="error"
+          action={
+            <>
+              <Button color="secondary" size="small" onClick={() => router.push("/login")}>
+                log in
+              </Button>
+            </>
+          }
+        >
+          you must logged in to submit a post
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

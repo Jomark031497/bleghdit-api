@@ -28,7 +28,7 @@ const Register: NextPage = () => {
   const handleSubmit = async (values: AuthProps) => {
     try {
       await dispatch(registerUser(values)).unwrap();
-      router.push("/login");
+      router.push("/login?success=true");
     } catch (err: any) {
       setErrors(err);
     }

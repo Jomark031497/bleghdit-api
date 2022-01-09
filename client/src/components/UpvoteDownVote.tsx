@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Alert, Box, Button, IconButton, Snackbar, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { CommentType, Post } from "../types";
@@ -8,7 +8,7 @@ import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
 import { mutate as normalMutate } from "swr";
 import { useState } from "react";
-import CSnackBar from "./custom/CSnackBar";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface Props {
   post: Post;
@@ -102,7 +102,28 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
           </IconButton>
         </Box>
       )}
-      <CSnackBar openSnackbar={openSnackbar} closeSnackbar={handleClose} />
+      <Snackbar
+        open={openSnackbar}
+        onClose={handleClose}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="error"
+          action={
+            <>
+              <Button color="secondary" size="small" onClick={() => router.push("/login")}>
+                log in
+              </Button>
+              <IconButton size="small" color="inherit">
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </>
+          }
+        >
+          you must logged in to upvote/downvote
+        </Alert>
+      </Snackbar>
     </>
   );
 };

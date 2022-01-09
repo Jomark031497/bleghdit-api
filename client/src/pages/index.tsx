@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { Container, Typography, Box, Button } from "@mui/material";
+import { Container, Typography, Box, Button, Snackbar, IconButton, Alert } from "@mui/material";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { Post } from "../types";
@@ -9,7 +9,7 @@ import FrontPageSideBar from "../components/FrontPageSideBar";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
-import CSnackBar from "../components/custom/CSnackBar";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Home: NextPage = () => {
   const [observedPost, setObservedPost] = useState("");
@@ -93,7 +93,28 @@ const Home: NextPage = () => {
           <FrontPageSideBar />
         </Box>
       </Container>
-      <CSnackBar openSnackbar={openSnackbar} closeSnackbar={handleClose} />
+      <Snackbar
+        open={openSnackbar}
+        onClose={handleClose}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="error"
+          action={
+            <>
+              <Button color="secondary" size="small" onClick={() => router.push("/login")}>
+                log in
+              </Button>
+              <IconButton size="small" color="inherit">
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </>
+          }
+        >
+          you must logged in to create a subbleghdit
+        </Alert>
+      </Snackbar>
     </>
   );
 };

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Box, Typography, Link as MuiLink } from "@mui/material";
+import { Box, Typography, Link as MuiLink, Snackbar, Alert } from "@mui/material";
 import { RootState, useAppDispatch } from "../redux/store";
 import { loginUser } from "../redux/features/auth/loginSlice";
 import CTextField from "../components/custom/CTextField";
@@ -24,6 +24,8 @@ const Login: NextPage = () => {
 
   const [errors, setErrors] = useState<any>({});
   const { data } = useSelector((state: RootState) => state.login);
+  const registered = router.query.success;
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   if (data) router.push("/");
 
@@ -35,6 +37,17 @@ const Login: NextPage = () => {
       setErrors(err);
     }
   };
+
+  useEffect(() => {
+    if (registered) {
+      setOpenSnackbar(true);
+    }
+  }, [registered]);
+
+  const handleClose = () => {
+    setOpenSnackbar(false);
+  };
+
   return (
     <>
       <Head>
@@ -104,6 +117,16 @@ const Login: NextPage = () => {
           </Typography>
         </Box>
       </Box>
+      <Snackbar
+        open={openSnackbar}
+        onClose={handleClose}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="success" variant="filled">
+          account registered
+        </Alert>
+      </Snackbar>
     </>
   );
 };
