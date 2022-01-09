@@ -4,7 +4,7 @@ import { Field, Form, Formik } from "formik";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CTextField from "../../../components/custom/CTextField";
 import { RootState } from "../../../redux/store";
@@ -18,6 +18,7 @@ const PostPage: NextPage = () => {
   const router = useRouter();
 
   const { data: user } = useSelector((state: RootState) => state.login);
+  const [errors, setErrors] = useState<any>({});
 
   useEffect(() => {
     // redirect to sub's homepage if not authenticated
@@ -25,7 +26,13 @@ const PostPage: NextPage = () => {
   }, []);
 
   const createPost = async (values: INewPost) => {
-    if (!values.title) return;
+    if (!values.title) {
+      setErrors({
+        ...errors,
+        title: "title must not be empty",
+      });
+      return;
+    }
     try {
       const { data: post } = await axios.post("/posts/create", {
         title: values.title,
@@ -35,8 +42,8 @@ const PostPage: NextPage = () => {
 
       // redirect to the created post if successful
       router.push(`/r/${post.subName}/${post.identifier}/${post.slug}`);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setErrors(error.response.data);
     }
   };
   return (
@@ -51,7 +58,10 @@ const PostPage: NextPage = () => {
           {() => (
             <Box id="form-container" component={Form} sx={{ background: "#fff", p: "1rem", borderRadius: "0.5rem" }}>
               <Typography variant="h5">Submit to /r/{router.query.sub}</Typography>
-              <Field as={CTextField} placeholder="title" name="title" />
+              <Field as={CTextField} placeholder="title" name="title" error={errors.title ? true : false} />
+              <Typography color="error" variant="subtitle2">
+                {errors.title}
+              </Typography>
               <Field as={CTextField} multiline minRows={4} name="body" placeholder="text (optional)" fullWidth />
 
               <Button type="submit" variant="contained" sx={{ my: "0.3rem" }}>

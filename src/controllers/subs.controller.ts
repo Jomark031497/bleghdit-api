@@ -14,6 +14,9 @@ export const createSub = async (req: Request, res: Response) => {
     if (isEmpty(name)) errors.name = "Name must not be empty";
     if (isEmpty(title)) errors.title = "Title must not be empty";
 
+    if (name.indexOf(" ") >= 0) errors.name = "sub name shouldn't have whitespace";
+
+    if (/[^a-z]/i.test(name)) errors.name = "sub should only have letters (a-z)";
     // check if there's an existing sub already
     const sub = await getRepository(Subs)
       .createQueryBuilder("sub")

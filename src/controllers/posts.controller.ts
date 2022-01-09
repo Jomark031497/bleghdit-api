@@ -3,14 +3,18 @@ import Subs from "../entities/Subleddit";
 import Post from "../entities/Post";
 import Comment from "../entities/Comment";
 import User from "../entities/User";
+import { isEmpty } from "class-validator";
 
 export const createPost = async (req: Request, res: Response) => {
   const { title, body, sub } = req.body; // destructure fields
   const user: any = req.user; // get user from the session
   if (!user) return res.status(404).json({ error: "unauthenticated" }); // return an error if there is no authenticated user
   try {
+    let errors: any = {};
+    if (isEmpty(title)) errors.title = "post title cannot be empty";
     const findSub = await Subs.findOneOrFail({ name: sub }); // check if the sub exists
     const post = new Post({ title, body, user, sub: findSub }); //create a post
+    if (Object.keys(errors).length > 0) return res.status(400).json(errors); // return error
     await post.save(); // save to the database
     return res.status(200).json(post);
   } catch (e) {
