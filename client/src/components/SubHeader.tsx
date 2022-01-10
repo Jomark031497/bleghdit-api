@@ -59,16 +59,19 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                 sx={{
                   height: "30vh",
                   width: "100vw",
-                  backgroundColor: "skyblue",
                   position: "relative",
                   cursor: ownsSub ? "pointer" : "",
+                  backgroundColor: "rgba(0,0,0,0.5)",
                 }}
                 onClick={() => openFileInput("banner")}
               >
                 <Image src={sub.bannerURN} layout="fill" objectFit="cover" />
               </Box>
             ) : (
-              <Box style={{ height: "24vh", background: "skyblue" }} />
+              <Box
+                style={{ height: "24vh", background: "skyblue", cursor: ownsSub ? "pointer" : "" }}
+                onClick={() => openFileInput("banner")}
+              />
             )}
 
             <Container maxWidth="lg" sx={{ height: "90px", display: "flex", position: "relative" }}>
