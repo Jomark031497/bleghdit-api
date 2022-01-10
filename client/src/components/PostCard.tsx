@@ -46,7 +46,7 @@ const PostCard: React.FC<PostProps> = ({ post, mutate }) => {
                   <Typography variant="h6">{post.title}</Typography>
 
                   {post.body && (
-                    <Typography variant="body2" sx={{ my: "0.5rem" }}>
+                    <Typography variant="body2" sx={{ my: "0.5rem", whiteSpace: "pre-wrap" }}>
                       {post.body}
                     </Typography>
                   )}

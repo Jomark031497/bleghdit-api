@@ -50,7 +50,9 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
               sx={{ mx: "0.3rem" }}
             />
           </Box>
-          <Typography variant="subtitle2">{sub.description}</Typography>
+          <Typography variant="subtitle2" sx={{ whiteSpace: "pre-wrap" }}>
+            {sub.description}
+          </Typography>
         </Box>
         <Divider />
         {/* <Box sx={{ display: "flex" }}>

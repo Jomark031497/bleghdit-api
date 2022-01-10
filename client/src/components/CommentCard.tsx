@@ -53,7 +53,9 @@ const CommentCard: React.FC<Props> = ({ post, comment }) => {
           />
         </Box>
         <Box sx={{ m: "0.5rem 1rem" }}>
-          <Typography variant="body1">{comment.body}</Typography>
+          <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
+            {comment.body}
+          </Typography>
         </Box>
       </Box>
     </Box>

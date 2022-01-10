@@ -88,7 +88,7 @@ const UserPage: NextPage = () => {
                           </Box>
                           <Divider sx={{ mt: "0.3rem" }} />
                           <Box>
-                            <Typography sx={{ p: "1rem 2rem" }}>{comment.body}</Typography>
+                            <Typography sx={{ p: "1rem 2rem", whiteSpace: "pre-wrap" }}>{comment.body}</Typography>
                           </Box>
                         </Box>
                       );
@@ -120,41 +120,37 @@ const UserPage: NextPage = () => {
                               <Avatar src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_3.png" />
                             </Box>
                             <Box sx={{ display: "flex", alignItems: "center" }}>
-                              <CLink href={`/u/${comment.username}`} label={comment.username} variant="subtitle1" />
-                              <Typography variant="subtitle2" color="textSecondary" noWrap>
+                              <CLink
+                                href={`/u/${comment.username}`}
+                                label={comment.username}
+                                variant="subtitle2"
+                                sx={{ px: "0.3rem" }}
+                              />
+                              <Typography variant="body2" color="textSecondary">
                                 commented on
                               </Typography>
                               <CLink
                                 href={`/r/${comment.post.subName}/${comment.post.identifier}/${comment.post.slug}`}
-                                variant="subtitle1"
+                                variant="subtitle2"
                                 label={comment.post.title}
                                 color="textPrimary"
+                                sx={{ px: "0.3rem" }}
                               />
-                              <Typography variant="subtitle1" color="textSecondary">
+                              <Typography variant="subtitle2" color="textSecondary">
                                 •
                               </Typography>
                               <CLink
                                 href={`/r/${comment.post.subName}`}
-                                variant="subtitle1"
+                                variant="subtitle2"
                                 label={`r/${comment.post.subName}`}
                                 color="textPrimary"
-                              />
-                            </Box>
-                            <Box sx={{ display: "flex", alignItems: "center" }}>
-                              <Typography variant="subtitle1" color="textSecondary">
-                                •
-                              </Typography>
-                              <CLink
-                                label={`Posted by u/${comment.post.username}`}
-                                href={`/u/${comment.post.username}`}
-                                variant="subtitle2"
-                                color="textSecondary"
+                                sx={{ px: "0.3rem" }}
                               />
                             </Box>
                           </Box>
                           <Divider sx={{ mt: "0.3rem" }} />
                           <Box>
-                            <Typography sx={{ p: "1rem 2rem" }}>{comment.body}</Typography>
+                            <Typography sx={{ p: "1rem 2rem", whiteSpace: "pre-wrap" }}>{comment.body}</Typography>
                           </Box>
                         </Box>
                       );

@@ -56,10 +56,11 @@ const PostPage: NextPage = () => {
     }
   };
 
-  const addComment = async (values: string) => {
-    if (!values) return;
+  const addComment = async (body: string) => {
+    if (!body) return;
+
     try {
-      await axios.post(`/posts/${post?.identifier}/${post?.slug}/comments`, { body: values.trim() });
+      await axios.post(`/posts/${post?.identifier}/${post?.slug}/comments`, { body });
 
       mutate(`/posts/${identifier}/${slug}/comments`);
     } catch (error) {
@@ -114,9 +115,9 @@ const PostPage: NextPage = () => {
                   {data ? (
                     <Formik
                       initialValues={{ body: "" }}
-                      onSubmit={(values) => {
-                        addComment(values.body);
-                        values.body = "";
+                      onSubmit={({ body }) => {
+                        addComment(body);
+                        body = "";
                       }}
                     >
                       {() => (
