@@ -7,12 +7,12 @@ import { useRouter } from "next/router";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import Layout from "../components/Layout";
 import theme from "../styles/theme";
 import store from "../redux/store";
 import fetcher from "../lib/fetcher";
 import createEmotionCache from "../lib/createEmotionCache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
+import Layout from "../components/Layout";
 
 // set the server's base URL to default for QoL
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";

@@ -102,7 +102,7 @@ const PostPage: NextPage = () => {
                     <Box sx={{ p: "0.5rem" }}>
                       <Typography variant="h5">{post.title}</Typography>
                       {post.body && (
-                        <Typography variant="body1" sx={{ margin: "0.5rem auto" }}>
+                        <Typography variant="body1" sx={{ margin: "0.5rem auto", whiteSpace: "pre-wrap" }}>
                           {post.body}
                         </Typography>
                       )}

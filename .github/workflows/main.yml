@@ -13,16 +13,18 @@ jobs:
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             cd bleghdit
             git pull
             npm install
             npx tsc
+            pm2 stop all
+            pm2 delete all
+            pm2 start --name "server" npm -- start
             cd client
             npm install
             npm run build
-            pm2 restart all --update-env
+            pm2 start --name "client" npm -- start
+            
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
