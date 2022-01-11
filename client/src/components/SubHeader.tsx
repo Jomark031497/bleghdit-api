@@ -4,7 +4,7 @@ import { mutate } from "swr";
 import { useSelector } from "react-redux";
 
 import { Avatar, Box, Container, Typography } from "@mui/material";
-import UploadIcon from "@mui/icons-material/Upload";
+
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import Image from "next/image";

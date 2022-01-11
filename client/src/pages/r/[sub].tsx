@@ -1,16 +1,4 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Snackbar,
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialIcon,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Button, Container, IconButton, Snackbar, Typography } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -75,7 +63,7 @@ const Subleddit: NextPage = () => {
               ) : (
                 <Box>
                   <Typography variant="subtitle1" color="error">
-                    There doesn't seem to be anything here...
+                    There doesn{"'"}t seem to be anything here...
                   </Typography>
                 </Box>
               )}
@@ -130,17 +118,5 @@ const Subleddit: NextPage = () => {
     </>
   );
 };
-
-const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
-  position: "fixed",
-  "&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft": {
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-  "&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight": {
-    top: theme.spacing(2),
-    left: theme.spacing(2),
-  },
-}));
 
 export default Subleddit;
