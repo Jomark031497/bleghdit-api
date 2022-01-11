@@ -8,6 +8,7 @@ import { Avatar, Box, Container, Typography } from "@mui/material";
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import Image from "next/image";
+import { getFirstLetter } from "../lib/getFirstLetter";
 
 interface SubProps {
   sub: Sub;
@@ -76,12 +77,20 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
 
             <Container maxWidth="lg" sx={{ height: "90px", display: "flex", position: "relative" }}>
               <Box sx={{ cursor: ownsSub ? "pointer" : "" }}>
-                <Avatar
-                  src={`${sub.imageURN}`}
-                  alt="subreddit image"
-                  sx={{ height: "80px", width: "80px", position: "absolute", top: -15 }}
-                  onClick={() => openFileInput("image")}
-                />
+                {sub.imageURN ? (
+                  <Avatar
+                    src={sub.imageUrl}
+                    alt="subreddit image"
+                    sx={{ height: "80px", width: "80px", position: "absolute", top: -15 }}
+                    onClick={() => openFileInput("image")}
+                  />
+                ) : (
+                  <Avatar
+                    sx={{ height: "80px", width: "80px", backgroundColor: "#111", position: "absolute", top: -15 }}
+                  >
+                    {getFirstLetter(sub.name)}
+                  </Avatar>
+                )}
               </Box>
               <Box sx={{ pl: "6rem" }}>
                 <Typography variant="h5">{sub.title}</Typography>

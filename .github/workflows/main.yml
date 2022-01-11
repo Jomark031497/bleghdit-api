@@ -14,9 +14,10 @@ jobs:
         with:
           command: |
             cd bleghdit
+            pm2 stop all
             git pull
             npm install
-            npx tsc
+            npm run build-server
             cd client
             npm install
             npm run build
