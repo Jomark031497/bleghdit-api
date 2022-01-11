@@ -4,7 +4,7 @@ import { mutate } from "swr";
 import { useSelector } from "react-redux";
 
 import { Avatar, Box, Container, Typography } from "@mui/material";
-
+import UploadIcon from "@mui/icons-material/Upload";
 import { RootState } from "../redux/store";
 import { Sub } from "../types";
 import Image from "next/image";
@@ -62,10 +62,13 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                   width: "100vw",
                   position: "relative",
                   cursor: ownsSub ? "pointer" : "",
-                  backgroundColor: "rgba(0,0,0,0.5)",
+                  "&:hover": {
+                    opacity: "0.6",
+                  },
                 }}
                 onClick={() => openFileInput("banner")}
               >
+                <Typography variant="h1">Hello</Typography>
                 <Image src={sub.bannerURN} layout="fill" objectFit="cover" />
               </Box>
             ) : (
@@ -75,15 +78,30 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
               />
             )}
 
-            <Container maxWidth="lg" sx={{ height: "90px", display: "flex", position: "relative" }}>
-              <Box sx={{ cursor: ownsSub ? "pointer" : "" }}>
+            <Container maxWidth="lg" sx={{ height: "90px", display: "flex" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  cursor: ownsSub ? "pointer" : "",
+                }}
+              >
                 {sub.imageURN ? (
-                  <Avatar
-                    src={sub.imageURN}
-                    alt="subreddit image"
-                    sx={{ height: "80px", width: "80px", position: "absolute", top: -15 }}
-                    onClick={() => openFileInput("image")}
-                  />
+                  <>
+                    <Avatar
+                      src={sub.imageURN}
+                      alt="subreddit image"
+                      sx={{
+                        height: "80px",
+                        width: "80px",
+                        position: "absolute",
+                        top: -15,
+                        "&:hover": {
+                          opacity: 0.3,
+                        },
+                      }}
+                      onClick={() => openFileInput("image")}
+                    />
+                  </>
                 ) : (
                   <Avatar
                     sx={{ height: "80px", width: "80px", backgroundColor: "#111", position: "absolute", top: -15 }}
