@@ -99,10 +99,14 @@ const Header: React.FC = () => {
   };
 
   return (
-    <Box>
-      <AppBar position="fixed" elevation={0} sx={{ justifyContent: "center", backgroundColor: "white", height: "5vh" }}>
+    <>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{ justifyContent: "center", backgroundColor: "white", height: { xs: "8vh", md: "5vh" } }}
+      >
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center", px: "0.1rem" }}>
-          <Box sx={{ mx: { xs: "0", md: " 2rem" } }}>
+          <Box sx={{ ml: { xs: "0.5rem", md: " 2rem" } }}>
             <Link href="/" passHref>
               <MuiLink underline="none" color="textPrimary" sx={{ display: "flex", alignItems: "start" }}>
                 <Image
@@ -216,7 +220,7 @@ const Header: React.FC = () => {
         </Toolbar>
       </AppBar>
       <Box sx={{ minHeight: "5vh" }} />
-    </Box>
+    </>
   );
 };
 
