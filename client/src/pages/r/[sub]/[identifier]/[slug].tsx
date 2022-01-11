@@ -73,8 +73,8 @@ const PostPage: NextPage = () => {
       <Head>
         <title>
           {post?.subName}: {post?.title}
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
         </title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       {post && (
         <Box sx={{ backgroundColor: "#2e2f2f", minHeight: "95vh", width: "100%" }}>
