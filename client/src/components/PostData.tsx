@@ -11,9 +11,10 @@ dayjs.extend(relativeTime);
 
 interface Props {
   post: Post;
+  subImage?: string;
 }
 
-const PostData: React.FC<Props> = ({ post }) => {
+const PostData: React.FC<Props> = ({ post, subImage }) => {
   return (
     <>
       {post && (
@@ -49,9 +50,17 @@ const PostData: React.FC<Props> = ({ post }) => {
             </Box>
           ) : (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111" }}>
-                {getFirstLetter(post.subName)}
-              </Avatar>
+              {subImage ? (
+                <Avatar
+                  src={subImage}
+                  alt="subreddit image"
+                  sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111", mx: "0.5rem" }}
+                />
+              ) : (
+                <Avatar sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111", mx: "0.5rem" }}>
+                  {getFirstLetter(post.subName)}
+                </Avatar>
+              )}
               <CLink
                 href={`/r/${post.subName}`}
                 variant="subtitle2"

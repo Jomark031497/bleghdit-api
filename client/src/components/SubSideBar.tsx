@@ -55,16 +55,6 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
           </Typography>
         </Box>
         <Divider />
-        {/* <Box sx={{ display: "flex" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", m: "0.5rem" }}>
-            <Typography variant="subtitle1">18.5k</Typography>
-            <Typography variant="subtitle2">Evergrow Army</Typography>
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", m: "0.5rem" }}>
-            <Typography variant="subtitle1">109</Typography>
-            <Typography variant="subtitle2">Online</Typography>
-          </Box>
-        </Box> */}
         <Box sx={{ display: "flex", alignItems: "center", my: "1rem" }}>
           <CakeIcon />
           <Typography>Created {dayjs(sub.createdAt).format("D MMM YYYY")}</Typography>
@@ -90,7 +80,7 @@ const SubSideBar: React.FC<SubProp> = ({ sub }) => {
             </>
           }
         >
-          you must logged in to submit a post
+          you must be logged in to submit a post
         </Alert>
       </Snackbar>
     </Box>

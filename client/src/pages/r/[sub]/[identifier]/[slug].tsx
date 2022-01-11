@@ -30,6 +30,7 @@ import CTextField from "../../../../components/custom/CTextField";
 import CButton from "../../../../components/custom/CButton";
 dayjs.extend(relativeTime);
 import CreatePost from "@mui/icons-material/Create";
+import CLink from "../../../../components/custom/CLink";
 
 const PostPage: NextPage = () => {
   const router = useRouter();
@@ -79,9 +80,18 @@ const PostPage: NextPage = () => {
       {post && (
         <Box sx={{ backgroundColor: "#2e2f2f", minHeight: "95vh", width: "100%" }}>
           <Container maxWidth="lg" disableGutters sx={{ backgroundColor: "#edeff1", minHeight: "95vh" }}>
-            <Box sx={{ display: "flex", backgroundColor: "#000", color: "#fff", p: "1rem 2rem", width: "100%" }}>
-              <ArticleIcon sx={{ mr: "0.5rem" }} />
-              <Typography variant="subtitle1">{post.title}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                backgroundColor: "skyblue",
+                color: "#fff",
+                p: "1rem 2rem",
+                width: "100%",
+                height: "10vh",
+                alignItems: "center",
+              }}
+            >
+              <CLink variant="h5" label={`/r/${post.subName}`} href={`/r/${post.subName}`} color="textPrimary" />
             </Box>
 
             <Box
@@ -145,6 +155,9 @@ const PostPage: NextPage = () => {
                         display: "flex",
                         justifyContent: "space-between",
                         flexDirection: { xs: "column", md: "row" },
+                        background: "rgba(0,0,0,0.3)",
+                        p: "1rem",
+                        borderRadius: "0.5rem",
                       }}
                     >
                       <Typography variant="h6" color="textSecondary">
@@ -182,7 +195,7 @@ const PostPage: NextPage = () => {
                 </Box>
               </Box>
 
-              <Box sx={{ flex: 0.4, my: "1rem", display: { xs: "none", md: "block" } }}>
+              <Box sx={{ flex: 0.4, my: "1rem", ml: "1rem", display: { xs: "none", md: "block" } }}>
                 <SubSideBar sub={post.sub} />
               </Box>
             </Box>

@@ -39,9 +39,18 @@ const FrontPageSideBar: React.FC = () => {
             <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
               {index + 1}.
             </Typography>
-            <Avatar sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111", mx: "0.5rem" }}>
-              {getFirstLetter(sub.name)}
-            </Avatar>
+            {sub.imageURN ? (
+              <Avatar
+                src={`${sub.imageURN}`}
+                alt="subreddit image"
+                sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111", mx: "0.5rem" }}
+              />
+            ) : (
+              <Avatar sx={{ width: "2.5rem", height: "2.5rem", backgroundColor: "#111", mx: "0.5rem" }}>
+                {getFirstLetter(sub.name)}
+              </Avatar>
+            )}
+
             <CLink
               href={`/r/${sub.name}`}
               label={`r/${sub.name}`}

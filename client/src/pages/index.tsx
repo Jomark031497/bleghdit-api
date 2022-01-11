@@ -96,23 +96,23 @@ const Home: NextPage = () => {
       <Snackbar
         open={openSnackbar}
         onClose={handleClose}
-        autoHideDuration={6000}
+        autoHideDuration={5000}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert
           severity="error"
           action={
             <>
-              <Button color="secondary" size="small" onClick={() => router.push("/login")}>
+              <Button variant="contained" color="primary" size="small" onClick={() => router.push("/login")}>
                 log in
               </Button>
-              <IconButton size="small" color="inherit">
+              <IconButton size="small" color="inherit" onClick={handleClose}>
                 <CloseIcon fontSize="small" />
               </IconButton>
             </>
           }
         >
-          you must logged in to create a subbleghdit
+          you must be logged in to create a subbleghdit
         </Alert>
       </Snackbar>
     </>

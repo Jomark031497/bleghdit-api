@@ -112,16 +112,16 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
           severity="error"
           action={
             <>
-              <Button color="secondary" size="small" onClick={() => router.push("/login")}>
+              <Button variant="contained" color="primary" size="small" onClick={() => router.push("/login")}>
                 log in
               </Button>
-              <IconButton size="small" color="inherit">
+              <IconButton size="small" color="inherit" onClick={handleClose}>
                 <CloseIcon fontSize="small" />
               </IconButton>
             </>
           }
         >
-          you must logged in to upvote/downvote
+          you must be logged in to upvote/downvote
         </Alert>
       </Snackbar>
     </>

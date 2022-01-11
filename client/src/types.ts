@@ -30,6 +30,7 @@ export interface Sub {
   createdAt: string;
   updatedAt: string;
   username: string;
+  imageUrl?: string;
 }
 
 export interface ReduxState {
