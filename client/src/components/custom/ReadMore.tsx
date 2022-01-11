@@ -15,16 +15,20 @@ const ReadMore: React.FC<Props> = ({ text, link }) => {
   };
 
   return (
-    <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
+    <>
       {text.length > MAX_CHAR ? (
         <>
-          <span onClick={() => router.push(link)}>{isReadMore ? text.slice(0, MAX_CHAR) : text}</span>
+          <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }} onClick={() => router.push(link)}>
+            {isReadMore ? text.slice(0, MAX_CHAR) : text}
+          </Typography>
           <span onClick={toggleReadMore}>{isReadMore ? <Button>Read More</Button> : <Button>Show Less</Button>}</span>
         </>
       ) : (
-        <span onClick={() => router.push(link)}>{text}</span>
+        <Typography variant="body1" onClick={() => router.push(link)} sx={{ whiteSpace: "pre-wrap" }}>
+          {text}
+        </Typography>
       )}
-    </Typography>
+    </>
   );
 };
 
