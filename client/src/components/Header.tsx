@@ -49,7 +49,7 @@ const Header: React.FC = () => {
       setAnchorEl(null);
       window.location.reload();
     } catch (err: any) {
-      console.error(err);
+      console.log(err);
     }
   };
 
@@ -58,8 +58,8 @@ const Header: React.FC = () => {
       try {
         const { data } = await axios.get("/auth/me", { withCredentials: true });
         dispatch(setCurrentUser(data));
-      } catch (err) {
-        console.error(err);
+      } catch (err: any) {
+        console.error(err.response.data.msg);
       }
     };
     checkAuth();
