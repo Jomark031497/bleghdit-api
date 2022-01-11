@@ -24,7 +24,7 @@ Backend:
 - Passport Authentication (Local)
 - Cloudinary for Image cloud hosting
 
-## Developmnet
+## Development
 
 clone the repo:
 
@@ -38,18 +38,10 @@ install all packages/library needed:
 npm run install-server && npm run install-client
 ```
 
-Run the server (run the watch script and the server script):
+Run the server anc client (run the client script, watch script and the server script):
 
 ```sh
-npm run watch
-# run in seperate terminal
-npm run server
-```
-
-Run the client:
-
-```sh
-npm run client
+npm run dev
 ```
 
 Environment Variables:
