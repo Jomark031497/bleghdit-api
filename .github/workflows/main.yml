@@ -17,14 +17,10 @@ jobs:
             git pull
             npm install
             npx tsc
-            pm2 stop all
-            pm2 delete all
-            pm2 start --name "server" npm -- start
             cd client
             npm install
             npm run build
-            pm2 start --name "client" npm -- start
-            
+            pm2 restart all
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
