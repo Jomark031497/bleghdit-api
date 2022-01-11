@@ -26,6 +26,7 @@ import CreatePost from "@mui/icons-material/Create";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useState } from "react";
+import CFab from "../../components/custom/CFab";
 
 const Subleddit: NextPage = () => {
   const router = useRouter();
@@ -38,11 +39,10 @@ const Subleddit: NextPage = () => {
     {
       icon: <CreatePost />,
       name: "Create Post",
-      action: {},
     },
   ];
 
-  const handleClick = (operation: string) => {
+  const fabAction = (operation: string) => {
     if (operation === "Create Post") {
       if (!user) {
         setOpenSnackbar(true);
@@ -89,7 +89,7 @@ const Subleddit: NextPage = () => {
             </Box>
           </Container>
           <Box sx={{ display: { xs: "block", md: "none" }, position: "relative", mt: 3, height: 320 }}>
-            <StyledSpeedDial ariaLabel="speed dial" icon={<SpeedDialIcon />} direction="up">
+            {/* <StyledSpeedDial ariaLabel="speed dial" icon={<SpeedDialIcon />} direction="up">
               {actions.map((action) => (
                 <SpeedDialAction
                   key={action.name}
@@ -99,7 +99,9 @@ const Subleddit: NextPage = () => {
                   tooltipOpen
                 />
               ))}
-            </StyledSpeedDial>
+            </StyledSpeedDial> */}
+
+            <CFab actions={actions} fabAction={fabAction} />
             <Snackbar
               open={openSnackbar}
               onClose={handleClose}

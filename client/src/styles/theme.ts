@@ -54,6 +54,15 @@ theme = createTheme(theme, {
       minHeight: "8vh",
     },
   },
+  components: {
+    MuiSpeedDialAction: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "red",
+        },
+      },
+    },
+  },
 });
 
 responsiveFontSizes(theme);
