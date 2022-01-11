@@ -79,7 +79,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
               <Box sx={{ cursor: ownsSub ? "pointer" : "" }}>
                 {sub.imageURN ? (
                   <Avatar
-                    src={sub.imageUrl}
+                    src={sub.imageURN}
                     alt="subreddit image"
                     sx={{ height: "80px", width: "80px", position: "absolute", top: -15 }}
                     onClick={() => openFileInput("image")}
