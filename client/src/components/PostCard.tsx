@@ -1,4 +1,3 @@
-import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -8,6 +7,8 @@ import { Post } from "../types";
 import UpvoteDownVote from "./UpvoteDownVote";
 import PostData from "./PostData";
 import PostActionButtons from "./PostActionButtons";
+import ReadMore from "./custom/ReadMore";
+import { useRouter } from "next/router";
 
 dayjs.extend(relativeTime);
 
@@ -18,6 +19,8 @@ interface PostProps {
 }
 
 const PostCard: React.FC<PostProps> = ({ post, mutate, subImage }) => {
+  const router = useRouter();
+
   return (
     <>
       {post && (
@@ -26,6 +29,7 @@ const PostCard: React.FC<PostProps> = ({ post, mutate, subImage }) => {
             display: "flex",
             mb: "0.7rem",
             background: "white",
+
             border: "0.1px solid transparent",
             borderRadius: "0.5rem",
             "&:hover": {
@@ -39,23 +43,22 @@ const PostCard: React.FC<PostProps> = ({ post, mutate, subImage }) => {
           <UpvoteDownVote post={post} mutate={mutate} />
 
           <Box sx={{ display: "flex", flexDirection: "column", flex: 8.5, m: "0.3rem 0.5rem" }} id="main-card-content">
-            <Link href={`/r/${post.subName}/${post.identifier}/${post.slug}`} passHref>
-              <Box id="link-children-parent">
-                <PostData post={post} subImage={subImage} />
+            <Box id="link-children-parent">
+              <PostData post={post} subImage={subImage} />
 
-                <Box sx={{ m: "0.5rem" }}>
-                  <Typography variant="h6">{post.title}</Typography>
+              <Box sx={{ m: "0.5rem" }}>
+                <Typography
+                  variant="h6"
+                  onClick={() => router.push(`/r/${post.subName}/${post.identifier}/${post.slug}`)}
+                >
+                  {post.title}
+                </Typography>
 
-                  {post.body && (
-                    <Typography variant="body2" sx={{ my: "0.5rem", whiteSpace: "pre-wrap" }}>
-                      {post.body}
-                    </Typography>
-                  )}
-                </Box>
-
-                <PostActionButtons post={post} />
+                {post.body && <ReadMore text={post.body} />}
               </Box>
-            </Link>
+
+              <PostActionButtons post={post} />
+            </Box>
           </Box>
         </Card>
       )}
