@@ -16,7 +16,7 @@ import voteRoutes from "./routes/vote.routes";
 const app = express(); // initialize express app
 dotenv(); // invoke dotenv config
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 // middlewares
 app.use(express.json()); // recognize incoming requests as JSON Objects
