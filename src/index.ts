@@ -21,7 +21,6 @@ const PORT = process.env.PORT || 8080;
 // middlewares
 app.use(express.json()); // recognize incoming requests as JSON Objects
 app.use(express.urlencoded({ extended: false })); // recognize incoming requests as strings or arrays
-app.use(express.static("public")); // expose public folder
 // restricts allowed hosts to a single origin
 app.use(
   cors({
