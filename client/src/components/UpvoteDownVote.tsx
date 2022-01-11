@@ -27,9 +27,11 @@ const UpvoteDownVote: React.FC<Props> = ({ post, comment, mutate }) => {
       setOpenSnackbar(true);
       return;
     }
+
     if ((!comment && value === post.userVote) || (comment && comment.userVote === value)) value = 0;
     // set the value to 0 if the user voted the same vote
     if (value === post.userVote) value = 0;
+
     try {
       await axios.post(
         "/vote",

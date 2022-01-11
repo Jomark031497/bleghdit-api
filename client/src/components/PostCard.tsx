@@ -49,12 +49,13 @@ const PostCard: React.FC<PostProps> = ({ post, mutate, subImage }) => {
               <Box sx={{ m: "0.5rem" }}>
                 <Typography
                   variant="h6"
+                  sx={{ "&:hover": { textDecoration: "underline" } }}
                   onClick={() => router.push(`/r/${post.subName}/${post.identifier}/${post.slug}`)}
                 >
                   {post.title}
                 </Typography>
 
-                {post.body && <ReadMore text={post.body} />}
+                {post.body && <ReadMore text={post.body} link={`/r/${post.subName}/${post.identifier}/${post.slug}`} />}
               </Box>
 
               <PostActionButtons post={post} />
