@@ -22,7 +22,7 @@ const ReadMore: React.FC<Props> = ({ text, link }) => {
           <span onClick={toggleReadMore}>{isReadMore ? <Button>Read More</Button> : <Button>Show Less</Button>}</span>
         </>
       ) : (
-        <span onClick={() => router.push(link)}>text</span>
+        <span onClick={() => router.push(link)}>{text}</span>
       )}
     </Typography>
   );
