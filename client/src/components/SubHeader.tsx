@@ -87,6 +87,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                 ) : (
                   <Avatar
                     sx={{ height: "80px", width: "80px", backgroundColor: "#111", position: "absolute", top: -15 }}
+                    onClick={() => openFileInput("image")}
                   >
                     {getFirstLetter(sub.name)}
                   </Avatar>
