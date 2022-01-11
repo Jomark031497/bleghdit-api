@@ -9,6 +9,7 @@ import {
   SpeedDialAction,
   SpeedDialIcon,
   styled,
+  Typography,
 } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -69,9 +70,15 @@ const Subleddit: NextPage = () => {
           <SubHeader sub={sub} />
           <Container id="main-container" maxWidth="lg" sx={{ background: "transparent", pb: "1rem", display: "flex" }}>
             <Box id="main-content" sx={{ flex: 1, my: "1rem" }}>
-              {sub.posts.map((post: Post) => (
-                <PostCard post={post} subImage={sub.imageURN} key={post.identifier} />
-              ))}
+              {sub.posts.length ? (
+                sub.posts.map((post: Post) => <PostCard post={post} subImage={sub.imageURN} key={post.identifier} />)
+              ) : (
+                <Box>
+                  <Typography variant="subtitle1" color="error">
+                    There doesn't seem to be anything here...
+                  </Typography>
+                </Box>
+              )}
             </Box>
 
             <Box

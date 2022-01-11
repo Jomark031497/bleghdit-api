@@ -103,7 +103,7 @@ const Header: React.FC = () => {
       <AppBar
         position="fixed"
         elevation={0}
-        sx={{ justifyContent: "center", backgroundColor: "white", height: { xs: "8vh", md: "5vh" } }}
+        sx={{ justifyContent: "center", backgroundColor: "white", height: { xs: "6vh", md: "5vh" } }}
       >
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center", px: "0.1rem" }}>
           <Box sx={{ ml: { xs: "0.5rem", md: " 2rem" } }}>
@@ -219,7 +219,7 @@ const Header: React.FC = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box sx={{ minHeight: "5vh" }} />
+      <Box sx={{ minHeight: { sx: "6vh", md: "5vh" } }} />
     </>
   );
 };

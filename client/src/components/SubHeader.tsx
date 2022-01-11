@@ -93,7 +93,7 @@ const SubHeader: React.FC<SubProps> = ({ sub }) => {
                   </Avatar>
                 )}
               </Box>
-              <Box sx={{ pl: "6rem" }}>
+              <Box sx={{ pl: "6rem", my: "0.5rem" }}>
                 <Typography variant="h5">{sub.title}</Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   /r/{sub.name}

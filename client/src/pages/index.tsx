@@ -71,8 +71,9 @@ const Home: NextPage = () => {
             sx={{
               backgroundColor: "#fff",
               borderRadius: "0.5rem",
-              mb: "1rem",
+              my: "1rem",
               p: "1rem",
+
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",

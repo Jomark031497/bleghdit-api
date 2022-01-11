@@ -25,7 +25,7 @@ const UserPage: NextPage = () => {
       </Head>
 
       <Container maxWidth="lg" sx={{ background: "transparent", display: "flex", flexDirection: "column" }}>
-        <Box sx={{ width: "100%", backgroundColor: "#fff", display: "flex", py: "0.3rem" }}>
+        <Box sx={{ width: "100%", backgroundColor: "#fff", display: "flex", py: "0.3rem", mt: "5rem" }}>
           <CButton onClick={() => setTab("overview")} color={tab === "overview" ? "primary" : "inherit"}>
             Overview
           </CButton>
@@ -97,7 +97,7 @@ const UserPage: NextPage = () => {
               </Box>
             )}
             {tab === "posts" && (
-              <Box>
+              <Box sx={{ backgroundColor: "#eee", mt: "1rem" }}>
                 {userSubmissions &&
                   userSubmissions.submissions.map((submission: any) => {
                     if (submission.type === "POST") {
@@ -108,7 +108,7 @@ const UserPage: NextPage = () => {
               </Box>
             )}
             {tab === "comments" && (
-              <Box>
+              <Box sx={{ backgroundColor: "#eee", mt: "1rem" }}>
                 {userSubmissions &&
                   userSubmissions.submissions.map((submission: any) => {
                     if (submission.type === "COMMENT") {
