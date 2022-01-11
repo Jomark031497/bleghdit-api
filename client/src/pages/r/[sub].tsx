@@ -1,4 +1,15 @@
-import { Box, Container, SpeedDial, SpeedDialAction, SpeedDialIcon, styled } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Snackbar,
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
+  styled,
+} from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -7,14 +18,21 @@ import useSWR from "swr";
 import PostCard from "../../components/PostCard";
 import SubHeader from "../../components/SubHeader";
 import SubSideBar from "../../components/SubSideBar";
+import CloseIcon from "@mui/icons-material/Close";
 import { Post, Sub } from "../../types";
 
 import CreatePost from "@mui/icons-material/Create";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useState } from "react";
 
 const Subleddit: NextPage = () => {
   const router = useRouter();
 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
   const { data: sub } = useSWR<Sub>(router.query.sub ? `/subs/${router.query.sub}` : null);
+  const { data: user } = useSelector((state: RootState) => state.login);
   const actions = [
     {
       icon: <CreatePost />,
@@ -25,8 +43,16 @@ const Subleddit: NextPage = () => {
 
   const handleClick = (operation: string) => {
     if (operation === "Create Post") {
+      if (!user) {
+        setOpenSnackbar(true);
+        return;
+      }
       router.push(`/r/${router.query.sub}/create`);
     }
+  };
+
+  const handleClose = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -67,6 +93,28 @@ const Subleddit: NextPage = () => {
                 />
               ))}
             </StyledSpeedDial>
+            <Snackbar
+              open={openSnackbar}
+              onClose={handleClose}
+              autoHideDuration={5000}
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+              <Alert
+                severity="error"
+                action={
+                  <>
+                    <Button variant="contained" color="primary" size="small" onClick={() => router.push("/login")}>
+                      log in
+                    </Button>
+                    <IconButton size="small" color="inherit" onClick={handleClose}>
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  </>
+                }
+              >
+                you must be logged in to create a post
+              </Alert>
+            </Snackbar>
           </Box>
         </>
       )}
