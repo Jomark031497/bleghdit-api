@@ -13,7 +13,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
 import { Post, CommentType } from "../../../../types";
-import ArticleIcon from "@mui/icons-material/Article";
 import UpvoteDownVote from "../../../../components/UpvoteDownVote";
 import PostData from "../../../../components/PostData";
 import SubSideBar from "../../../../components/SubSideBar";
