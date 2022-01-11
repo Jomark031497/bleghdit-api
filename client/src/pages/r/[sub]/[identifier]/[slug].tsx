@@ -124,9 +124,9 @@ const PostPage: NextPage = () => {
                   {data ? (
                     <Formik
                       initialValues={{ body: "" }}
-                      onSubmit={({ body }) => {
-                        addComment(body);
-                        body = "";
+                      onSubmit={(values) => {
+                        addComment(values.body);
+                        values.body = "";
                       }}
                     >
                       {() => (
