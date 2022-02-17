@@ -57,7 +57,7 @@ app.listen(PORT, async () => {
     if (process.env.MODE === "PRODUCTION") {
       await createConnection({
         type: "postgres",
-        url: <string>process.env.TYPEORM_URL,
+        url: <string>process.env.DATABASE_URL,
         synchronize: true,
         logging: false,
       });
