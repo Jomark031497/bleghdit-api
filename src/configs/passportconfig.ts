@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import { Strategy as localStrategy } from "passport-local";
-import User from "./entities/User";
+import User from "../entities/User";
 
 export default function (passport: any) {
   passport.use(

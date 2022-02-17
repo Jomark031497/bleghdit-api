@@ -7,7 +7,7 @@ import passport from "passport";
 import { config as dotenv } from "dotenv";
 import { createConnection } from "typeorm";
 import trim from "./middlewares/trimFields";
-import authenticate from "./passportconfig";
+import authenticate from "./configs/passportconfig";
 import authRoutes from "./routes/auth.routes";
 import postRoutes from "./routes/posts.routes";
 import subRoutes from "./routes/subs.routes";
@@ -16,7 +16,7 @@ import voteRoutes from "./routes/vote.routes";
 const app = express(); // initialize express app
 dotenv(); // invoke dotenv config
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 // middlewares
 app.use(express.json()); // recognize incoming requests as JSON Objects
@@ -54,8 +54,19 @@ app.get("/api", (_: Request, res: Response) => {
 app.listen(PORT, async () => {
   console.log(`listening to port ${PORT}`);
   try {
-    await createConnection();
-    console.log("connected to database");
+    if (process.env.MODE === "PRODUCTION") {
+      await createConnection({
+        type: "postgres",
+        url: <string>process.env.TYPEORM_URL,
+        synchronize: true,
+        logging: false,
+      });
+
+      console.log("connected to database: PRODUCTION MODE");
+    } else {
+      await createConnection();
+      console.log("connected to database: DEVELOPMENT MODE");
+    }
   } catch (e) {
     console.error(e);
   }
