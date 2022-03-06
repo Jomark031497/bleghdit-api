@@ -4,11 +4,11 @@
   "description": "a reddit clone created using react/next, typescript, nodeJS/express, typeorm, and PostgreSQL",
   "main": "index.js",
   "scripts": {
-    "build-server": "tsc",
-    "install-server": "npm install",
     "start": "node dist/index.js",
     "dev": "nodemon dist/index.js",
     "watch": "tsc -w",
+    "build": "tsc",
+    "dev:watch": "concurrently \"npm run watch\" \"npm run dev\"",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
@@ -45,7 +45,6 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "cloudinary": "^1.27.1",
-    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
