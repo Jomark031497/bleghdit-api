@@ -21,7 +21,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "typeRoots": [
+      "src/types", // this is where you define your types
+      "node_modules/@types" //this where npm packages containing types are located
+    ]
   },
   "exclude": ["node_modules", "client"],
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]

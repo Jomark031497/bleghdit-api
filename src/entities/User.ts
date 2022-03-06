@@ -1,5 +1,5 @@
 import { BeforeInsert, Column, Entity, Index, OneToMany } from "typeorm";
-import { genSalt, hash } from "bcrypt";
+import { hash } from "argon2";
 import { Exclude } from "class-transformer";
 import { IsEmail, Length } from "class-validator";
 import RootEntity from "./RootEntity";
@@ -36,7 +36,6 @@ export default class User extends RootEntity {
 
   @BeforeInsert()
   async hashPassword() {
-    const salt = await genSalt();
-    this.password = await hash(this.password, salt);
+    this.password = await hash(this.password);
   }
 }
