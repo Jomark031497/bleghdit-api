@@ -8,7 +8,6 @@ import Vote from "./Vote";
 
 @Entity("users")
 export default class User extends RootEntity {
-  // Partial<User> : So we don't have to use all the required fields
   constructor(user: Partial<User>) {
     super();
     Object.assign(this, user);
@@ -25,19 +24,16 @@ export default class User extends RootEntity {
   email: string;
 
   @Column()
-  @Exclude() // exclude this column from showing when returning a JSON obj
+  @Exclude()
   @Length(6, 255, { message: "Username must be at least 6 characters long" })
   password: string;
 
-  // User can have multiple posts
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
-  // A User can have multiple votes
   @OneToMany(() => Vote, (vote) => vote.user)
   votes: Vote[];
 
-  // lifecycle hook to hash password before saving
   @BeforeInsert()
   async hashPassword() {
     const salt = await genSalt();

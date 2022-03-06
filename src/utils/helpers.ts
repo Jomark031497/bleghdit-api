@@ -1,4 +1,3 @@
-// make a random generated ID
 export const makeID = (length: number): string => {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -9,7 +8,6 @@ export const makeID = (length: number): string => {
   return result;
 };
 
-// convert a text to slug
 export const slugify = (str: string): string => {
   str = str.trim();
   str = str.toLowerCase();
@@ -31,7 +29,6 @@ export const slugify = (str: string): string => {
     .replace(/-/g, "_");
 };
 
-// map errors into an object
 export const mapErrors = (errors: Object[]) => {
   return errors.reduce((prev: any, err: any) => {
     prev[err.property] = Object.entries(err.constraints)[0][1];

@@ -29,12 +29,10 @@ export default class Subs extends RootEntity {
   @Column()
   username: string;
 
-  // There can be multiple subleddits owned by a one user
   @ManyToOne(() => User)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
-  // there can be multiple posts in one sub
   @OneToMany(() => Post, (post) => post.sub)
   posts: Post[];
 }

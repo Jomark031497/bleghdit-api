@@ -5,11 +5,10 @@ import { getConnection, getRepository } from "typeorm";
 import Post from "../entities/Post";
 
 export const createSub = async (req: Request, res: Response) => {
-  const { name, title, description } = req.body; // destructure the fields
-  const user: any = req.user; // get user from session
-  if (!user) return res.status(404).json({ error: "unauthenticated" }); // return an error if there is no authenticated user
+  const { name, title, description } = req.body;
+  const user: any = req.user;
+  if (!user) return res.status(404).json({ error: "unauthenticated" });
   try {
-    // validations
     let errors: any = {};
     if (isEmpty(name)) errors.name = "Name must not be empty";
     if (isEmpty(title)) errors.title = "Title must not be empty";
@@ -17,17 +16,17 @@ export const createSub = async (req: Request, res: Response) => {
     if (name.indexOf(" ") >= 0) errors.name = "sub name shouldn't have whitespace";
 
     if (/[^a-z]/i.test(name)) errors.name = "sub should only have letters (a-z)";
-    // check if there's an existing sub already
+
     const sub = await getRepository(Subs)
       .createQueryBuilder("sub")
       .where("lower(sub.name) = :name", { name: name.toLowerCase() })
       .getOne();
 
-    if (sub) errors.name = "Subleddit name already exists"; // create the error
-    if (Object.keys(errors).length > 0) return res.status(400).json(errors); // return error
+    if (sub) errors.name = "Subleddit name already exists";
+    if (Object.keys(errors).length > 0) return res.status(400).json(errors);
 
-    const newSub = new Subs({ name, description, title, user }); // create a sub
-    await newSub.save(); // save to the database
+    const newSub = new Subs({ name, description, title, user });
+    await newSub.save();
     return res.status(200).json(newSub);
   } catch (e) {
     return res.status(400).json(e);
@@ -53,18 +52,17 @@ export const getSubs = async (_: Request, res: Response) => {
 };
 
 export const getSub = async (req: Request, res: Response) => {
-  const { name } = req.params; // get the sub name from the request
-  const user: any = req.user; //get authenticated user if available
+  const { name } = req.params;
+  const user: any = req.user;
   try {
-    const sub = await Subs.findOneOrFail({ name }); // find the sub from the Subs
-    // fetch posts
+    const sub = await Subs.findOneOrFail({ name });
     const posts = await Post.find({
       where: { sub },
       relations: ["comments", "votes"],
       order: { createdAt: "DESC" },
     });
-    sub.posts = posts; // add posts to the sub
-    if (user) sub.posts.forEach((post) => post.setUserVote(user)); // set user vote for voting display
+    sub.posts = posts;
+    if (user) sub.posts.forEach((post) => post.setUserVote(user));
     return res.json(sub);
   } catch (err) {
     console.error(err);
@@ -73,17 +71,16 @@ export const getSub = async (req: Request, res: Response) => {
 };
 
 export const uploadSubImage = async (req: Request, res: Response) => {
-  const user: any = req.user; // get the user from session
-  const sub: Subs = user.sub; // get sub from user
-  const type = req.body.type; // get the type (image/bannner) from req.body
+  const user: any = req.user;
+  const sub: Subs = user.sub;
+  const type = req.body.type;
   try {
-    // check if type is banner or image
     if (type !== "image" && type !== "banner") return res.status(400).json({ error: "invalid type" });
 
     if (type === "image") {
-      sub.imageURN = req.file!.path; // add the imageURN
+      sub.imageURN = req.file!.path;
     } else {
-      sub.bannerURN = req.file!.path; // add the bannerURN
+      sub.bannerURN = req.file!.path;
     }
     await sub.save();
     return res.status(200).json(sub);
@@ -94,11 +91,10 @@ export const uploadSubImage = async (req: Request, res: Response) => {
 };
 
 export const searchSubs = async (req: Request, res: Response) => {
-  const { name } = req.params; // destructure field
+  const { name } = req.params;
   try {
-    if (isEmpty(name)) return res.status(400).json({ error: "Name must not be empty" }); // return if search is empty
+    if (isEmpty(name)) return res.status(400).json({ error: "Name must not be empty" });
 
-    // find the subs using wildcard
     const subs = await getRepository(Subs)
       .createQueryBuilder()
       .where("LOWER(name) LIKE :name", { name: `${name.toLowerCase().trim()}%` })

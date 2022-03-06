@@ -16,7 +16,7 @@ export default class Post extends RootEntity {
 
   @Index()
   @Column()
-  identifier: string; // 7 Character Id
+  identifier: string;
 
   @Column()
   title: string;
@@ -34,21 +34,17 @@ export default class Post extends RootEntity {
   @Column()
   username: string;
 
-  // A User can have multiple posts
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
-  // A Sub can have multiple posts
   @ManyToOne(() => Subs, (sub) => sub.posts)
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
   sub: Subs;
 
-  // A Post can have multiple comments
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
-  // A Post can have multiple votes
   @OneToMany(() => Vote, (vote) => vote.post)
   votes: Vote[];
 

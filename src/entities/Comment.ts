@@ -15,7 +15,7 @@ export default class Comment extends RootEntity {
 
   @Index()
   @Column()
-  identifier: string; // 8 character string
+  identifier: string;
 
   @Column({ type: "text" })
   body: string;
@@ -23,16 +23,13 @@ export default class Comment extends RootEntity {
   @Column()
   username: string;
 
-  // A User can have multiple comments
   @ManyToOne(() => User)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
-  // A Post can have multiple comments
   @ManyToOne(() => Post, (post) => post.comments)
   post: Post;
 
-  // A Comment can have many votes
   @OneToMany(() => Vote, (vote) => vote.comment)
   votes: Vote[];
 
